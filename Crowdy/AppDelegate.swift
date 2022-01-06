@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Crowdy
 //
-//  Created by 18673799 on 20.12.2021.
+//  Created by Mikhail Borisov on 20.12.2021.
 //
 
 import UIKit
