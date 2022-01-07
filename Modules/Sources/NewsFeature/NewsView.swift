@@ -13,7 +13,11 @@ import ComposableArchitecture
 /// Экран "Что ноовго"
 struct NewsView: View {
 
-	let store: Store<NewsState, NewsAction>
+	private let store: Store<NewsState, NewsAction>
+
+	public init(store: Store<NewsState, NewsAction>) {
+		self.store = store
+	}
 
 	private struct NewsRow: View {
 

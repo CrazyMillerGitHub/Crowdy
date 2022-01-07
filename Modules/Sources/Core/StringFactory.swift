@@ -15,4 +15,10 @@ public extension StringFactory {
 		case `continue`
 		case whatsNew
 	}
+
+	enum HomeRow: String {
+		case participants
+		case expireOn
+		case progress
+	}
 }
