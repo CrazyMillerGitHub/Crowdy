@@ -1,8 +1,11 @@
+// swift-tools-version:5.5
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
 
 let package = Package(
     name: "Modules",
-	platforms: [.iOS(.v13)],
+	platforms: [.iOS(.v14)],
     products: [
 		.library(
 			name: "Core",
@@ -19,6 +22,9 @@ let package = Package(
 		.library(
 			name: "HomeFeature",
 			targets: ["HomeFeature"]),
+		.library(
+			name: "HomeRow",
+			targets: ["HomeRow"]),
 		.library(
 			name: "SearchFeature",
 			targets: ["SearchFeature"]),
@@ -44,7 +50,8 @@ let package = Package(
 		.target(
 			name: "NewsFeature",
 			dependencies: [
-				"Core"
+				"Core",
+				"DesignSystem"
 			]
 		),
 		.target(
@@ -82,6 +89,13 @@ let package = Package(
 				"SettingsFeature",
 				"SearchFeature",
 				"HomeFeature"
+			]
+		),
+		.target(
+			name: "HomeRow",
+			dependencies: [
+				"Core",
+				"DesignSystem"
 			]
 		)
 	]
