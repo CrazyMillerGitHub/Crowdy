@@ -34,10 +34,14 @@ let package = Package(
 		.library(
 			name: "AppFeature",
 			targets: ["AppFeature"]),
+		.library(
+			name: "DeeplinkFeature",
+			targets: ["DeeplinkFeature"])
     ],
     dependencies: [
 		.package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.32.0"),
-		.package(url: "https://github.com/CrazyMillerGitHub/QrCodeManager", .branch("main"))
+		.package(url: "https://github.com/CrazyMillerGitHub/QrCodeManager", .branch("main")),
+		.package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.3.1")
     ],
 	targets: [
 		.target(
@@ -96,6 +100,12 @@ let package = Package(
 			dependencies: [
 				"Core",
 				"DesignSystem"
+			]
+		),
+		.target(
+			name: "DeeplinkFeature",
+			dependencies: [
+				.product(name: "Parsing", package: "swift-parsing")
 			]
 		)
 	]
