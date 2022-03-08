@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Core
 
+/// Стейт-машина для модуля авторизации
 public struct AuthState: Equatable {
 	
 }
@@ -28,11 +29,18 @@ public enum AuthAction {
 	case authFailed
 }
 
+/// Окружение для авторизации
 public struct AuthEnvironment {
 
+    /// Запрос на авторизацию пользователя
 	var authUserRequest: (JSONDecoder, String, String) -> Effect<AuthModel, APIError>
+    /// Запрос на сохранение данных пользователя в бд
 	var saveModelRequest: (StorageProtocol, AuthModel) -> Void
 
+    /// Инициализация
+    /// - Parameters:
+    ///   - authUserRequest: Запрос на авторизацию пользователя
+    ///   - saveModelRequest: Запрос на сохранение данных пользователя в бд
 	public init(
 		authUserRequest: @escaping (JSONDecoder, String, String) -> Effect<AuthModel, APIError>,
 		saveModelRequest: @escaping (StorageProtocol, AuthModel) -> Void
@@ -42,6 +50,7 @@ public struct AuthEnvironment {
 	}
 }
 
+/// Reducer для авторизации
 public let authReducer = Reducer<
 	AuthState,
 	AuthAction,
