@@ -21,4 +21,11 @@ public extension StringFactory {
 		case expireOn
 		case progress
 	}
+
+	enum AuthFeature: String {
+		case login
+		case password
+		case forgotPassword
+		case logIn
+	}
 }

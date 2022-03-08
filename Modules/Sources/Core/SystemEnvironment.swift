@@ -7,12 +7,31 @@
 
 import ComposableArchitecture
 
+public protocol StorageProtocol {
+	
+}
+
+struct Storage: StorageProtocol {}
+
 @dynamicMemberLookup
 public struct SystemEnvironment<Environment> {
 
 	public var environment: Environment
 	public var mainQueue: () -> AnySchedulerOf<DispatchQueue>
 	public var decoder: () -> JSONDecoder
+	public var storage: () -> StorageProtocol
+
+	public init(
+		environment: Environment,
+		mainQueue: @escaping () -> AnySchedulerOf<DispatchQueue>,
+		decoder: @escaping () -> JSONDecoder,
+		storage: @escaping () -> StorageProtocol
+	) {
+		self.environment = environment
+		self.mainQueue = mainQueue
+		self.decoder = decoder
+		self.storage = storage
+	}
 
 	public subscript<Dependency>(
 		dynamicMember keyPath: WritableKeyPath<Environment, Dependency>
@@ -27,11 +46,15 @@ public struct SystemEnvironment<Environment> {
 		return decoder
 	}
 
+	private static func storage() -> StorageProtocol {
+		return Storage()
+	}
+
 	public static func live(environment: Environment) -> Self {
-		Self(environment: environment, mainQueue: { .main }, decoder: decoder)
+		Self(environment: environment, mainQueue: { .main }, decoder: decoder, storage: storage)
 	}
 
 	public static func dev(environment: Environment) -> Self {
-		Self(environment: environment, mainQueue: { .main }, decoder: decoder)
+		Self(environment: environment, mainQueue: { .main }, decoder: decoder, storage: storage)
 	}
 }

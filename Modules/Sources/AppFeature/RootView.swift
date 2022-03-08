@@ -7,31 +7,46 @@
 
 import SwiftUI
 import HomeFeature
-import SearchFeature
+import Core
+import DashboardFeature
 import SettingsFeature
+import AuthFeature
 import Foundation
+import ComposableArchitecture
 
 public struct RootView: View {
 
-	public init() {}
+	private let store: Store<RootState, RootAction>
+
+	public init(store: Store<RootState, RootAction>) {
+		self.store = store
+	}
 
 	public var body: some View {
-		TabView {
-			HomeView()
-				.tabItem {
-					Image(systemName: "list.bullet")
-					Text("Repositories")
-				}
-			SearchView()
-				.tabItem {
-					Image(systemName: "list.bullet")
-					Text("Repositories")
-				}
-			SettingsView()
-				.tabItem {
-					Image(systemName: "list.bullet")
-					Text("Repositories")
-				}
+		WithViewStore(store.stateless) { viewStore in
+			TabView {
+				HomeView(
+					store: .init(
+						initialState: .init(homeRowState: .init()),
+						reducer: homeReducer,
+						environment: .dev(environment: .init())
+					)
+				)
+					.tabItem {
+						Image(systemName: "star.square.fill")
+						Text("Discovery")
+					}
+				DashboardView()
+					.tabItem {
+						Image(systemName: "chart.bar.fill")
+						Text("Dashboard")
+					}
+				SettingsView()
+					.tabItem {
+						Image(systemName: "gearshape.fill")
+						Text("Settings")
+					}
+			}
 		}
 	}
 }
@@ -40,7 +55,13 @@ public struct RootView: View {
 struct RootView_Preview: PreviewProvider {
 
 	static var previews: some View {
-		RootView()
+		RootView(
+			store: .init(
+				initialState: RootState(),
+				reducer: rootReducer,
+				environment: .dev(environment: RootEnvironment())
+			)
+		)
 	}
 }
 #endif

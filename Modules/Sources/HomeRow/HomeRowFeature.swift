@@ -11,9 +11,16 @@ import ComposableArchitecture
 import UIKit
 
 public struct HomeRowState: Equatable {
-	var crowdfunding: HomeRowModel = HomeRowModel.fixture
-	var isLoaded: Bool = false
-	var contentImage: UIImage = UIImage(systemName: "circle")!
+
+	public init(crowdfunding: HomeRowModel = HomeRowModel.fixture, isLoaded: Bool = false, contentImage: UIImage = UIImage(systemName: "circle")!) {
+		self.crowdfunding = crowdfunding
+		self.isLoaded = isLoaded
+		self.contentImage = contentImage
+	}
+
+	var crowdfunding: HomeRowModel
+	var isLoaded: Bool
+	var contentImage: UIImage
 }
 
 public enum HomeRowAction {
@@ -26,13 +33,26 @@ public enum HomeRowAction {
 }
 
 public struct HomeRowEnvironment {
+
 	var crowdfundingId: () -> Int
 	var crowdfundingRequest: (JSONDecoder, Int) -> Effect<HomeRowModel, APIError>
 	var mediaContentRequest: (JSONDecoder, URL?) -> Effect<UIImage, APIError>
 	var updateFavouriteRequest: (JSONDecoder, Int, Bool) -> Effect<HomeRowModel, APIError>
+
+	public init(
+		crowdfundingId: @escaping () -> Int,
+		crowdfundingRequest: @escaping (JSONDecoder, Int) -> Effect<HomeRowModel, APIError>,
+		mediaContentRequest: @escaping (JSONDecoder, URL?) -> Effect<UIImage, APIError>,
+		updateFavouriteRequest: @escaping (JSONDecoder, Int, Bool) -> Effect<HomeRowModel, APIError>
+	) {
+		self.crowdfundingId = crowdfundingId
+		self.crowdfundingRequest = crowdfundingRequest
+		self.mediaContentRequest = mediaContentRequest
+		self.updateFavouriteRequest = updateFavouriteRequest
+	}
 }
 
-let homeRowReducer = Reducer<
+public let homeRowReducer = Reducer<
 	HomeRowState,
 	HomeRowAction,
 	SystemEnvironment<HomeRowEnvironment>

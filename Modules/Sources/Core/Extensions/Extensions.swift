@@ -8,7 +8,7 @@
 import UIKit
 
 public extension RawRepresentable where RawValue == String {
-	var localizableString: String { NSLocalizedString(rawValue, comment: "") }
+	var localizableString: String { NSLocalizedString(rawValue, bundle: Bundle.main, comment: "") }
 }
 
 extension UIViewController {

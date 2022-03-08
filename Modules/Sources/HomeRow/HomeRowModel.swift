@@ -27,7 +27,7 @@ public struct HomeRowModel: Decodable, Equatable {
 	/// Кол-во участников
 	let participantsCount: Int
 
-	static var fixture: HomeRowModel {
+	public static var fixture: HomeRowModel {
 		return Self.init(
 			identifier: .init(),
 			title: "",

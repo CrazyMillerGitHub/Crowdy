@@ -8,5 +8,10 @@
 
 "continue" = "Продолжить";
 "whatsNew" = "Что нового";
-"participants" = "Участники";
+"participants" = "Участники:";
 "progress" = "Собрано:";
+"expireOn" = "Истекает:";
+"login" = "Логин";
+"logIn" = "Войти";
+"password" = "Пароль";
+"forgotPassword" = "Забыли пароль?";

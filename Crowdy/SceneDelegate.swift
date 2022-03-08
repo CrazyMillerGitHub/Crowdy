@@ -19,7 +19,14 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	) {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		let window = UIWindow(windowScene: windowScene)
-		window.rootViewController = UIHostingController(rootView: RootView())
+		let rootView = RootView(
+			store: .init(
+				initialState: RootState(),
+				reducer: rootReducer,
+				environment: .dev(environment: RootEnvironment())
+			)
+		)
+		window.rootViewController = UIHostingController(rootView: rootView)
 
 		self.window = window
 

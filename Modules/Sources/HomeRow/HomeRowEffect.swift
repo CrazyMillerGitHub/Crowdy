@@ -8,7 +8,6 @@
 import Core
 import Combine
 import ComposableArchitecture
-import Foundation
 import UIKit
 
 func crowdfundingEffect(
@@ -26,7 +25,7 @@ func crowdfundingEffect(
 		.eraseToEffect()
 }
 
-func dummyCrowdfundingEffect(
+public func dummyCrowdfundingEffect(
 	decoder: JSONDecoder,
 	crowdfundingId: Int
 ) -> Effect<HomeRowModel, APIError> {
@@ -60,8 +59,8 @@ func mediaContentEffect(decoder: JSONDecoder, url: URL?) -> Effect<UIImage, APIE
 		.eraseToEffect()
 }
 
-func dummyMediaContentEffect(decoder: JSONDecoder, url: URL?) -> Effect<UIImage, APIError> {
-	guard let image = UIImage(systemName: "circle") else {
+public func dummyMediaContentEffect(decoder: JSONDecoder, url: URL?) -> Effect<UIImage, APIError> {
+	guard let image = UIImage(named: "placeholder.png", in: .main, with: nil) else {
 		assertionFailure("Данный блок не должен падать с ошибкой")
 		return Effect(error: .downloadError)
 	}
@@ -84,7 +83,7 @@ func updateFavouriteEffect(
 		.eraseToEffect()
 }
 
-func dummyUpdateFavouriteEffect(
+public func dummyUpdateFavouriteEffect(
 	decoder: JSONDecoder,
 	crowdfundingId: Int,
 	newState: Bool

@@ -6,15 +6,39 @@
 //
 
 import SwiftUI
+import Core
+import HomeRow
+import ComposableArchitecture
 import DesignSystem
 
 public struct HomeView: View {
 
-	public init() {}
+	private let store: Store<HomeState, HomeAction>
+
+	public init(store: Store<HomeState, HomeAction>) {
+		self.store = store
+	}
 
 	public var body: some View {
-		HStack {
-			Spacer()
-		}.background(Color.darkSpace.color)
+		WithViewStore(store) { viewStore in
+			NavigationView {
+				Form {
+					HomeRow(store: .init(
+						initialState: viewStore.state.homeRowState,
+						reducer: homeRowReducer,
+						environment: .dev(
+							environment: HomeRowEnvironment(
+								crowdfundingId: { 4 },
+								crowdfundingRequest: dummyCrowdfundingEffect,
+								mediaContentRequest: dummyMediaContentEffect,
+								updateFavouriteRequest: dummyUpdateFavouriteEffect
+							)
+						)
+					)
+					)
+				}
+				.navigationTitle("Home")
+			}
+		}
 	}
 }

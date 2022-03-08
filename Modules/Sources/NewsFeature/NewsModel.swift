@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct NewsModel: Decodable, Equatable {
+public struct NewsModel: Decodable, Equatable {
 
 	let identifier: UUID
 	let title: String
 	let subtitle: String
 	let url: URL
 
-	static func == (lhs: NewsModel, rhs: NewsModel) -> Bool {
+	public static func == (lhs: NewsModel, rhs: NewsModel) -> Bool {
 		return lhs.identifier == rhs.identifier
 	}
 }
 
 extension NewsModel: Identifiable {
-	var id: UUID { identifier }
+	public var id: UUID { identifier }
 }

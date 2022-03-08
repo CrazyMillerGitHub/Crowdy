@@ -9,21 +9,29 @@ import Foundation
 import Core
 import ComposableArchitecture
 
-struct NewsState: Equatable {
+public struct NewsState: Equatable {
+
+	public init() {}
+
 	var news: [NewsModel] = []
 }
 
-enum NewsAction {
+public enum NewsAction {
 	case onAppear
     case dataLoaded(Result<[NewsModel], APIError>)
 	case continueButtonTapped
 }
 
-struct NewsEnvironment {
+public struct NewsEnvironment {
+
 	var newsRequest: (JSONDecoder) -> Effect<[NewsModel], APIError>
+
+	public init(newsRequest: @escaping (JSONDecoder) -> Effect<[NewsModel], APIError>) {
+		self.newsRequest = newsRequest
+	}
 }
 
-let newsReducer = Reducer<
+public let newsReducer = Reducer<
 	NewsState,
 	NewsAction,
 	SystemEnvironment<NewsEnvironment>

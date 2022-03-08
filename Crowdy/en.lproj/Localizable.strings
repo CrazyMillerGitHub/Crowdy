@@ -10,3 +10,8 @@
 "whatsNew" = "What's new";
 "participants" = "Participants";
 "progress" = "Progress:";
+"expireOn" = "Expire on";
+"logIn" = "Log in";
+"login" = "Login";
+"password" = "Password";
+"forgotPassword" = "Forgot password?";

@@ -1,0 +1,5 @@
+primary_repo: https://gitlab.com/Subscripty/Crowdy
+cache_addresses:
+- https://xcode-cloud.storage.yandexcloud.net
+custom_fingerprint_envs: 
+- ARCHS

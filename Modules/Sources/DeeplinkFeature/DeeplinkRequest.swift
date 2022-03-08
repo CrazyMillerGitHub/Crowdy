@@ -2,7 +2,7 @@
 //  DeeplinkRequest.swift
 //  
 //
-//  Created by 18673799 on 07.01.2022.
+//  Created by Mikhail Borisov on 07.01.2022.
 //
 
 import Parsing

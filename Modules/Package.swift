@@ -1,11 +1,10 @@
 // swift-tools-version:5.5
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "Modules",
-	platforms: [.iOS(.v14)],
+	platforms: [.iOS(.v15)],
     products: [
 		.library(
 			name: "Core",
@@ -26,22 +25,28 @@ let package = Package(
 			name: "HomeRow",
 			targets: ["HomeRow"]),
 		.library(
-			name: "SearchFeature",
-			targets: ["SearchFeature"]),
+			name: "DashboardFeature",
+			targets: ["DashboardFeature"]),
 		.library(
 			name: "SettingsFeature",
 			targets: ["SettingsFeature"]),
+		.library(
+			name: "AuthFeature",
+			targets: ["AuthFeature"]),
 		.library(
 			name: "AppFeature",
 			targets: ["AppFeature"]),
 		.library(
 			name: "DeeplinkFeature",
-			targets: ["DeeplinkFeature"])
+			targets: ["DeeplinkFeature"]),
+        .library(name: "PaymentFeature",
+                 targets: ["PaymentFeature"])
     ],
     dependencies: [
 		.package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.32.0"),
 		.package(url: "https://github.com/CrazyMillerGitHub/QrCodeManager", .branch("main")),
-		.package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.3.1")
+		.package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.3.1"),
+		.package(url: "https://github.com/stripe/stripe-ios", from: "21.0.0")
     ],
 	targets: [
 		.target(
@@ -53,6 +58,13 @@ let package = Package(
 		.target(name: "DesignSystem"),
 		.target(
 			name: "NewsFeature",
+			dependencies: [
+				"Core",
+				"DesignSystem"
+			]
+		),
+		.target(
+			name: "AuthFeature",
 			dependencies: [
 				"Core",
 				"DesignSystem"
@@ -74,7 +86,7 @@ let package = Package(
 			]
 		),
 		.target(
-			name: "SearchFeature",
+			name: "DashboardFeature",
 			dependencies: [
 				"DesignSystem",
 				"Core"
@@ -91,10 +103,19 @@ let package = Package(
 			name: "AppFeature",
 			dependencies: [
 				"SettingsFeature",
-				"SearchFeature",
-				"HomeFeature"
+				"DashboardFeature",
+				"HomeFeature",
+				"HomeRow",
+				"NewsFeature",
+				"AuthFeature"
 			]
 		),
+        .target(
+            name: "PaymentFeature",
+            dependencies: [
+                .product(name: "Stripe", package: "stripe-ios")
+            ]
+        ),
 		.target(
 			name: "HomeRow",
 			dependencies: [

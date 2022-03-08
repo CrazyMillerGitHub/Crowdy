@@ -50,6 +50,8 @@ public struct HomeRow: View {
 				ForEach(0..<3) { idx in
 					Text(infos(viewStore)[idx])
 						.font(.footnote)
+						.minimumScaleFactor(0.01)
+						.lineLimit(1)
 						.redacted(reason: viewStore.state.isLoaded ? [] : .placeholder )
 						.shimmering(active: !viewStore.state.isLoaded)
 				}
@@ -58,39 +60,36 @@ public struct HomeRow: View {
 	}
 
 	public var body: some View {
-		WithViewStore(store) { viewStore in
-			VStack(alignment: .leading) {
+		return WithViewStore(store) { viewStore in
+			VStack(alignment: .center) {
 				ZStack(alignment: .bottomLeading) {
 					Image(uiImage: viewStore.state.contentImage)
 						.resizable()
 						.background(Color.darkSpace.color)
-					SwiftUI.Button {
-						viewStore.send(.favouriteButtonTapped)
-					} label: {
-						Image(systemName: "heart.fill")
-							.foregroundColor(
-								viewStore.state.crowdfunding.favourite
-								? Color.white
-								: Color.white.opacity(Constants.disabledOpacity)
-							)
-							.modifier(TopTrailingViewModifier())
-							.padding(Constants.padding)
-					}
+					Image(systemName: "heart.fill")
+						.foregroundColor(
+							viewStore.state.crowdfunding.favourite
+							? Color.white
+							: Color.white.opacity(Constants.disabledOpacity)
+						)
+						.modifier(TopTrailingViewModifier())
+						.padding(Constants.padding)
+						.onTapGesture {
+							viewStore.send(.favouriteButtonTapped)
+						}
 					Text(viewStore.state.crowdfunding.title)
 						.font(.headline)
 						.foregroundColor(SwiftUI.Color.white)
 						.padding(Constants.padding)
 				}
-				.frame(width: .infinity, height: Constants.previewHeight)
+				.frame(height: Constants.previewHeight)
 				ProgressView(value: viewStore.state.crowdfunding.amountPrecentage)
 					.padding(Constants.padding / 2)
 				DetailsView(viewStore: viewStore)
-					.frame(width: .infinity)
 					.padding([.leading,  .bottom, .trailing], Constants.padding)
 			}
-			.listRowInsets(
-				.init(top: .zero, leading: .zero, bottom: .zero, trailing: .zero)
-			)
+			.background(Color.white.color)
+			.modifier(RowModifier())
 			.onAppear {
 				viewStore.send(.onAppear)
 			}

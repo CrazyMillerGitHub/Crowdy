@@ -10,22 +10,26 @@ import SwiftUI
 public struct BrandButtonStyle: ButtonStyle {
 
 	private struct Constants {
-		static let cornerRadius: CGFloat = 15
-		static let horizontalPadding: CGFloat = 60
+		static let cornerRadius: CGFloat = 10
 	}
 
-	public init() {}
+	private let color: Color
+
+	public init(color: Color = Color.brand) {
+		self.color = color
+	}
 
 	public func makeBody(configuration: Configuration) -> some View {
-		configuration.label
+		configuration
+			.label
 			.font(Font.button.font)
 			.frame(minWidth: .zero, maxWidth: .infinity)
-			.padding()
+			.frame(height: 60)
 			.foregroundColor(.white)
-			.background(Color.blue.color)
+			.background(color.color)
 			.cornerRadius(Constants.cornerRadius)
-			.padding(.horizontal, Constants.horizontalPadding)
 			.scaleEffect(configuration.isPressed ? 0.9 : 1.0)
-			.animation(Animation.easeOut)
+			.animation(Animation.easeOut, value: configuration.isPressed)
+			.padding(.bottom)
 	}
 }
