@@ -15,3 +15,14 @@
 "login" = "Login";
 "password" = "Password";
 "forgotPassword" = "Forgot password?";
+"logOut" = "Log out";
+"welcomeBack" = "Welcome back";
+"settings" = "Settings";
+"dashboard" = "Dashboard";
+"discovery" = "Discovery";
+"spent" = "Spent";
+"recentCrowdfundings" = "Recent crowdfundings";
+"cancel" = "Cancel";
+"donate" = "Donate";
+"stage" = "Progress";
+"previewImages" = "Preview images";

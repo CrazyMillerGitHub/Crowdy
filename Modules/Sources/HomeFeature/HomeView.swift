@@ -10,6 +10,7 @@ import Core
 import HomeRow
 import ComposableArchitecture
 import DesignSystem
+import DetailFeature
 
 public struct HomeView: View {
 
@@ -22,22 +23,32 @@ public struct HomeView: View {
 	public var body: some View {
 		WithViewStore(store) { viewStore in
 			NavigationView {
-				Form {
-					HomeRow(store: .init(
-						initialState: viewStore.state.homeRowState,
-						reducer: homeRowReducer,
-						environment: .dev(
-							environment: HomeRowEnvironment(
-								crowdfundingId: { 4 },
-								crowdfundingRequest: dummyCrowdfundingEffect,
-								mediaContentRequest: dummyMediaContentEffect,
-								updateFavouriteRequest: dummyUpdateFavouriteEffect
-							)
-						)
-					)
-					)
-				}
-				.navigationTitle("Home")
+                VStack {
+                    Picker("", selection: viewStore.state.$selectionState) {
+                        Text("Funds").tag(SelectionState.funds)
+                        Text("Charity").tag(SelectionState.charity)
+                    }
+                    .pickerStyle(.segmented)
+                    Form {
+                        NavigationLink {
+                        } label: {
+                            HomeRow(store: .init(
+                                initialState: viewStore.state.homeRowState,
+                                reducer: homeRowReducer,
+                                environment: .dev(
+                                    environment: HomeRowEnvironment(
+                                        crowdfundingId: { 4 },
+                                        crowdfundingRequest: dummyCrowdfundingEffect,
+                                        mediaContentRequest: dummyMediaContentEffect,
+                                        updateFavouriteRequest: dummyUpdateFavouriteEffect
+                                    )
+                                )
+                            )
+                            )
+                        }
+                    }
+                }
+                .navigationTitle(StringFactory.Tab.discovery.localizableString)
 			}
 		}
 	}

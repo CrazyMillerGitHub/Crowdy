@@ -11,7 +11,6 @@ import Core
 import DashboardFeature
 import SettingsFeature
 import AuthFeature
-import Foundation
 import ComposableArchitecture
 
 public struct RootView: View {
@@ -25,28 +24,34 @@ public struct RootView: View {
 	public var body: some View {
 		WithViewStore(store.stateless) { viewStore in
 			TabView {
-				HomeView(
-					store: .init(
-						initialState: .init(homeRowState: .init()),
-						reducer: homeReducer,
-						environment: .dev(environment: .init())
-					)
-				)
-					.tabItem {
-						Image(systemName: "star.square.fill")
-						Text("Discovery")
-					}
-				DashboardView()
-					.tabItem {
-						Image(systemName: "chart.bar.fill")
-						Text("Dashboard")
-					}
-				SettingsView()
-					.tabItem {
-						Image(systemName: "gearshape.fill")
-						Text("Settings")
-					}
-			}
+                HomeView(
+                    store: .init(
+                        initialState: .init(homeRowState: .init(), selectionState: .funds),
+                        reducer: homeReducer,
+                        environment: .dev(environment: .init())
+                    )
+                )
+                    .tabItem {
+                        Image(systemName: "star.square.fill")
+                        Text(StringFactory.Tab.discovery.localizableString)
+                    }
+                DashboardView()
+                    .tabItem {
+                        Image(systemName: "chart.bar.fill")
+                        Text(StringFactory.Tab.dashboard.localizableString)
+                    }
+                SettingsView(
+                    store: .init(
+                        initialState: .init(),
+                        reducer: settingsReducer,
+                        environment: .dev(environment: .init(loadUserRequest: dummyLoadUserRequest))
+                    )
+                )
+                    .tabItem {
+                        Image(systemName: "gearshape.fill")
+                        Text(StringFactory.Tab.settings.localizableString)
+                    }
+            }
 		}
 	}
 }

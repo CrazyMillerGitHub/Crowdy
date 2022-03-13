@@ -88,7 +88,7 @@ public struct HomeRow: View {
 				DetailsView(viewStore: viewStore)
 					.padding([.leading,  .bottom, .trailing], Constants.padding)
 			}
-			.background(Color.white.color)
+            .background(Color.clear)
 			.modifier(RowModifier())
 			.onAppear {
 				viewStore.send(.onAppear)

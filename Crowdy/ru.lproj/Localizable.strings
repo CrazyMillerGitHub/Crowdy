@@ -15,3 +15,14 @@
 "logIn" = "Войти";
 "password" = "Пароль";
 "forgotPassword" = "Забыли пароль?";
+"logOut" = "Выйти";
+"welcomeBack" = "С возвращением";
+"settings" = "Настройки";
+"dashboard" = "Статистика";
+"discovery" = "Исследование";
+"spent" = "Потрачено";
+"recentCrowdfundings" = "Последнии сборы";
+"cancel" = "Отменить";
+"donate" = "Пожертвовать";
+"stage" = "Прогресс";
+"previewImages" = "Вложенные изображения";

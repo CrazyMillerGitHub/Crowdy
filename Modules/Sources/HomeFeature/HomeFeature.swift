@@ -9,14 +9,26 @@ import Foundation
 import ComposableArchitecture
 import HomeRow
 import Core
+import SwiftUI
+
+public enum SelectionState: Hashable, Equatable {
+    case funds
+    case charity
+}
 
 public struct HomeState: Equatable {
 
 	var homeRowState: HomeRowState
+    @State var selectionState: SelectionState = .funds
 
-	public init(homeRowState: HomeRowState) {
+    public init(homeRowState: HomeRowState, selectionState: SelectionState) {
 		self.homeRowState = homeRowState
+//        self.selectionState = selectionState
 	}
+
+    public static func == (lhs: HomeState, rhs: HomeState) -> Bool {
+        return lhs.homeRowState == rhs.homeRowState && lhs.selectionState == rhs.selectionState
+    }
 }
 
 public struct HomeEnvironment {

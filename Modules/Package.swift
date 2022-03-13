@@ -40,13 +40,23 @@ let package = Package(
 			name: "DeeplinkFeature",
 			targets: ["DeeplinkFeature"]),
         .library(name: "PaymentFeature",
-                 targets: ["PaymentFeature"])
+                 targets: ["PaymentFeature"]),
+        .library(name: "FundsDetailsFeature",
+                 targets: ["FundsDetailsFeature"]),
+        .library(name: "OperationRow",
+                 targets: ["OperationRow"]),
+        .library(name: "DetailFeature",
+                 targets: ["DetailFeature"]),
+        .library(name: "CardFeature",
+                 targets: ["CardFeature"])
     ],
     dependencies: [
 		.package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.32.0"),
 		.package(url: "https://github.com/CrazyMillerGitHub/QrCodeManager", .branch("main")),
 		.package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.3.1"),
-		.package(url: "https://github.com/stripe/stripe-ios", from: "21.0.0")
+		.package(url: "https://github.com/stripe/stripe-ios", from: "21.0.0"),
+        .package(url: "https://github.com/CrazyMillerGitHub/ResizableSheet", .branch("main")),
+        .package(url: "https://github.com/johnpatrickmorgan/TCACoordinators", .branch("main"))
     ],
 	targets: [
 		.target(
@@ -95,8 +105,8 @@ let package = Package(
 		.target(
 			name: "SettingsFeature",
 			dependencies: [
-				"DesignSystem",
-				"Core"
+                "OperationRow",
+                .product(name: "ResizableSheet", package: "ResizableSheet")
 			]
 		),
 		.target(
@@ -107,7 +117,8 @@ let package = Package(
 				"HomeFeature",
 				"HomeRow",
 				"NewsFeature",
-				"AuthFeature"
+				"AuthFeature",
+                "DetailFeature"
 			]
 		),
         .target(
@@ -123,6 +134,34 @@ let package = Package(
 				"DesignSystem"
 			]
 		),
+        .target(
+            name: "FundsDetailsFeature",
+            dependencies: [
+                "Core",
+                "DesignSystem"
+            ]
+        ),
+        .target(
+            name: "OperationRow",
+            dependencies: [
+                "Core",
+                "DesignSystem"
+            ]
+        ),
+        .target(
+            name: "DetailFeature",
+            dependencies: [
+                "Core",
+                "DesignSystem"
+            ]
+        ),
+        .target(
+            name: "CardFeature",
+            dependencies: [
+                "Core",
+                "DesignSystem"
+            ]
+        ),
 		.target(
 			name: "DeeplinkFeature",
 			dependencies: [

@@ -17,6 +17,7 @@ public enum Color: CaseIterable {
 	case darkSpace
 	case brand
 	case white
+    case accept
 
 	public var uiColor: UIColor {
 		.init(red: rgbPalette.red, green: rgbPalette.green, blue: rgbPalette.blue, alpha: rgbPalette.alpha)
@@ -38,6 +39,8 @@ public enum Color: CaseIterable {
 			return (red: 1, green: 1, blue: 1, alpha: 1.0)
 		case .brand:
 			return (red: 72/256, green: 40/256, blue: 214/256, alpha: 1.0)
+        case .accept:
+            return (red: 21/256, green: 173/256, blue: 139/256, alpha: 1.0)
 		}
 	}
 }

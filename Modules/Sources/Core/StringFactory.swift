@@ -9,23 +9,65 @@ import Foundation
 
 public enum StringFactory {}
 
+// MARK: - Tab
+public extension StringFactory {
+
+    enum Tab: String {
+        case settings
+        case discovery
+        case dashboard
+    }
+}
+
+// MARK: - News
 public extension StringFactory {
 
 	enum News: String {
 		case `continue`
 		case whatsNew
 	}
-
-	enum HomeRow: String {
-		case participants
-		case expireOn
-		case progress
-	}
-
-	enum AuthFeature: String {
-		case login
-		case password
-		case forgotPassword
-		case logIn
-	}
 }
+
+// MARK: - HomeRow
+public extension StringFactory {
+
+    enum HomeRow: String {
+        case participants
+        case expireOn
+        case progress
+    }
+}
+
+// MARK: - AuthFeature
+public extension StringFactory {
+
+    enum AuthFeature: String {
+        case login
+        case password
+        case forgotPassword
+        case logIn
+    }
+}
+
+// MARK: - Settings
+public extension StringFactory {
+
+    enum Settings: String {
+        case logOut
+        case welcomeBack
+        case spent
+        case recentCrowdfundings
+    }
+}
+
+// MARK: - Details
+public extension StringFactory {
+
+    enum Details: String {
+        case donate
+        case cancel
+        case previewImages
+        case stage
+    }
+}
+
