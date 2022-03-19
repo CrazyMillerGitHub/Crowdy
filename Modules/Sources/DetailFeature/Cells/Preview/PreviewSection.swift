@@ -6,14 +6,20 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct PreviewSection: View {
 
     private let items = 0..<10
+    private let viewStore: ViewStore<DetailState, DetailAction>
 
     private enum Constants {
         static let height: CGFloat = 64.0
         static let cornerRadius: CGFloat = 10
+    }
+
+    public init(viewStore: ViewStore<DetailState, DetailAction>) {
+        self.viewStore = viewStore
     }
 
     var body: some View {
@@ -24,7 +30,7 @@ struct PreviewSection: View {
                         .frame(width: Constants.height, height: Constants.height)
                         .foregroundColor(Color.red)
                         .onTapGesture {
-                            print(idx)
+                            viewStore.send(.previewTapped(UUID()))
                         }
                 }
             }

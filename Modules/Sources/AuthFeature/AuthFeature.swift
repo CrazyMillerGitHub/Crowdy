@@ -10,7 +10,8 @@ import Core
 
 /// Стейт-машина для модуля авторизации
 public struct AuthState: Equatable {
-	
+
+    public init() {}
 }
 
 /// Actions that may happend on authorization screen

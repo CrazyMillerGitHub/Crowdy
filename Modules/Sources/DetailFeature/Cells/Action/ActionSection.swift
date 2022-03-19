@@ -28,13 +28,15 @@ struct ActionSection: View {
             }
             .buttonStyle(BrandButtonStyle(color: isIncoming ? .brand : .magnetta))
             HStack(alignment: .center) {
-                Text("Совершая перевод, вы соглшаетесь \nс [пользовательским соглашением](https://apple.com).")
+                Text("Совершая перевод, вы соглашаетесь \nс [пользовательским соглашением](https://apple.com)")
                     .font(.footnote)
+                    .multilineTextAlignment(.center)
                     .onTapGesture {
                         print("Agreement click")
                     }
             }
         }
+        .padding(.bottom)
         .listRowSeparator(.hidden)
     }
 }

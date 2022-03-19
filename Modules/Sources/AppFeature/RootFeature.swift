@@ -6,52 +6,116 @@
 //
 
 import ComposableArchitecture
-import HomeRow
 import Core
+import HomeFeature
 import NewsFeature
+import SettingsFeature
+import DashboardFeature
+import DetailFeature
+import AuthFeature
+import PreviewFeature
+import AddFeature
 
-public struct RootState {
 
-	public init(homeRowState: HomeRowState = HomeRowState(), newsState: NewsState = NewsState()) {
-		self.homeRowState = homeRowState
-		self.newsState = newsState
-	}
+public enum ScreenState: Equatable, Identifiable {
+    /// Экран Исследование
+    case homeState(HomeState)
+    case homeDetailState(DetailState)
+    /// Экран Настройки
+    case settingsState(SettingsState)
+    /// Экран Статистки
+    case dashboardState(DashboardState)
+    /// Экран Авторизация
+    case authState(AuthState)
+    /// Экран "Что нового"
+    case newsState(NewsState)
+    case previewState(PreviewState)
+    case addState(AddState)
+    
 
-	public init() {
-		self.homeRowState = HomeRowState()
-		self.newsState = NewsState()
-	}
-
-	public var homeRowState: HomeRowState
-	public var newsState: NewsState
+    public var id: UUID {
+        return UUID()
+    }
 }
 
-public enum RootAction {
-	case homeRowAction(HomeRowAction)
-	case newsAction(HomeRowAction)
+public enum ScreenAction {
+    //// Действия на экране "Исследование"
+	case homeAction(HomeAction)
+    //// Действия на экране "Настройки"
+    case settinsgAction(SettingsAction)
+    //// Действия на экране "Статистика"
+    case dashboardAction(DashboardAction)
+    //// Действия на экране "Авторизация"
+    case authAction(AuthAction)
+    //// Действия на экране "Что нового"
+	case newsAction(NewsAction)
+    case detailAction(DetailAction)
+    case previewAction(PreviewAction)
+    case addAction(AddAction)
 }
 
-public struct RootEnvironment {
+public struct ScreenEnvironment {
 
 	public init() {}
 }
 
-public let rootReducer = Reducer<
-	RootState,
-	RootAction,
-	SystemEnvironment<RootEnvironment>
->.combine(
-	homeRowReducer.pullback(
-		state: \.homeRowState,
-		action: /RootAction.homeRowAction,
-		environment: { _ in .dev(
-			environment: HomeRowEnvironment(
-				crowdfundingId: { 4 },
-				crowdfundingRequest: dummyCrowdfundingEffect,
-				mediaContentRequest: dummyMediaContentEffect,
-				updateFavouriteRequest: dummyUpdateFavouriteEffect
-			)
-		)
-		}
-	)
+public let screenReducer = Reducer<ScreenState, ScreenAction, ScreenEnvironment>.combine(
+    homeReducer.pullback(
+        state: /ScreenState.homeState,
+        action: /ScreenAction.homeAction,
+        environment: { environment in
+            return .dev(
+                environment: HomeEnvironment(loadFundsRequest: dummyLoadFundsRequest)
+            )
+        }
+    ),
+    previewReducer.pullback(
+        state: /ScreenState.previewState,
+        action: /ScreenAction.previewAction,
+        environment: { _ in
+            return .init()
+        }
+    ),
+//    settingsReducer.pullback(
+//        state: /ScreenState.settingsState,
+//        action: ScreenAction.settinsgAction,
+//        environment: { environment in
+//            return .dev(
+//                environment: SettingsEnvironment(
+//                    loadUserRequest: dummyLoadUserRequest
+//                )
+//            )
+//        }
+//    ),
+    dashboardReducer.pullback(
+        state: /ScreenState.dashboardState,
+        action: /ScreenAction.dashboardAction,
+        environment: { environment in
+            return .dev(
+                environment: DashboardEnvironment()
+            )
+        }
+    ),
+    authReducer.pullback(
+        state: /ScreenState.authState,
+        action: /ScreenAction.authAction,
+        environment: { environment in
+            return .dev(
+                environment:
+                    AuthEnvironment(
+                        authUserRequest: dummyAuthRequest,
+                        saveModelRequest: dummySaveModelRequest
+                    )
+            )
+        }
+    ),
+    newsReducer.pullback(
+        state: /ScreenState.newsState,
+        action: /ScreenAction.newsAction,
+        environment: { environment in
+            return .dev(
+                environment: NewsEnvironment(newsRequest: dummyNewsEffect)
+            )
+        }
+    )
 )

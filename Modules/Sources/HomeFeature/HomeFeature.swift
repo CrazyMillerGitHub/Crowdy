@@ -7,37 +7,25 @@
 
 import Foundation
 import ComposableArchitecture
-import HomeRow
 import Core
 import SwiftUI
 
-public enum SelectionState: Hashable, Equatable {
-    case funds
-    case charity
-}
+public struct HomeEnvironment {
 
-public struct HomeState: Equatable {
+    var loadFundsRequest: (JSONDecoder) -> Effect<[Fund], APIError>
 
-	var homeRowState: HomeRowState
-    @State var selectionState: SelectionState = .funds
-
-    public init(homeRowState: HomeRowState, selectionState: SelectionState) {
-		self.homeRowState = homeRowState
-//        self.selectionState = selectionState
-	}
-
-    public static func == (lhs: HomeState, rhs: HomeState) -> Bool {
-        return lhs.homeRowState == rhs.homeRowState && lhs.selectionState == rhs.selectionState
+    public init(loadFundsRequest: @escaping (JSONDecoder) -> Effect<[Fund], APIError>) {
+        self.loadFundsRequest = loadFundsRequest
     }
 }
 
-public struct HomeEnvironment {
-
-	public init() {}
-}
-
 public enum HomeAction {
-	case homeRowAction(HomeRowAction)
+    case selectFund(UUID)
+    case toggleFavorite(UUID)
+    case onAppear
+    case addTapped
+    case loadFunds(Result<[Fund], APIError>)
+    case loadFundsFailed
 }
 
 public let homeReducer = Reducer<
@@ -45,5 +33,21 @@ public let homeReducer = Reducer<
 	HomeAction,
 	SystemEnvironment<HomeEnvironment>
 > { state, action, environment in
-	return .none
+    switch action {
+    case .onAppear:
+        state = .fixture
+        return environment
+            .loadFundsRequest(environment.decoder())
+            .receive(on: environment.mainQueue())
+            .catchToEffect()
+            .map(HomeAction.loadFunds)
+    case .loadFunds(let result):
+        guard case .success(let funds) = result else {
+            return .none
+        }
+        state.funds = funds
+        return .none
+    case _:
+        return .none
+    }
 }

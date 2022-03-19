@@ -67,7 +67,8 @@ public struct InputField: View {
 				.animation(.easeOut(duration: Constants.animationDuration), value: inputFieldHighlighted)
 			TextField("", text: $text) { isBegin in
 				inputFieldHighlighted = isBegin || !text.isEmpty
-			}
+            }
+            .foregroundColor(SwiftUI.Color.black)
 		}
 		.offset(x: .zero, y: inputFieldHighlighted ? Constants.highlighted : .zero)
 		.padding(.leading)
@@ -80,7 +81,9 @@ public struct InputField: View {
 					: Color.darkSpace.color,
 					lineWidth: Constants.lineWidth
 				)
-		)
+        ).background(
+            RoundedRectangle(cornerRadius: Constants.cornerRadius).fill(Color.white.color)
+        )
 	}
 }
 

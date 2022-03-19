@@ -22,7 +22,7 @@ func newsEffect(decoder: JSONDecoder) -> Effect<[NewsModel], APIError> {
 		.eraseToEffect()
 }
 
-func dummyNewsEffect(decoder: JSONDecoder) -> Effect<[NewsModel], APIError> {
+public func dummyNewsEffect(decoder: JSONDecoder) -> Effect<[NewsModel], APIError> {
 	let url = URL(fileURLWithPath: "")
 	let response: [NewsModel] = [
 		.init(identifier: UUID(), title: "Feature 1", subtitle: "Some news", url: url),

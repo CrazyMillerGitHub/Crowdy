@@ -7,49 +7,42 @@
 
 import SwiftUI
 import Core
-import HomeRow
 import ComposableArchitecture
 import DesignSystem
-import DetailFeature
 
 public struct HomeView: View {
 
 	private let store: Store<HomeState, HomeAction>
+    @State
+    private var searchText = ""
 
 	public init(store: Store<HomeState, HomeAction>) {
 		self.store = store
 	}
-
-	public var body: some View {
-		WithViewStore(store) { viewStore in
-			NavigationView {
-                VStack {
-                    Picker("", selection: viewStore.state.$selectionState) {
-                        Text("Funds").tag(SelectionState.funds)
-                        Text("Charity").tag(SelectionState.charity)
-                    }
-                    .pickerStyle(.segmented)
-                    Form {
-                        NavigationLink {
-                        } label: {
-                            HomeRow(store: .init(
-                                initialState: viewStore.state.homeRowState,
-                                reducer: homeRowReducer,
-                                environment: .dev(
-                                    environment: HomeRowEnvironment(
-                                        crowdfundingId: { 4 },
-                                        crowdfundingRequest: dummyCrowdfundingEffect,
-                                        mediaContentRequest: dummyMediaContentEffect,
-                                        updateFavouriteRequest: dummyUpdateFavouriteEffect
-                                    )
-                                )
-                            )
-                            )
-                        }
+    public var body: some View {
+        WithViewStore(store) { viewStore in
+            ScrollView {
+                LazyVStack {
+                    ForEach(viewStore.funds, id: \.id) { fund in
+                        HomeRow(viewStore: viewStore, fund: fund)
+                            .padding()
                     }
                 }
-                .navigationTitle(StringFactory.Tab.discovery.localizableString)
-			}
-		}
+            }
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Image(systemName: "plus")
+                        .font(.body)
+                        .onTapGesture {
+                            viewStore.send(.addTapped)
+                        }
+                }
+            }
+        }
+        .searchable(text: $searchText)
+        .navigationTitle(StringFactory.Tab.discovery.localizableString)
 	}
 }

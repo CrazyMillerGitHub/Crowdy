@@ -18,7 +18,7 @@ public struct RowModifier: ViewModifier {
 	public func body(content: Content) -> some View {
 		content
 			.cornerRadius(cornerRadius)
-			.modifier(LongPressModifier())
+//			.modifier(LongPressModifier())
 			.listRowBackground(SwiftUI.Color.clear)
 			.listRowInsets(.init(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
 	}

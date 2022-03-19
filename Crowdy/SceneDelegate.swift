@@ -21,13 +21,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let window = UIWindow(windowScene: windowScene)
 		let rootView = RootView(
 			store: .init(
-				initialState: RootState(),
-				reducer: rootReducer,
-				environment: .dev(environment: RootEnvironment())
-			)
+                initialState: .initialState,
+                reducer: mainTabCoordinatorReducer,
+                environment: .init()
+            )
 		)
 		window.rootViewController = UIHostingController(rootView: rootView)
-
 		self.window = window
 
 		window.makeKeyAndVisible()

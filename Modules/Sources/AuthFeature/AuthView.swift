@@ -75,8 +75,8 @@ struct Preview_AuthView: PreviewProvider {
 				reducer: authReducer,
 				environment: .dev(
 					environment: AuthEnvironment(
-						authUserRequest: dummyAuthEffect,
-						saveModelRequest: saveModelRequest
+						authUserRequest: dummyAuthRequest,
+						saveModelRequest: dummySaveModelRequest
 					)
 				)
 			)

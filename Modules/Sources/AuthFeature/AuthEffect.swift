@@ -24,9 +24,9 @@ func authEffect(
 		.eraseToEffect()
 }
 
-func saveModelRequest(storage: StorageProtocol, model: AuthModel) {}
+public func dummySaveModelRequest(storage: StorageProtocol, model: AuthModel) {}
 
-func dummyAuthEffect(
+public func dummyAuthRequest(
 	decoder: JSONDecoder,
 	login: String,
 	password: String

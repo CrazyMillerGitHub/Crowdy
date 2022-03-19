@@ -22,9 +22,6 @@ let package = Package(
 			name: "HomeFeature",
 			targets: ["HomeFeature"]),
 		.library(
-			name: "HomeRow",
-			targets: ["HomeRow"]),
-		.library(
 			name: "DashboardFeature",
 			targets: ["DashboardFeature"]),
 		.library(
@@ -41,14 +38,16 @@ let package = Package(
 			targets: ["DeeplinkFeature"]),
         .library(name: "PaymentFeature",
                  targets: ["PaymentFeature"]),
-        .library(name: "FundsDetailsFeature",
-                 targets: ["FundsDetailsFeature"]),
         .library(name: "OperationRow",
                  targets: ["OperationRow"]),
         .library(name: "DetailFeature",
                  targets: ["DetailFeature"]),
         .library(name: "CardFeature",
-                 targets: ["CardFeature"])
+                 targets: ["CardFeature"]),
+        .library(name: "PreviewFeature",
+                 targets: ["PreviewFeature"]),
+        .library(name: "AddFeature",
+                 targets: ["AddFeature"])
     ],
     dependencies: [
 		.package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.32.0"),
@@ -115,30 +114,18 @@ let package = Package(
 				"SettingsFeature",
 				"DashboardFeature",
 				"HomeFeature",
-				"HomeRow",
 				"NewsFeature",
 				"AuthFeature",
-                "DetailFeature"
+                "DetailFeature",
+                "PreviewFeature",
+                "AddFeature",
+                .product(name: "TCACoordinators", package: "TCACoordinators")
 			]
 		),
         .target(
             name: "PaymentFeature",
             dependencies: [
                 .product(name: "Stripe", package: "stripe-ios")
-            ]
-        ),
-		.target(
-			name: "HomeRow",
-			dependencies: [
-				"Core",
-				"DesignSystem"
-			]
-		),
-        .target(
-            name: "FundsDetailsFeature",
-            dependencies: [
-                "Core",
-                "DesignSystem"
             ]
         ),
         .target(
@@ -149,7 +136,21 @@ let package = Package(
             ]
         ),
         .target(
+            name: "PreviewFeature",
+            dependencies: [
+                "Core",
+                "DesignSystem"
+            ]
+        ),
+        .target(
             name: "DetailFeature",
+            dependencies: [
+                "Core",
+                "DesignSystem"
+            ]
+        ),
+        .target(
+            name: "AddFeature",
             dependencies: [
                 "Core",
                 "DesignSystem"
