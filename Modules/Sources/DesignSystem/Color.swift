@@ -17,6 +17,8 @@ public enum Color: CaseIterable {
 	case darkSpace
 	case brand
 	case white
+    case darkContent
+    case lightContent
     case accept
 
 	public var uiColor: UIColor {
@@ -41,6 +43,10 @@ public enum Color: CaseIterable {
 			return (red: 72/256, green: 40/256, blue: 214/256, alpha: 1.0)
         case .accept:
             return (red: 21/256, green: 173/256, blue: 139/256, alpha: 1.0)
+        case .darkContent:
+            return (red: 18/256, green: 18/256, blue: 18/256, alpha: 1.0)
+        case .lightContent:
+            return (red: 135.0/255.0, green: 136.0/255.0, blue: 136.0/255.0, alpha: 1.0)
 		}
 	}
 }

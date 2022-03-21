@@ -29,7 +29,9 @@ public enum ScreenState: Equatable, Identifiable {
     case authState(AuthState)
     /// Экран "Что нового"
     case newsState(NewsState)
+    /// Экран просмотра
     case previewState(PreviewState)
+    /// Экран добавления нового сбора
     case addState(AddState)
     
 
@@ -59,7 +61,7 @@ public struct ScreenEnvironment {
 	public init() {}
 }
 
-public let screenReducer = Reducer<ScreenState, ScreenAction, ScreenEnvironment>.combine(
+public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<ScreenEnvironment>>.combine(
     homeReducer.pullback(
         state: /ScreenState.homeState,
         action: /ScreenAction.homeAction,
@@ -73,20 +75,42 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, ScreenEnvironment>
         state: /ScreenState.previewState,
         action: /ScreenAction.previewAction,
         environment: { _ in
-            return .init()
+            return .dev(
+                environment: PreviewEnvironment()
+            )
         }
     ),
-//    settingsReducer.pullback(
-//        state: /ScreenState.settingsState,
-//        action: ScreenAction.settinsgAction,
-//        environment: { environment in
-//            return .dev(
-//                environment: SettingsEnvironment(
-//                    loadUserRequest: dummyLoadUserRequest
-//                )
-//            )
-//        }
-//    ),
+    addReducer.pullback(
+        state: /ScreenState.addState,
+        action: /ScreenAction.addAction,
+        environment: { _ in
+            return .dev(
+                environment: AddEnvironment(
+                    saveFundRequest: saveFundRequest
+                )
+            )
+        }
+    ),
+    detailReducer.pullback(
+        state: /ScreenState.homeDetailState,
+        action: /ScreenAction.detailAction,
+        environment: { _ in
+            return .dev(
+                environment: DetailEnvironment(loadDetailsRequest: dummyLoadDetailsRequest)
+            )
+        }
+    ),
+    settingsReducer.pullback(
+        state: /ScreenState.settingsState,
+        action: /ScreenAction.settinsgAction,
+        environment: { environment in
+            return .dev(
+                environment: SettingsEnvironment(
+                    loadUserRequest: dummyLoadUserRequest
+                )
+            )
+        }
+    ),
     dashboardReducer.pullback(
         state: /ScreenState.dashboardState,
         action: /ScreenAction.dashboardAction,

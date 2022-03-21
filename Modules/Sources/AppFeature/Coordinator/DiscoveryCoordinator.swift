@@ -78,7 +78,7 @@ typealias DiscoveryCoordinatorReducer = Reducer<
 >
 
 let discoveryCoordinatorReducer: DiscoveryCoordinatorReducer = screenReducer
-    .forEachIndexedRoute(environment: { _ in .init() })
+    .forEachIndexedRoute(environment: { _ in .dev(environment: .init()) })
     .withRouteReducer(
         Reducer { state, action, environment in
             switch action {
@@ -92,6 +92,10 @@ let discoveryCoordinatorReducer: DiscoveryCoordinatorReducer = screenReducer
                 state.routes.goBack()
             case .routeAction(_, action: .homeAction(.addTapped)):
                 state.routes.presentCover(.addState(.init()))
+            case .routeAction(_, action: .addAction(.cancelTapped)):
+                state.routes.goBack()
+            case .routeAction(_, action: .addAction(.receiveResponse(_))):
+                state.routes.goBackToRoot()
             case _:
                 break
             }

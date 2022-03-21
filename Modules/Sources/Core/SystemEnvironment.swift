@@ -13,7 +13,7 @@ public struct SystemEnvironment<Environment> {
 	public var environment: Environment
 	public var mainQueue: () -> AnySchedulerOf<DispatchQueue>
 	public var decoder: () -> JSONDecoder
-	public var storage: () -> StorageProtocol
+	public var storage: () -> CoreDataStorage
     public var remoteConfig: () -> RemoteConfigProtocol
     public var featureAvailability: () -> FeatureAvailabilityProtocol
 
@@ -21,7 +21,7 @@ public struct SystemEnvironment<Environment> {
 		environment: Environment,
 		mainQueue: @autoclosure @escaping () -> AnySchedulerOf<DispatchQueue>,
 		decoder: @escaping () -> JSONDecoder,
-		storage: @escaping () -> StorageProtocol,
+		storage: @escaping () -> CoreDataStorage,
         remoteConfig: @escaping () -> RemoteConfigProtocol,
         featureAvailability: @escaping () -> FeatureAvailabilityProtocol
 	) {
@@ -51,11 +51,11 @@ public struct SystemEnvironment<Environment> {
     }
 
     private static func remoteConfig() -> RemoteConfigProtocol {
-        return RemoteConfig(storage: storage())
+        return RemoteConfig(storage: Storage())
     }
 
-	private static func storage() -> StorageProtocol {
-		return Storage()
+	private static func storage() -> CoreDataStorage {
+        return CoreDataStorage.shared
 	}
 
 	public static func live(environment: Environment) -> Self {

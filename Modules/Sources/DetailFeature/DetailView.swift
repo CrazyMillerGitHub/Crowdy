@@ -13,7 +13,6 @@ import DesignSystem
 public struct DetailView: View {
 
     private let store: Store<DetailState, DetailAction>
-    @Environment(\.presentationMode) var presentationMode
 
     public init(store: Store<DetailState, DetailAction>) {
         self.store = store
@@ -22,7 +21,7 @@ public struct DetailView: View {
     public var body: some View {
         WithViewStore(store) { viewStore in
             List {
-                HeaderSection()
+                HeaderSection(store: store)
                 ContentSection()
                 Section(header: Text(StringFactory.Details.stage.localizableString)) {
                     InfoSection()
@@ -62,10 +61,15 @@ public struct DetailView: View {
 struct DetailView_Preview: PreviewProvider {
 
     static var previews: some View {
-        return DetailView(store: .init(initialState: .init(identifier: .init()),
-                                       reducer: detailReducer,
-                                       environment: .dev(environment: .init())
-                                      ))
+        return DetailView(
+            store: .init(
+                initialState: .init(identifier: .init()),
+                reducer: detailReducer,
+                environment: .dev(
+                    environment: .init(loadDetailsRequest: dummyLoadDetailsRequest)
+                )
+            )
+        )
     }
 }
 #endif

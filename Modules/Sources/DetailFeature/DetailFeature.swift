@@ -14,14 +14,18 @@ public struct ProgressModel: Decodable {
 }
 
 public struct DetailModel: Decodable {
+    let id: UUID
+    let fund: Fund
     let title: String
-    let author: String
+    var author: String
     let info: String
     let isIncoming: Bool
     let progress: ProgressModel
 
     static var fixture: Self {
         .init(
+            id: .init(),
+            fund: .fixture,
             title: "",
             author: "",
             info: "",
@@ -53,14 +57,19 @@ public enum DetailAction {
     case onFavoriteButonnTap
     case onShareButtonTap
     case onAppear
-    case onDataLoaded(DetailModel)
+    case onDataLoaded(Result<DetailModel, APIError>)
     case onActionTapped
     case closeButtonTapped
     case previewTapped(UUID)
 }
 
 public struct DetailEnvironment {
-    
+
+    public var loadDetailsRequest: (JSONDecoder, UUID) -> Effect<DetailModel, APIError>
+
+    public init(loadDetailsRequest: @escaping (JSONDecoder, UUID) -> Effect<DetailModel, APIError>) {
+        self.loadDetailsRequest = loadDetailsRequest
+    }
 }
 
 public let detailReducer = Reducer<
@@ -68,5 +77,21 @@ DetailState,
 DetailAction,
 SystemEnvironment<DetailEnvironment>
 > { state, action, environment in
-    return .none
+    switch action {
+    case .onAppear:
+        return environment
+            .loadDetailsRequest(environment.decoder(), state.identifier)
+            .receive(on: environment.mainQueue())
+            .catchToEffect()
+            .map(DetailAction.onDataLoaded)
+    case .onDataLoaded(let response):
+        guard case .success(let model) = response else {
+            return .none
+        }
+        state.detailModel.author = model.author
+//        state.detailModel = model
+        return .none
+    case _:
+        return .none
+    }
 }

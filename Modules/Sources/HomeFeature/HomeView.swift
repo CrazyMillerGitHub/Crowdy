@@ -13,17 +13,46 @@ import DesignSystem
 public struct HomeView: View {
 
 	private let store: Store<HomeState, HomeAction>
-    @State
-    private var searchText = ""
 
 	public init(store: Store<HomeState, HomeAction>) {
 		self.store = store
 	}
+
+    public var body: some View {
+        WithViewStore(store) { viewStore in
+            HomeList(store: store)
+                .navigationTitle(StringFactory.Tab.discovery.localizableString)
+                .searchable(
+                    text: viewStore.binding(\.$searchText),
+                    placement: .navigationBarDrawer(displayMode: .always),
+                    prompt: "Поиск"
+                )
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Image(systemName: "plus")
+                            .font(.headline)
+                            .onTapGesture {
+                                viewStore.send(.addTapped)
+                            }
+                    }
+                }
+        }
+	}
+}
+
+public struct HomeList: View {
+
+    private let store: Store<HomeState, HomeAction>
+
+    init(store: Store<HomeState, HomeAction>) {
+        self.store = store
+    }
+
     public var body: some View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 LazyVStack {
-                    ForEach(viewStore.funds, id: \.id) { fund in
+                    ForEach(viewStore.searchResults, id: \.id) { fund in
                         HomeRow(viewStore: viewStore, fund: fund)
                             .padding()
                     }
@@ -32,17 +61,6 @@ public struct HomeView: View {
             .onAppear {
                 viewStore.send(.onAppear)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "plus")
-                        .font(.body)
-                        .onTapGesture {
-                            viewStore.send(.addTapped)
-                        }
-                }
-            }
         }
-        .searchable(text: $searchText)
-        .navigationTitle(StringFactory.Tab.discovery.localizableString)
-	}
+    }
 }

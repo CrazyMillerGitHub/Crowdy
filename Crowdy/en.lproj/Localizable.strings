@@ -26,3 +26,8 @@
 "donate" = "Donate";
 "stage" = "Progress";
 "previewImages" = "Preview images";
+"publish" = "Publish";
+"createFund" = "Create fund";
+"category" = "Category";
+"fundExpiration" = "Fund expiration";
+"without" = "Termeless";

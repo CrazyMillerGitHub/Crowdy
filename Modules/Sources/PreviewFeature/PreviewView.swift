@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PreviewView.swift
 //  
 //
 //  Created by Mikhail Borisov on 19.03.2022.
@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import ComposableArchitecture
+import Core
 
 public struct PreviewState: Equatable {
 
@@ -26,7 +27,7 @@ public struct PreviewEnvironment {
 public typealias PreviewReducer = Reducer<
     PreviewState,
     PreviewAction,
-    PreviewEnvironment
+    SystemEnvironment<PreviewEnvironment>
 >
 
 public let previewReducer = PreviewReducer { state, action, environment in
@@ -68,6 +69,14 @@ public struct PreviewView: View {
 public struct PreviewView_Preview: PreviewProvider {
 
     public static var previews: some View {
-        PreviewView(store: .init(initialState: .init(), reducer: previewReducer, environment: .init()))
+        PreviewView(
+            store: .init(
+                initialState: .init(),
+                reducer: previewReducer,
+                environment: .dev(
+                    environment: PreviewEnvironment()
+                )
+            )
+        )
     }
 }

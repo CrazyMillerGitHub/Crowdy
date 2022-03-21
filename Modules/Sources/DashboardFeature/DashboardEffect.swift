@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  DashboardEffect.swift
 //  
 //
 //  Created by Mikhail Borisov on 13.03.2022.

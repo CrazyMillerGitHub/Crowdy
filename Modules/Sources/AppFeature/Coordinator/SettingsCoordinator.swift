@@ -62,7 +62,7 @@ typealias SettingsCoordinatorReducer = Reducer<
 >
 
 let settingsCoordinatorReducer: SettingsCoordinatorReducer = screenReducer
-    .forEachIndexedRoute(environment: { _ in .init() })
+    .forEachIndexedRoute(environment: { _ in .dev(environment: .init()) })
     .withRouteReducer(
         Reducer { state, action, environment in
             switch action {

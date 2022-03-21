@@ -31,7 +31,7 @@ func editFavorite(decoder: JSONDecoder, identifier: UUID) -> Effect<EditFavorite
 }
 
 public func dummyLoadFundsRequest(decoder: JSONDecoder) -> Effect<[Fund], APIError> {
-    return Effect(value: [.init(), .init(), .init()])
+    return Effect(value: [.fixture])
         .delay(for: 2, scheduler: RunLoop.main)
         .eraseToEffect()
 }

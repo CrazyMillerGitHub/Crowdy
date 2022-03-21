@@ -19,19 +19,20 @@ public struct HomeEnvironment {
     }
 }
 
-public enum HomeAction {
+public enum HomeAction: BindableAction {
     case selectFund(UUID)
     case toggleFavorite(UUID)
     case onAppear
     case addTapped
     case loadFunds(Result<[Fund], APIError>)
     case loadFundsFailed
+    case binding(BindingAction<HomeState>)
 }
 
 public let homeReducer = Reducer<
-	HomeState,
-	HomeAction,
-	SystemEnvironment<HomeEnvironment>
+    HomeState,
+    HomeAction,
+    SystemEnvironment<HomeEnvironment>
 > { state, action, environment in
     switch action {
     case .onAppear:
@@ -45,9 +46,11 @@ public let homeReducer = Reducer<
         guard case .success(let funds) = result else {
             return .none
         }
+        state.isLoaded = true
         state.funds = funds
         return .none
     case _:
         return .none
     }
 }
+.binding()

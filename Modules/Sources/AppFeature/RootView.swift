@@ -25,10 +25,10 @@ public struct RootView: View {
     public var body: some View {
         WithViewStore(store) { viewStore in
             TabView(
-                selection: viewStore.binding(
-                    get: { $0.selectedTab },
-                    send: MainTabCoordinatorAction.selectedTabChange
-                )
+//                selection: viewStore.binding(
+//                    get: { $0.selectedTab },
+//                    send: MainTabCoordinatorAction.selectedTabChange
+//                )
             ) {
                 DiscoveryCoordinatorView(store: discoveryCoordinatorStore)
                     .tabItem {

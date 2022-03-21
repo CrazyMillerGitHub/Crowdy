@@ -71,3 +71,14 @@ public extension StringFactory {
     }
 }
 
+public extension StringFactory {
+
+    enum Add: String {
+        case createFund
+        case publish
+        case cancel
+        case category
+        case fundExpiration
+        case without
+    }
+}

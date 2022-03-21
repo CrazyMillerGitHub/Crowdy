@@ -12,6 +12,7 @@ public struct InputField: View {
 
 	// MARK: - Properties
 
+    @Environment(\.colorScheme) var colorScheme
 	private let placeholder: String
 	@Binding
 	private var text: String
@@ -21,7 +22,7 @@ public struct InputField: View {
 	private enum Constants {
 
 		static let highlighted: Double = 6
-		static let height: Double = 64
+		static let height: Double = 54
 		static let lineWidth: Double = 1
 		static let cornerRadius: Double = 10
 		static let animationDuration: Double = 0.2
@@ -49,9 +50,7 @@ public struct InputField: View {
 		ZStack(alignment: .leading) {
 			Text(placeholder)
 				.foregroundColor(
-					inputFieldHighlighted
-					? Color.brand.color
-					: Color.darkSpace.color
+                    Color.lightContent.color
 				)
 				.scaleEffect(
 					inputFieldHighlighted
@@ -68,7 +67,7 @@ public struct InputField: View {
 			TextField("", text: $text) { isBegin in
 				inputFieldHighlighted = isBegin || !text.isEmpty
             }
-            .foregroundColor(SwiftUI.Color.black)
+            .foregroundColor(colorScheme == .dark ? .white : .black)
 		}
 		.offset(x: .zero, y: inputFieldHighlighted ? Constants.highlighted : .zero)
 		.padding(.leading)
@@ -78,11 +77,12 @@ public struct InputField: View {
 				.stroke(
 					inputFieldHighlighted
 					? Color.brand.color
-					: Color.darkSpace.color,
+                    : .clear,
 					lineWidth: Constants.lineWidth
 				)
         ).background(
-            RoundedRectangle(cornerRadius: Constants.cornerRadius).fill(Color.white.color)
+            RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                .fill(colorScheme == .dark ? Color.darkContent.color : .black.opacity(0.1))
         )
 	}
 }

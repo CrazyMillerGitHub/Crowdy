@@ -15,8 +15,6 @@ public struct AuthView: View {
 
 	private let store: Store<AuthState, AuthAction>
 	@FocusState private var focusedField: Field?
-	@State private var loginValue: String = ""
-	@State private var passwordValue: String = ""
 
 	private enum Field {
 		case login
@@ -31,11 +29,12 @@ public struct AuthView: View {
 		return WithViewStore(store) { viewStore in
 			VStack(alignment: .leading, spacing: 15) {
 				Spacer()
-				Text("Hi, 👋")
+				Text("Good morning, 👋")
 					.font(.title)
-				InputField(StringFactory.AuthFeature.login.localizableString, text: $loginValue)
+                    .bold()
+                InputField(StringFactory.AuthFeature.login.localizableString, text: viewStore.binding(\.$loginValue))
 					.focused($focusedField, equals: .login)
-				InputField(StringFactory.AuthFeature.password.localizableString, text: $passwordValue)
+				InputField(StringFactory.AuthFeature.password.localizableString, text: viewStore.binding(\.$passwordValue))
 					.focused($focusedField, equals: .password)
 					Text(StringFactory.AuthFeature.forgotPassword.localizableString)
 						.font(.footnote)
@@ -45,10 +44,14 @@ public struct AuthView: View {
 						}
 				Spacer()
 				Button(StringFactory.AuthFeature.logIn.localizableString) {
-					viewStore.send(.logInButtonTapped(loginValue, passwordValue))
+					viewStore.send(.logInButtonTapped)
 				}
 				.buttonStyle(BrandButtonStyle())
 			}
+            .overlay(content: {
+                ProgressView()
+                    .opacity(viewStore.isLoading ? 1 : 0)
+            })
 			.padding([.leading, .trailing])
 			.onAppear(perform: {
 				viewStore.send(.onAppear)

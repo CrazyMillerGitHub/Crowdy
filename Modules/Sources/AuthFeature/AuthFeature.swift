@@ -11,15 +11,27 @@ import Core
 /// Стейт-машина для модуля авторизации
 public struct AuthState: Equatable {
 
-    public init() {}
+    @BindableState var passwordValue: String
+    @BindableState var loginValue: String
+    var isLoading: Bool
+
+    public init(
+        loginValue: String = "",
+        passwordValue: String = "",
+        isLoading: Bool = false
+    ) {
+        self.loginValue = loginValue
+        self.passwordValue = passwordValue
+        self.isLoading = isLoading
+    }
 }
 
 /// Actions that may happend on authorization screen
-public enum AuthAction {
+public enum AuthAction: BindableAction {
 	/// initial event
 	case onAppear
 	/// Log in button was pressed
-	case logInButtonTapped(String, String)
+	case logInButtonTapped
 	/// Forgot password was tapped
 	case forgotButtonTapped
 	/// User have been authorized
@@ -28,6 +40,8 @@ public enum AuthAction {
 	case authCompleted
 	/// Authorization Failed
 	case authFailed
+    /// Binding
+    case binding(BindingAction<AuthState>)
 }
 
 /// Окружение для авторизации
@@ -60,17 +74,21 @@ public let authReducer = Reducer<
 	switch action {
 	case .onAppear:
 		return .none
-	case .logInButtonTapped(let login, let password):
+	case .logInButtonTapped:
+        debugPrint("login: \(state.loginValue), password: \(state.passwordValue)")
+        state.isLoading = true
 		return environment
-			.authUserRequest(environment.decoder(), login, password)
+            .authUserRequest(environment.decoder(), state.loginValue, state.passwordValue)
+            .delay(for: 1, scheduler: DispatchQueue.main)
 			.receive(on: environment.mainQueue())
 			.catchToEffect()
 			.map(AuthAction.didAuthUser)
 	case .didAuthUser(let result):
+        state.isLoading = false
 		switch result {
 		case .success(let model):
-			environment
-				.saveModelRequest(environment.storage(), model)
+//			environment
+//				.saveModelRequest(environment.storage(), model)
 			return .none
 		case .failure(let err):
 			return .none
@@ -79,3 +97,4 @@ public let authReducer = Reducer<
 		return .none
 	}
 }
+.binding()

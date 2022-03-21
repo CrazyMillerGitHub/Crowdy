@@ -7,11 +7,13 @@
 
 import Foundation
 import SwiftUI
+import DesignSystem
 import ComposableArchitecture
 
 struct DashboardRow: View {
 
     private let viewStore: ViewStore<DashboardState, DashboardAction>
+    @Environment(\.colorScheme) var colorScheme
 
     init(viewStore: ViewStore<DashboardState, DashboardAction>) {
         self.viewStore = viewStore
@@ -19,7 +21,7 @@ struct DashboardRow: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 10)
-            .fill(Color.white)
+            .fill(colorScheme == .dark ? Color.darkContent.color : Color.white)
             .overlay {
                 HStack(spacing: 10) {
                     Image("placeholder", bundle: .main)
@@ -32,6 +34,7 @@ struct DashboardRow: View {
                             .font(.footnote)
                             .bold()
                         Text("Сбор продолжается")
+                            .foregroundColor(Color.accept.color)
                             .font(.caption)
                     }
                     Spacer()

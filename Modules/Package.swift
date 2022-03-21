@@ -54,14 +54,15 @@ let package = Package(
 		.package(url: "https://github.com/CrazyMillerGitHub/QrCodeManager", .branch("main")),
 		.package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.3.1"),
 		.package(url: "https://github.com/stripe/stripe-ios", from: "21.0.0"),
-        .package(url: "https://github.com/CrazyMillerGitHub/ResizableSheet", .branch("main")),
-        .package(url: "https://github.com/johnpatrickmorgan/TCACoordinators", .branch("main"))
+        .package(url: "https://github.com/johnpatrickmorgan/TCACoordinators", .branch("main")),
+        .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI", .branch("master"))
     ],
 	targets: [
 		.target(
 			name: "Core",
 			dependencies: [
-				.product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+				.product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SDWebImageSwiftUI", package: "SDWebImageSwiftUI")
 			]
 		),
 		.target(name: "DesignSystem"),
@@ -104,8 +105,7 @@ let package = Package(
 		.target(
 			name: "SettingsFeature",
 			dependencies: [
-                "OperationRow",
-                .product(name: "ResizableSheet", package: "ResizableSheet")
+                "OperationRow"
 			]
 		),
 		.target(

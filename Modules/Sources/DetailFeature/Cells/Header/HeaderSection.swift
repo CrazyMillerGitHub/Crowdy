@@ -6,38 +6,48 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
+import ComposableArchitecture
 
 struct HeaderSection: View {
+
+    private let store: Store<DetailState, DetailAction>
+
+    init(store: Store<DetailState, DetailAction>) {
+        self.store = store
+    }
     
     var body: some View {
-        GeometryReader { proxy in
-            let minY = proxy.frame(in: .named("SCROLL")).minY
-            let size = proxy.size
-            let height = max(size.height + minY, .zero)
-            Image("placeholder", bundle: .main)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: size.width, height: height, alignment: .top)
-                .overlay(content: {
-                    ZStack(alignment: .bottom) {
-                            HStack {
-                                VStack {
-                                Spacer()
-                                Text("Author: Mikhail Borisov")
-                                    .font(.headline)
-                                    .foregroundColor(Color.white.opacity(0.7))
-                                Text("Modern Plane")
-                                    .foregroundColor(Color.white)
-                                    .font(.title)
-                                    .bold()
+        WithViewStore(store) { viewStore in
+            GeometryReader { proxy in
+                let minY = proxy.frame(in: .named("SCROLL")).minY
+                let size = proxy.size
+                let height = max(size.height + minY, .zero)
+                WebImage(url: viewStore.detailModel.fund.image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: size.width, height: height, alignment: .top)
+                    .overlay(content: {
+                        ZStack(alignment: .bottom) {
+                                HStack {
+                                    VStack {
+                                        Spacer()
+                                        Text(viewStore.detailModel.author)
+                                            .font(.headline)
+                                            .foregroundColor(Color.white.opacity(0.7))
+                                        Text(viewStore.detailModel.title)
+                                            .foregroundColor(Color.white)
+                                            .font(.title)
+                                            .bold()
+                                    }
+                                    Spacer()
                                 }
-                                Spacer()
-                            }
-                    }
-                    .padding()
-                })
-                .cornerRadius(0)
-                .offset(y: -minY)
+                        }
+                        .padding()
+                    })
+                    .cornerRadius(0)
+                    .offset(y: -minY)
+            }
         }
         .frame(height: 360)
         .listRowInsets(.init())

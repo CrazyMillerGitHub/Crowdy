@@ -69,7 +69,7 @@ typealias DashboardCoordinatorReducer = Reducer<
 >
 
 let dashboardCoordinatorReducer: DashboardCoordinatorReducer = screenReducer
-    .forEachIndexedRoute(environment: { _ in .init() })
+    .forEachIndexedRoute(environment: { _ in .dev(environment: .init()) })
     .withRouteReducer(
         Reducer { state, action, environment in
             switch action {
@@ -78,6 +78,8 @@ let dashboardCoordinatorReducer: DashboardCoordinatorReducer = screenReducer
             case .routeAction(_, action: .detailAction(.previewTapped(let id))):
                 state.routes.presentCover(.previewState(.init()))
             case .routeAction(_, action: .previewAction(.closeButtonTapped)):
+                state.routes.goBack()
+            case .routeAction(_, action: .detailAction(.closeButtonTapped)):
                 state.routes.goBack()
             case _:
                 break

@@ -31,9 +31,6 @@ struct ActionSection: View {
                 Text("Совершая перевод, вы соглашаетесь \nс [пользовательским соглашением](https://apple.com)")
                     .font(.footnote)
                     .multilineTextAlignment(.center)
-                    .onTapGesture {
-                        print("Agreement click")
-                    }
             }
         }
         .padding(.bottom)

@@ -8,10 +8,13 @@
 import SwiftUI
 import Core
 import Combine
+import SDWebImageSwiftUI
 import DesignSystem
 import ComposableArchitecture
 
 public struct HomeRow: View {
+
+    @Environment(\.colorScheme) var colorScheme
 
 	private struct Constants {
 		static let previewHeight: CGFloat = 185
@@ -29,10 +32,10 @@ public struct HomeRow: View {
 	public var body: some View {
         return VStack(alignment: .center) {
             ZStack(alignment: .bottomLeading) {
-                SwiftUI.Image("placeholder", bundle: .main)//fund.contentImage)
+                WebImage(url: fund.image)
                     .resizable()
                     .background(Color.white)
-                    .shimmering(active: !fund.isLoaded)
+                    .shimmering(active: !viewStore.isLoaded)
                 Image(systemName: "heart.fill")
                     .foregroundColor(
                         fund.isFavorite
@@ -44,18 +47,22 @@ public struct HomeRow: View {
                     .onTapGesture {
                         viewStore.send(.toggleFavorite(fund.id))
                     }
-                Text("fff")//fund.title)
+                Text(fund.title)
                     .font(.headline)
                     .foregroundColor(SwiftUI.Color.white)
                     .padding(Constants.padding)
+                    .shimmering(active: !viewStore.isLoaded)
             }
             .frame(height: Constants.previewHeight)
-//            ProgressView(value: fund.amountPrecentage)
-//                .padding(Constants.padding / 2)
+            ProgressView(value: fund.amountPrecentage)
+                .padding(Constants.padding / 2)
             HomeRowDetail(fund: fund)
                 .padding([.leading,  .bottom, .trailing], Constants.padding)
         }
         .modifier(RowModifier())
+        .background(colorScheme == .dark ? Color.darkContent.color : .white)
+        .cornerRadius(10)
+        .shadow(color: .black.opacity(0.10), radius: 5, x: 0, y: 0)
         .onTapGesture {
             viewStore.send(.selectFund(fund.id))
         }

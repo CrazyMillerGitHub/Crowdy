@@ -11,8 +11,8 @@ import ComposableArchitecture
 
 public struct DashboardState: Equatable {
 
-    var activateFunds: [Fund] = [.init()]
-    var previousFunds: [Fund] = [.init()]
+    var activateFunds: [Fund] = [.fixture]
+    var previousFunds: [Fund] = [.fixture]
 
     public init() {}
 }

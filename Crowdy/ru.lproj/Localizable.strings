@@ -26,3 +26,8 @@
 "donate" = "Пожертвовать";
 "stage" = "Прогресс";
 "previewImages" = "Вложенные изображения";
+"publish" = "Опубликовать";
+"createFund" = "Создать сбор";
+"category" = "Категория";
+"fundExpiration" = "Срок сбора";
+"without" = "Без срока";
