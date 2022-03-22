@@ -55,14 +55,14 @@ let package = Package(
 		.package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.3.1"),
 		.package(url: "https://github.com/stripe/stripe-ios", from: "21.0.0"),
         .package(url: "https://github.com/johnpatrickmorgan/TCACoordinators", .branch("main")),
-        .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI", .branch("master"))
+        .package(url: "https://github.com/onevcat/Kingfisher",  from: "7.2.0")
     ],
 	targets: [
 		.target(
 			name: "Core",
 			dependencies: [
-				.product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "SDWebImageSwiftUI", package: "SDWebImageSwiftUI")
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Kingfisher", package: "Kingfisher")
 			]
 		),
 		.target(name: "DesignSystem"),

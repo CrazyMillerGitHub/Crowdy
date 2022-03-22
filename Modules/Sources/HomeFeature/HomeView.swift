@@ -21,7 +21,7 @@ public struct HomeView: View {
     public var body: some View {
         WithViewStore(store) { viewStore in
             HomeList(store: store)
-                .navigationTitle(StringFactory.Tab.discovery.localizableString)
+                .navigationBarTitle(StringFactory.Tab.discovery.localizableString, displayMode: .large)
                 .searchable(
                     text: viewStore.binding(\.$searchText),
                     placement: .navigationBarDrawer(displayMode: .always),

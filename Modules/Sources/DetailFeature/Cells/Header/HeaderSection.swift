@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
+import Kingfisher
 import ComposableArchitecture
 
 struct HeaderSection: View {
@@ -23,7 +23,7 @@ struct HeaderSection: View {
                 let minY = proxy.frame(in: .named("SCROLL")).minY
                 let size = proxy.size
                 let height = max(size.height + minY, .zero)
-                WebImage(url: viewStore.detailModel.fund.image)
+                KFImage(viewStore.detailModel.fund.image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: size.width, height: height, alignment: .top)

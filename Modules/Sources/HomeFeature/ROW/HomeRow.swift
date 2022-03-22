@@ -8,7 +8,7 @@
 import SwiftUI
 import Core
 import Combine
-import SDWebImageSwiftUI
+import Kingfisher
 import DesignSystem
 import ComposableArchitecture
 
@@ -32,7 +32,7 @@ public struct HomeRow: View {
 	public var body: some View {
         return VStack(alignment: .center) {
             ZStack(alignment: .bottomLeading) {
-                WebImage(url: fund.image)
+                KFImage(fund.image)
                     .resizable()
                     .background(Color.white)
                     .shimmering(active: !viewStore.isLoaded)
