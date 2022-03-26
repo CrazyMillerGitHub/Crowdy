@@ -9,14 +9,18 @@ import Foundation
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
+import Core
+import Kingfisher
 
 struct DashboardRow: View {
 
     private let viewStore: ViewStore<DashboardState, DashboardAction>
+    private let fund: Fund
     @Environment(\.colorScheme) var colorScheme
 
-    init(viewStore: ViewStore<DashboardState, DashboardAction>) {
+    init(viewStore: ViewStore<DashboardState, DashboardAction>, fund: Fund) {
         self.viewStore = viewStore
+        self.fund = fund
     }
     
     var body: some View {
@@ -24,16 +28,16 @@ struct DashboardRow: View {
             .fill(colorScheme == .dark ? Color.darkContent.color : Color.white)
             .overlay {
                 HStack(spacing: 10) {
-                    Image("placeholder", bundle: .main)
+                    KFImage(fund.image)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 90, height: 90)
                         .cornerRadius(10)
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Крутой стол в каждый дом")
+                        Text(fund.title)
                             .font(.footnote)
                             .bold()
-                        Text("Сбор продолжается")
+                        Text(fund.status.localizableString)
                             .foregroundColor(Color.accept.color)
                             .font(.caption)
                     }

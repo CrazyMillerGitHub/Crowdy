@@ -20,7 +20,10 @@ struct ExpirationRow: View {
         VStack(alignment: .leading) {
             InputField(StringFactory.Add.fundExpiration.localizableString, text: $expirationString)
             Chips(title: StringFactory.Add.without.localizableString, binding: $isSelected)
-        }
+        }.onChange(of: isSelected, perform: { newValue in
+            expirationString = newValue ? "Без срока" : (expirationDateValue ?? 0).debugDescription
+            expirationDateValue = newValue ? nil : 12344434
+        })
         .padding([.leading, .trailing, .top])
     }
 }

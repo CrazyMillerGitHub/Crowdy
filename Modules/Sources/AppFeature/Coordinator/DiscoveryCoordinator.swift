@@ -12,6 +12,7 @@ import HomeFeature
 import PreviewFeature
 import DetailFeature
 import AddFeature
+import AuthFeature
 
 public struct DiscoveryCoordinatorView: View {
 
@@ -51,6 +52,11 @@ public struct DiscoveryCoordinatorView: View {
                     action: ScreenAction.addAction,
                     then: AddView.init
                 )
+                CaseLet(
+                    state: /ScreenState.authState,
+                    action: ScreenAction.authAction,
+                    then: AuthView.init
+                )
             }
         }
     }
@@ -83,19 +89,25 @@ let discoveryCoordinatorReducer: DiscoveryCoordinatorReducer = screenReducer
         Reducer { state, action, environment in
             switch action {
             case .routeAction(_, action: .homeAction(.selectFund(let id))):
-                state.routes.presentCover(.homeDetailState(.init(identifier: id)))
+                state.routes.presentCover(.homeDetailState(.init(uuid: id)))
             case .routeAction(_, action: .detailAction(.closeButtonTapped)):
                 state.routes.goBack()
-            case .routeAction(_, action: .detailAction(.previewTapped(let id))):
-                state.routes.presentCover(.previewState(.init()))
+            case .routeAction(_, action: .detailAction(.previewTapped(let url))):
+                state.routes.presentCover(.previewState(.init(url: url)))
             case .routeAction(_, action: .previewAction(.closeButtonTapped)):
                 state.routes.goBack()
             case .routeAction(_, action: .homeAction(.addTapped)):
                 state.routes.presentCover(.addState(.init()))
             case .routeAction(_, action: .addAction(.cancelTapped)):
                 state.routes.goBack()
-            case .routeAction(_, action: .addAction(.receiveResponse(_))):
-                state.routes.goBackToRoot()
+            case .routeAction(_, action: .detailAction(.startCancellingOrder)):
+                state.routes.goBack()
+            case .routeAction(_, action: .detailAction(.startTransactionOrder)):
+                state.routes.goBack()
+//            case .routeAction(_, action: .homeAction(.goToAuth)):
+//                state.routes = [.root(.authState(.init()))]
+//            case .routeAction(_, action: .addAction(.receiveResponse(_))):
+//                state.routes.goBackToRoot()
             case _:
                 break
             }

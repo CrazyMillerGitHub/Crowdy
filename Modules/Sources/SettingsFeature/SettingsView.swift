@@ -26,44 +26,24 @@ public struct SettingsView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 List {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .foregroundColor(Color.brand.color)
-                            .frame(height: 164)
-                        VStack {
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                Image(systemName: "plus.square")
-                                    .font(.title)
-                                    .foregroundColor(Color.white)
-                                Spacer()
-                            }
-                            Spacer()
-                        }
+                    AvailabilityView(viewStore.isCardAvailable) {
+                        CardSection(store: store)
                     }
+                    SpendingSection(spentAmount: viewStore.binding(\.$spent))
+                    AvailabilityView(viewStore.isOperationsAvailble) {
+                        OperationSection(store: store)
+                    }
+                    Button(StringFactory.Settings.logOut.localizableString) {
+                        viewStore.send(.logOutButtonTapped)
+                    }
+                    .buttonStyle(BrandButtonStyle(color: .brand))
                     .listRowSeparator(.hidden)
-                    Section(header: Text(StringFactory.Settings.spent.localizableString)) {
-                        Text("123 $")
-                            .font(.system(size: 25, weight: .semibold))
-                            .listRowSeparator(.hidden)
-                    }
-                    Section {
-                        ForEach(0 ..< 3) {_ in
-                            OperationRow(model: .fixture)
-                        }.listRowSeparator(.hidden)
-                    } header: {
-                        Text(StringFactory.Settings.recentCrowdfundings.localizableString)
-                    } footer: {
-                        Button(StringFactory.Settings.logOut.localizableString) {
-                            viewStore.send(.logOutButtonTapped)
-                        }
-                        .buttonStyle(BrandButtonStyle(color: .brand))
-                        .listRowSeparator(.hidden)
-                    }
                 }
+                .redacted(reason: viewStore.isLoading ? .placeholder : [])
+                .shimmering(active: viewStore.isLoading)
+                .disabled(viewStore.isLoading)
                 .listStyle(.plain)
-                .navigationTitle("👋, Mikhail")
+                .navigationTitle("👋, Михаил")
                 .navigationBarItems(
                     leading:
                         Text(StringFactory.Settings.welcomeBack.localizableString)
@@ -94,7 +74,10 @@ struct SettingsView_Preview: PreviewProvider {
                 initialState: SettingsState(),
                 reducer: settingsReducer,
                 environment: .dev(
-                    environment: .init(loadUserRequest: dummyLoadUserRequest)
+                    environment: .init(
+                        loadUserRequest: dummyLoadUserRequest,
+                        loadOperationsRequest: dummyLoadUserOperationsRequest
+                    )
                 )
             )
         )

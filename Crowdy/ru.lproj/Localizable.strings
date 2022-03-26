@@ -31,3 +31,7 @@
 "category" = "Категория";
 "fundExpiration" = "Срок сбора";
 "without" = "Без срока";
+"activeFund" = "Активные сборы";
+"previousFund" = "Прошлые сборы";
+"travel" = "Путешествие";
+"deliveringGoods" = "Доставка вознагрождения";

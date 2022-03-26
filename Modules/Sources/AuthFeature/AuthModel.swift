@@ -6,6 +6,7 @@
 //
 
 import Core
+import ComposableArchitecture
 
 /// Модель авторизации
 public struct AuthModel: Decodable {
@@ -15,4 +16,17 @@ public struct AuthModel: Decodable {
 	var passwordHash: String
 	/// ифнормация о пользователе
 	var user: User
+    @BindableState var shouldRegister = false
+}
+
+public struct LoginRequest: Encodable {
+    let user: String
+    let password: String
+}
+
+public struct RegisterRequest: Encodable {
+    let fullName: String
+    let email: String
+    let password: String
+    let confirmPassword: String
 }

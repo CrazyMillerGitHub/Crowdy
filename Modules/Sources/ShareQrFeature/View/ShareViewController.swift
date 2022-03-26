@@ -104,7 +104,7 @@ final public class ShareViewController: UIViewController {
 			.sink { event in
 				switch event {
 				case .didLoad(let image):
-					print(image)
+					debugPrint(image)
 				}
 			}
 			.store(in: &cancellable)

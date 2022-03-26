@@ -16,6 +16,8 @@ public struct InputField: View {
 	private let placeholder: String
 	@Binding
 	private var text: String
+    @State
+    private var inputValue: String = ""
 	@State
 	private var inputFieldHighlighted = false
 
@@ -47,7 +49,7 @@ public struct InputField: View {
 	// MARK: - UI
 
 	public var body: some View {
-		ZStack(alignment: .leading) {
+		return ZStack(alignment: .leading) {
 			Text(placeholder)
 				.foregroundColor(
                     Color.lightContent.color
@@ -65,8 +67,10 @@ public struct InputField: View {
 				)
 				.animation(.easeOut(duration: Constants.animationDuration), value: inputFieldHighlighted)
 			TextField("", text: $text) { isBegin in
-				inputFieldHighlighted = isBegin || !text.isEmpty
-            }
+				inputFieldHighlighted = isBegin || !inputValue.isEmpty
+            }.onChange(of: text, perform: { newValue in
+                inputValue = newValue
+            })
             .foregroundColor(colorScheme == .dark ? .white : .black)
 		}
 		.offset(x: .zero, y: inputFieldHighlighted ? Constants.highlighted : .zero)

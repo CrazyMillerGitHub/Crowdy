@@ -7,33 +7,38 @@
 
 import SwiftUI
 import Core
+import ComposableArchitecture
 import DesignSystem
 
 struct ActionSection: View {
 
-    let isIncoming: Bool
+    private let store: Store<DetailState, DetailAction>
 
-    init(isIncoming: Bool) {
-        self.isIncoming = isIncoming
+    init(store: Store<DetailState, DetailAction>) {
+        self.store = store
     }
 
     var body: some View {
-        VStack(alignment: .center, spacing: 10.0) {
-            Button(
-                isIncoming
-                ? StringFactory.Details.donate.localizableString
-                : StringFactory.Details.cancel.localizableString
-            ) {
-                print("here")
+        WithViewStore(store) { viewStore in
+            VStack(alignment: .center, spacing: 10.0) {
+                Button(
+                    viewStore.detail.isIncoming
+                    ? StringFactory.Details.donate.localizableString
+                    : StringFactory.Details.cancel.localizableString
+                ) {
+                    viewStore.detail.isIncoming
+                    ? viewStore.send(.startTransactionOrder)
+                    : viewStore.send(.startCancellingOrder)
+                }
+                .buttonStyle(BrandButtonStyle(color: viewStore.detail.isIncoming ? .brand : .magnetta))
+                HStack(alignment: .center) {
+                    Text("Совершая перевод, вы соглашаетесь \nс [пользовательским соглашением](https://apple.com)")
+                        .font(.footnote)
+                        .multilineTextAlignment(.center)
+                }
             }
-            .buttonStyle(BrandButtonStyle(color: isIncoming ? .brand : .magnetta))
-            HStack(alignment: .center) {
-                Text("Совершая перевод, вы соглашаетесь \nс [пользовательским соглашением](https://apple.com)")
-                    .font(.footnote)
-                    .multilineTextAlignment(.center)
-            }
+            .padding(.bottom)
+            .listRowSeparator(.hidden)
         }
-        .padding(.bottom)
-        .listRowSeparator(.hidden)
     }
 }

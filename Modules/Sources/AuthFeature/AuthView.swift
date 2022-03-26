@@ -29,7 +29,7 @@ public struct AuthView: View {
 		return WithViewStore(store) { viewStore in
 			VStack(alignment: .leading, spacing: 15) {
 				Spacer()
-				Text("Good morning, 👋")
+				Text("Добрый день, 👋")
 					.font(.title)
                     .bold()
                 InputField(StringFactory.AuthFeature.login.localizableString, text: viewStore.binding(\.$loginValue))
@@ -78,8 +78,9 @@ struct Preview_AuthView: PreviewProvider {
 				reducer: authReducer,
 				environment: .dev(
 					environment: AuthEnvironment(
-						authUserRequest: dummyAuthRequest,
-						saveModelRequest: dummySaveModelRequest
+                        loginUserRequest: dummyLoginRequest,
+                        registerUserRequest: dummyRegisterRequest,
+                        saveModelRequest: dummySaveModelRequest
 					)
 				)
 			)

@@ -24,12 +24,12 @@ public struct DetailView: View {
                 HeaderSection(store: store)
                 ContentSection()
                 Section(header: Text(StringFactory.Details.stage.localizableString)) {
-                    InfoSection()
+                    InfoSection(detail: viewStore.binding(\.$detail))
                 }
                 Section(header: Text(StringFactory.Details.previewImages.localizableString)) {
-                    PreviewSection(viewStore: viewStore)
+                    PreviewSection(store: store)
                 }
-                ActionSection(isIncoming: viewStore.state.detailModel.isIncoming)
+                ActionSection(store: store)
             }
             .listStyle(.plain)
             .overlay(content: {
@@ -39,6 +39,7 @@ public struct DetailView: View {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(Color.white.opacity(0.8))
                             .font(.system(.title))
+                            .unredacted()
                             .onTapGesture {
                                 viewStore.send(.closeButtonTapped)
                             }
@@ -53,6 +54,9 @@ public struct DetailView: View {
             .onAppear {
                 viewStore.send(.onAppear)
             }
+            .transition(.opacity.animation(.default))
+            .redacted(reason: viewStore.isLoading ? .placeholder : [])
+            .shimmering(active: viewStore.isLoading)
         }
     }
 }
@@ -63,10 +67,10 @@ struct DetailView_Preview: PreviewProvider {
     static var previews: some View {
         return DetailView(
             store: .init(
-                initialState: .init(identifier: .init()),
+                initialState: .init(uuid: .init()),
                 reducer: detailReducer,
                 environment: .dev(
-                    environment: .init(loadDetailsRequest: dummyLoadDetailsRequest)
+                    environment: .init(loadDetailRequest: dummyLoadDetailRequest)
                 )
             )
         )

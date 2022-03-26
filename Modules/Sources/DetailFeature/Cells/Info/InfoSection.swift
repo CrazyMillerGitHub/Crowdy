@@ -9,6 +9,14 @@ import DesignSystem
 import SwiftUI
 
 struct InfoSection: View {
+
+    @Binding
+    private var detail: FundDetail
+
+    init(detail: Binding<FundDetail>) {
+        self._detail = detail
+    }
+
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 10)
@@ -19,8 +27,9 @@ struct InfoSection: View {
                 .frame(width: 100, height: 30)
             HStack(alignment: .center) {
                 Spacer()
-                Text("120/140")
+                Text("\(detail.progress.remainAmount.value) / \(detail.progress.originalAmount.value)")
                     .font(.caption2)
+                    .bold()
                     .foregroundColor(.white)
                 Spacer()
             }

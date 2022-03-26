@@ -74,9 +74,9 @@ let dashboardCoordinatorReducer: DashboardCoordinatorReducer = screenReducer
         Reducer { state, action, environment in
             switch action {
             case .routeAction(_, action: .dashboardAction(.selectFund(let id))):
-                state.routes.presentCover(.homeDetailState(.init(identifier: id)))
-            case .routeAction(_, action: .detailAction(.previewTapped(let id))):
-                state.routes.presentCover(.previewState(.init()))
+                state.routes.presentCover(.homeDetailState(.init(uuid: id)))
+            case .routeAction(_, action: .detailAction(.previewTapped(let url))):
+                state.routes.presentCover(.previewState(.init(url: url)))
             case .routeAction(_, action: .previewAction(.closeButtonTapped)):
                 state.routes.goBack()
             case .routeAction(_, action: .detailAction(.closeButtonTapped)):

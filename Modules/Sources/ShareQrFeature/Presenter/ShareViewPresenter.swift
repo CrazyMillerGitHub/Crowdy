@@ -31,9 +31,9 @@ final public class ShareViewPresenter: ShareViewPresenterProtocol {
 			.sink { event in
 				switch event {
 				case .viewDidLoad:
-					print(">>>")
+					debugPrint(">>>")
 				case .viewWillDismiss:
-					print(">>>>")
+					debugPrint(">>>>")
 				}
 			}
 			.store(in: &cancellable)

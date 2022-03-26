@@ -67,7 +67,10 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<
         action: /ScreenAction.homeAction,
         environment: { environment in
             return .dev(
-                environment: HomeEnvironment(loadFundsRequest: dummyLoadFundsRequest)
+                environment: HomeEnvironment(
+                    loadFundsRequest: dummyLoadFundsRequest,
+                    updateFavoriteFundRequest: dummyUpdateFavoriteFundRequest
+                )
             )
         }
     ),
@@ -96,7 +99,7 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<
         action: /ScreenAction.detailAction,
         environment: { _ in
             return .dev(
-                environment: DetailEnvironment(loadDetailsRequest: dummyLoadDetailsRequest)
+                environment: DetailEnvironment(loadDetailRequest: dummyLoadDetailRequest)
             )
         }
     ),
@@ -106,7 +109,8 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<
         environment: { environment in
             return .dev(
                 environment: SettingsEnvironment(
-                    loadUserRequest: dummyLoadUserRequest
+                    loadUserRequest: dummyLoadUserRequest,
+                    loadOperationsRequest: dummyLoadUserOperationsRequest
                 )
             )
         }
@@ -116,7 +120,9 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<
         action: /ScreenAction.dashboardAction,
         environment: { environment in
             return .dev(
-                environment: DashboardEnvironment()
+                environment: DashboardEnvironment(
+                    getUserFundsRequest: dummyGetUserFundsRequest
+                )
             )
         }
     ),
@@ -127,7 +133,8 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<
             return .dev(
                 environment:
                     AuthEnvironment(
-                        authUserRequest: dummyAuthRequest,
+                        loginUserRequest: loginEffect,
+                        registerUserRequest: registerEffect,
                         saveModelRequest: dummySaveModelRequest
                     )
             )

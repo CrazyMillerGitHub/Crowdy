@@ -9,11 +9,8 @@ import Foundation
 import ComposableArchitecture
 import Core
 
-func loadFundsRequest(decoder: JSONDecoder) -> Effect<[Fund], APIError> {
-	guard let url = URL(string: "es.com/apo") else {
-		return Effect(error: .urlError)
-	}
-	return URLSession.shared.dataTaskPublisher(for: url)
+public func loadFundsRequest(decoder: JSONDecoder, baseURL: URL) -> Effect<[Fund], APIError> {
+    return URLSession.shared.dataTaskPublisher(for: baseURL.appendingPathComponent("get"))
 		.mapError { _ in APIError.downloadError }
 		.map { data, _ in data }
 		.decode(type: [Fund].self, decoder: decoder)
@@ -21,17 +18,45 @@ func loadFundsRequest(decoder: JSONDecoder) -> Effect<[Fund], APIError> {
 		.eraseToEffect()
 }
 
-struct EditFavoriteResponse: Decodable {
-
-    let success: Bool
-}
-
-func editFavorite(decoder: JSONDecoder, identifier: UUID) -> Effect<EditFavoriteResponse, APIError> {
-    return Effect(value: .init(success: true))
-}
-
 public func dummyLoadFundsRequest(decoder: JSONDecoder) -> Effect<[Fund], APIError> {
-    return Effect(value: [.fixture])
-        .delay(for: 2, scheduler: RunLoop.main)
+    var fund = Fund.fixture
+    fund.id = .init(uuidString: "D0AD236D-0100-0000-A0BB-236D01000000")!
+    return Effect(value: [fund])
+        .delay(for: 1, scheduler: DispatchQueue.main)
         .eraseToEffect()
+}
+
+public func updateFavoriteFundRequest(
+    decoder: JSONDecoder,
+    encoder: JSONEncoder,
+    baseURL: URL,
+    request: EditFavoruriteRequest
+) -> Effect<Fund, APIError> {
+    var urlRequest = URLRequest(url: baseURL.appendingPathComponent("update"))
+    urlRequest.httpBody = try? encoder.encode(request)
+    urlRequest.httpMethod = "POST"
+    return URLSession.shared.dataTaskPublisher(for: urlRequest)
+        .mapError { _ in APIError.downloadError }
+        .map { data, _ in data }
+        .decode(type: Fund.self, decoder: decoder)
+        .mapError { _ in APIError.decodingError }
+        .eraseToEffect()
+}
+
+public func dummyUpdateFavoriteFundRequest(
+    decoder: JSONDecoder,
+    encoder: JSONEncoder,
+    baseURL: URL,
+    request: EditFavoruriteRequest
+) -> Effect<Fund, APIError> {
+    var fund: Fund = .fixture
+    fund.id = request.crowdfindingId
+    fund.isFavorite = request.newState
+    return Effect(value: fund)
+}
+
+public struct EditFavoruriteRequest: Encodable {
+    let userId: Int64
+    let crowdfindingId: UUID
+    let newState: Bool
 }

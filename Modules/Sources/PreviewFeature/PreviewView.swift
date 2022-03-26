@@ -8,11 +8,16 @@
 import Foundation
 import SwiftUI
 import ComposableArchitecture
+import Kingfisher
 import Core
 
 public struct PreviewState: Equatable {
 
-    public init() {}
+    let url: URL
+
+    public init(url: URL) {
+        self.url = url
+    }
 }
 
 public enum PreviewAction {
@@ -58,7 +63,7 @@ public struct PreviewView: View {
                     }
                     Spacer()
                 }.background(Color.black)
-                Image("placeholder", bundle: .main)
+                KFImage(viewStore.url)
                     .resizable()
                     .scaledToFit()
             }
@@ -71,7 +76,7 @@ public struct PreviewView_Preview: PreviewProvider {
     public static var previews: some View {
         PreviewView(
             store: .init(
-                initialState: .init(),
+                initialState: .init(url: .init(fileReferenceLiteralResourceName: "placeholder")),
                 reducer: previewReducer,
                 environment: .dev(
                     environment: PreviewEnvironment()

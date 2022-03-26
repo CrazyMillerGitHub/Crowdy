@@ -35,6 +35,7 @@ public extension StringFactory {
         case participants
         case expireOn
         case progress
+        case without
     }
 }
 
@@ -71,6 +72,16 @@ public extension StringFactory {
     }
 }
 
+// MARK: - Dashboard
+public extension StringFactory {
+
+    enum Dashboard: String {
+        case activeFund
+        case previousFund
+    }
+}
+
+// MARK: - Add
 public extension StringFactory {
 
     enum Add: String {

@@ -36,6 +36,9 @@ public struct HomeView: View {
                             }
                     }
                 }
+                .onAppear {
+                    viewStore.send(.onAppear)
+                }
         }
 	}
 }
@@ -53,9 +56,11 @@ public struct HomeList: View {
             ScrollView {
                 LazyVStack {
                     ForEach(viewStore.searchResults, id: \.id) { fund in
-                        HomeRow(viewStore: viewStore, fund: fund)
+                        HomeRow(store: store, fund: fund)
                             .padding()
-                    }
+                            .redacted(reason: !viewStore.isLoading ? [] : .placeholder)
+                            .shimmering(active:  viewStore.isLoading)
+                    }.transition(.opacity.animation(.default))
                 }
             }
             .onAppear {

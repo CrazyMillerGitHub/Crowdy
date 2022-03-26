@@ -11,7 +11,7 @@ import Core
 public struct HomeState: Equatable {
 
     public var funds: [Fund]
-    var isLoaded = false
+    var isLoading = true
     @BindableState var searchText = ""
 
     public var searchResults: [Fund] {
@@ -35,7 +35,7 @@ public struct HomeState: Equatable {
 extension HomeState {
 
     static var fixture: HomeState {
-        return .init(funds: [.fixture])
+        return .init(funds: [.fixture, .fixture, .fixture])
 //        return .init()
 //        var initalArr: IdentifiedArrayOf<HomeRowState> = []
 //        for _ in 0..<3 {

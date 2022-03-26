@@ -15,6 +15,7 @@ public struct AddState: Equatable {
     @BindableState var expirationDateValue: Double?
     @BindableState var catogoryValue: String
     @BindableState var backgroundURL: URL?
+    var alert: AlertState<AddAction>?
 
     public init(
         titleValue: String = "",
@@ -27,6 +28,10 @@ public struct AddState: Equatable {
         self.catogoryValue = catogoryValue
         self.backgroundURL = backgroundURL
     }
+
+    public static func == (lhs: AddState, rhs: AddState) -> Bool {
+        return lhs.titleValue == rhs.titleValue
+    }
 }
 
 public enum AddAction: BindableAction {
@@ -35,6 +40,8 @@ public enum AddAction: BindableAction {
     case publishTapped
     case binding(BindingAction<AddState>)
     case receiveResponse(Result<FundRequestDTO, APIError>)
+    case responseFailed
+    case alertOkTapped
 }
 
 public struct AddEnvironment {
@@ -57,9 +64,17 @@ public let addReducer = AddReducer { state, action, environment in
             .receive(on: environment.mainQueue())
             .catchToEffect()
             .map(AddAction.receiveResponse)
+    case .responseFailed:
+        state.alert = AlertState(
+            title: .init("Ошибка"),
+            message: .init("Что-то пошло не так"),
+            dismissButton: .default(.init("Хорошо"))
+        )
+    case .alertOkTapped:
+        state.alert = nil
     case .receiveResponse(let response):
         guard case let .success(dto) = response else {
-            return .none
+            return Effect(value: .responseFailed)
         }
         debugPrint("Data successfully saved")
     case _:

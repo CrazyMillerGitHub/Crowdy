@@ -13,14 +13,20 @@ public struct AuthState: Equatable {
 
     @BindableState var passwordValue: String
     @BindableState var loginValue: String
+    @BindableState var confirmpasswordValue: String
+    @BindableState var fullNameValue: String
     var isLoading: Bool
 
     public init(
         loginValue: String = "",
         passwordValue: String = "",
+        confirmpasswordValue: String = "",
+        fullNameValue: String = "",
         isLoading: Bool = false
     ) {
         self.loginValue = loginValue
+        self.confirmpasswordValue = confirmpasswordValue
+        self.fullNameValue = fullNameValue
         self.passwordValue = passwordValue
         self.isLoading = isLoading
     }
@@ -32,6 +38,8 @@ public enum AuthAction: BindableAction {
 	case onAppear
 	/// Log in button was pressed
 	case logInButtonTapped
+    /// Register button Tapped
+    case registerButtonTapped
 	/// Forgot password was tapped
 	case forgotButtonTapped
 	/// User have been authorized
@@ -48,19 +56,24 @@ public enum AuthAction: BindableAction {
 public struct AuthEnvironment {
 
     /// Запрос на авторизацию пользователя
-	var authUserRequest: (JSONDecoder, String, String) -> Effect<AuthModel, APIError>
+	var loginUserRequest: (JSONDecoder, JSONEncoder, URL, LoginRequest) -> Effect<AuthModel, APIError>
+    /// Зарегистрировать пользователя
+    var registerUserRequest: (JSONDecoder, JSONEncoder, URL, RegisterRequest) -> Effect<AuthModel, APIError>
     /// Запрос на сохранение данных пользователя в бд
 	var saveModelRequest: (StorageProtocol, AuthModel) -> Void
 
     /// Инициализация
     /// - Parameters:
     ///   - authUserRequest: Запрос на авторизацию пользователя
+    ///   - registerUserRequest: Зарегистрировать пользователя
     ///   - saveModelRequest: Запрос на сохранение данных пользователя в бд
 	public init(
-		authUserRequest: @escaping (JSONDecoder, String, String) -> Effect<AuthModel, APIError>,
+		loginUserRequest: @escaping(JSONDecoder, JSONEncoder, URL, LoginRequest) -> Effect<AuthModel, APIError>,
+        registerUserRequest: @escaping (JSONDecoder, JSONEncoder, URL, RegisterRequest) -> Effect<AuthModel, APIError>,
 		saveModelRequest: @escaping (StorageProtocol, AuthModel) -> Void
 	) {
-		self.authUserRequest = authUserRequest
+		self.loginUserRequest = loginUserRequest
+        self.registerUserRequest = registerUserRequest
 		self.saveModelRequest = saveModelRequest
 	}
 }
@@ -78,11 +91,31 @@ public let authReducer = Reducer<
         debugPrint("login: \(state.loginValue), password: \(state.passwordValue)")
         state.isLoading = true
 		return environment
-            .authUserRequest(environment.decoder(), state.loginValue, state.passwordValue)
-            .delay(for: 1, scheduler: DispatchQueue.main)
+            .loginUserRequest(
+                environment.decoder(),
+                environment.encoder(),
+                environment.remoteConfig().baseURL.appendingPathComponent("auth"),
+                .init(user: state.loginValue, password: state.passwordValue)
+            )
 			.receive(on: environment.mainQueue())
 			.catchToEffect()
 			.map(AuthAction.didAuthUser)
+    case .registerButtonTapped:
+        return environment
+            .registerUserRequest(
+                environment.decoder(),
+                environment.encoder(),
+                environment.remoteConfig().baseURL.appendingPathComponent("auth"),
+                .init(
+                    fullName: state.fullNameValue,
+                    email: state.loginValue,
+                    password: state.passwordValue,
+                    confirmPassword: state.confirmpasswordValue
+                )
+            )
+            .receive(on: environment.mainQueue())
+            .catchToEffect()
+            .map(AuthAction.didAuthUser)
 	case .didAuthUser(let result):
         state.isLoading = false
 		switch result {
@@ -91,8 +124,11 @@ public let authReducer = Reducer<
 //				.saveModelRequest(environment.storage(), model)
 			return .none
 		case .failure(let err):
-			return .none
+            return Effect(value: .authFailed)
 		}
+    case .authFailed:
+        debugPrint("auth failed")
+        fallthrough
 	case _:
 		return .none
 	}

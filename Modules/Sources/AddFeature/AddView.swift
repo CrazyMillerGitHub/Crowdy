@@ -30,6 +30,7 @@ public struct AddView: View {
                         Button(StringFactory.Add.publish.localizableString) {
                             viewStore.send(.publishTapped)
                         }
+                        .alert(self.store.scope(state: \.alert), dismiss: .alertOkTapped)
                         .padding([.leading, .trailing, .top])
                         .buttonStyle(BrandButtonStyle())
                     }

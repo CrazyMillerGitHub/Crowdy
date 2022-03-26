@@ -23,19 +23,19 @@ struct HeaderSection: View {
                 let minY = proxy.frame(in: .named("SCROLL")).minY
                 let size = proxy.size
                 let height = max(size.height + minY, .zero)
-                KFImage(viewStore.detailModel.fund.image)
+                KFImage(viewStore.detail.fund.image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: size.width, height: height, alignment: .top)
                     .overlay(content: {
                         ZStack(alignment: .bottom) {
                                 HStack {
-                                    VStack {
+                                    VStack(alignment: .leading) {
                                         Spacer()
-                                        Text(viewStore.detailModel.author)
+                                        Text(viewStore.detail.author)
                                             .font(.headline)
                                             .foregroundColor(Color.white.opacity(0.7))
-                                        Text(viewStore.detailModel.title)
+                                        Text(viewStore.detail.title)
                                             .foregroundColor(Color.white)
                                             .font(.title)
                                             .bold()

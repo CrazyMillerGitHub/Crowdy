@@ -5,9 +5,13 @@
 //  Created by Mikhail Borisov on 08.03.2022.
 //
 
+import Foundation
+
 public protocol RemoteConfigProtocol {
 
     var isUserAuthentificated: Bool { get }
+
+    var baseURL: URL { get }
 }
 
 /// Конифиг для работы с фичтоглами в модулях
@@ -20,6 +24,11 @@ public final class RemoteConfig: RemoteConfigProtocol {
     }
 
     public var isUserAuthentificated: Bool {
-        storage.loadValue(for: #function) ?? false
+        true
+//        storage.loadValue(for: #function) ?? false
+    }
+
+    public var baseURL: URL {
+        URL(string: "http:localhost")!
     }
 }

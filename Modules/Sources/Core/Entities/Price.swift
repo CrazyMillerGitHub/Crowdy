@@ -24,4 +24,17 @@ public struct Price: Decodable {
         currencyFormatter.locale = .init(identifier: currency)
         return currencyFormatter.string(from: amount as NSDecimalNumber) ?? ""
     }
+
+    public static var fixture = Self(
+        amount: 0,
+        currency: "RU_ru"
+    )
+}
+
+extension Price: Equatable {
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.amount == rhs.amount
+        && lhs.currency == rhs.currency
+    }
 }

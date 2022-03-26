@@ -13,6 +13,8 @@ public struct SystemEnvironment<Environment> {
 	public var environment: Environment
 	public var mainQueue: () -> AnySchedulerOf<DispatchQueue>
 	public var decoder: () -> JSONDecoder
+    public var encoder: () -> JSONEncoder
+    public var currentUser: () -> User
 	public var storage: () -> CoreDataStorage
     public var remoteConfig: () -> RemoteConfigProtocol
     public var featureAvailability: () -> FeatureAvailabilityProtocol
@@ -21,6 +23,8 @@ public struct SystemEnvironment<Environment> {
 		environment: Environment,
 		mainQueue: @autoclosure @escaping () -> AnySchedulerOf<DispatchQueue>,
 		decoder: @escaping () -> JSONDecoder,
+        encoder: @escaping () -> JSONEncoder,
+        currentUser: @escaping () -> User,
 		storage: @escaping () -> CoreDataStorage,
         remoteConfig: @escaping () -> RemoteConfigProtocol,
         featureAvailability: @escaping () -> FeatureAvailabilityProtocol
@@ -28,6 +32,8 @@ public struct SystemEnvironment<Environment> {
 		self.environment = environment
 		self.mainQueue = mainQueue
 		self.decoder = decoder
+        self.encoder = encoder
+        self.currentUser = currentUser
 		self.storage = storage
         self.remoteConfig = remoteConfig
         self.featureAvailability = featureAvailability
@@ -46,12 +52,23 @@ public struct SystemEnvironment<Environment> {
 		return decoder
 	}
 
+    private static func encoder() -> JSONEncoder {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        return encoder
+    }
+
     private static func featureAvailability() -> FeatureAvailabilityProtocol {
         return FeatureAvailability()
     }
 
     private static func remoteConfig() -> RemoteConfigProtocol {
         return RemoteConfig(storage: Storage())
+    }
+
+    private static func currentUser() -> User {
+        // TODO: Добавить загрузку откуда-то значения
+        return User(uuid: 1)
     }
 
 	private static func storage() -> CoreDataStorage {
@@ -63,6 +80,8 @@ public struct SystemEnvironment<Environment> {
             environment: environment,
             mainQueue: .main,
             decoder: decoder,
+            encoder: encoder,
+            currentUser: currentUser,
             storage: storage,
             remoteConfig: remoteConfig,
             featureAvailability: featureAvailability
@@ -74,6 +93,8 @@ public struct SystemEnvironment<Environment> {
             environment: environment,
             mainQueue: .main,
             decoder: decoder,
+            encoder: encoder,
+            currentUser: currentUser,
             storage: storage,
             remoteConfig: remoteConfig,
             featureAvailability: featureAvailability

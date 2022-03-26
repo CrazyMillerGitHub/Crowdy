@@ -22,21 +22,27 @@ public struct DashboardView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 List {
-                    Section(header: Text("Активные сборы")) {
-                        ForEach(viewStore.state.activateFunds, id: \.id) { fund in
-                            DashboardRow(viewStore: viewStore)
+                    AvailabilityView(!viewStore.state.activateFunds.isEmpty) {
+                        Section(header: Text(StringFactory.Dashboard.activeFund.localizableString)) {
+                            ForEach(viewStore.state.activateFunds, id: \.id) { fund in
+                                DashboardRow(viewStore: viewStore, fund: fund)
+                            }
                         }
+                        .listSectionSeparator(.hidden)
                     }
-                    .listSectionSeparator(.hidden)
-                    Section(header: Text("Прошедшие сборы")) {
-                        ForEach(viewStore.state.previousFunds, id: \.id) { fund in
-                            DashboardRow(viewStore: viewStore)
+                    AvailabilityView(!viewStore.state.previousFunds.isEmpty) {
+                        Section(header: Text(StringFactory.Dashboard.previousFund.localizableString)) {
+                            ForEach(viewStore.state.previousFunds, id: \.id) { fund in
+                                DashboardRow(viewStore: viewStore, fund: fund)
+                            }
                         }
+                        .listSectionSeparator(.hidden)
                     }
-                    .listSectionSeparator(.hidden)
                 }
                 .listStyle(.plain)
                 .navigationTitle(StringFactory.Tab.dashboard.localizableString)
+                .redacted(reason: viewStore.isLoading ? .placeholder : [])
+                .shimmering(active: viewStore.isLoading)
             }
             .onAppear {
                 viewStore.send(.onAppear)

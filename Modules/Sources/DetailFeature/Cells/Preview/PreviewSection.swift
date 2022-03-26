@@ -6,32 +6,39 @@
 //
 
 import SwiftUI
+import DesignSystem
+import Kingfisher
 import ComposableArchitecture
 
 struct PreviewSection: View {
 
-    private let items = 0..<10
-    private let viewStore: ViewStore<DetailState, DetailAction>
+    private let store: Store<DetailState, DetailAction>
+    @Environment(\.colorScheme) var colorScheme
 
     private enum Constants {
         static let height: CGFloat = 64.0
         static let cornerRadius: CGFloat = 10
     }
 
-    public init(viewStore: ViewStore<DetailState, DetailAction>) {
-        self.viewStore = viewStore
+    public init(store: Store<DetailState, DetailAction>) {
+        self.store = store
     }
 
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack {
-                ForEach(items) { idx in
-                    RoundedRectangle(cornerRadius: Constants.cornerRadius)
-                        .frame(width: Constants.height, height: Constants.height)
-                        .foregroundColor(Color.red)
-                        .onTapGesture {
-                            viewStore.send(.previewTapped(UUID()))
-                        }
+        WithViewStore(store) { viewStore in
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack {
+                    ForEach(viewStore.previews, id: \.self) { preview in
+                        KFImage(preview)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: Constants.height, height: Constants.height)
+                            .cornerRadius(10)
+                            .foregroundColor(colorScheme == .dark ? Color.darkContent.color : Color.lightContent.color)
+                            .onTapGesture {
+                                viewStore.send(.previewTapped(preview))
+                            }.padding(.vertical)
+                    }
                 }
             }
         }
