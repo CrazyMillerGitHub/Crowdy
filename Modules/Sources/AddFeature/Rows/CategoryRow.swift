@@ -8,6 +8,7 @@
 import SwiftUI
 import DesignSystem
 import Core
+import ComposableArchitecture
 
 struct CategoryRow: View {
 
@@ -15,7 +16,9 @@ struct CategoryRow: View {
 
     var body: some View {
         VStack {
-            InputField(StringFactory.Add.category.localizableString, text: $categoryValue)
+            InputField(placeholder: StringFactory.Add.category.localizableString, binding: $categoryValue) {
+                TextField("", text:  $categoryValue)
+            }
         }
         .padding([.leading, .trailing, .top])
     }

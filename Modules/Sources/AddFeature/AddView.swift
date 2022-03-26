@@ -26,7 +26,7 @@ public struct AddView: View {
                         FundBackgroundRow()
                         FundNameRow(fundNameText: viewStore.binding(\.$titleValue))
                         ExpirationRow(expirationDateValue: viewStore.binding(\.$expirationDateValue))
-                        CategoryRow(categoryValue: viewStore.binding(\.$catogoryValue))
+                        CategoryRow(categoryValue: viewStore.binding(\.$categoryValue))
                         Button(StringFactory.Add.publish.localizableString) {
                             viewStore.send(.publishTapped)
                         }

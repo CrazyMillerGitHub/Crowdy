@@ -20,7 +20,9 @@ struct OperationSection: View {
             Section {
                 ForEach(viewStore.operations, id: \.self) { model in
                     OperationRow(model: model)
-                }.listRowSeparator(.hidden)
+                }
+                .listRowSeparator(.hidden)
+                .transition(.opacity.animation(.default))
             } header: {
                 Text(StringFactory.Settings.recentCrowdfundings.localizableString)
             } footer: {}

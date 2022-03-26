@@ -18,7 +18,9 @@ struct FundNameRow: View {
 
     var body: some View {
         VStack {
-            InputField("Название сбора", text: $fundNameText)
+            InputField(placeholder: "Название сбора", binding: $fundNameText) {
+                TextField("", text:  $fundNameText)
+            }
         }
         .padding([.leading, .trailing, .top])
     }

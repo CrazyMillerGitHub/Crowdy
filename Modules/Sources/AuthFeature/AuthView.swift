@@ -32,16 +32,26 @@ public struct AuthView: View {
 				Text("Добрый день, 👋")
 					.font(.title)
                     .bold()
-                InputField(StringFactory.AuthFeature.login.localizableString, text: viewStore.binding(\.$loginValue))
-					.focused($focusedField, equals: .login)
-				InputField(StringFactory.AuthFeature.password.localizableString, text: viewStore.binding(\.$passwordValue))
-					.focused($focusedField, equals: .password)
-					Text(StringFactory.AuthFeature.forgotPassword.localizableString)
-						.font(.footnote)
-						.foregroundColor(Color.brand.color)
-						.onTapGesture {
-							viewStore.send(.forgotButtonTapped)
-						}
+                InputField(
+                    placeholder: StringFactory.AuthFeature.login.localizableString,
+                    binding: viewStore.binding(\.$loginValue)
+                ) {
+                    TextField("", text: viewStore.binding(\.$loginValue))
+                        .focused($focusedField, equals: .login)
+                }
+                InputField(
+                    placeholder: StringFactory.AuthFeature.login.localizableString,
+                    binding: viewStore.binding(\.$passwordValue)
+                ) {
+                    SecureField("", text: viewStore.binding(\.$passwordValue))
+                        .focused($focusedField, equals: .password)
+                }
+                Text(StringFactory.AuthFeature.forgotPassword.localizableString)
+                    .font(.footnote)
+                    .foregroundColor(Color.brand.color)
+                    .onTapGesture {
+                        viewStore.send(.forgotButtonTapped)
+                    }
 				Spacer()
 				Button(StringFactory.AuthFeature.logIn.localizableString) {
 					viewStore.send(.logInButtonTapped)

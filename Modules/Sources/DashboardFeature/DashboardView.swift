@@ -27,6 +27,7 @@ public struct DashboardView: View {
                             ForEach(viewStore.state.activateFunds, id: \.id) { fund in
                                 DashboardRow(viewStore: viewStore, fund: fund)
                             }
+                            .transition(.opacity.animation(.default))
                         }
                         .listSectionSeparator(.hidden)
                     }
@@ -34,7 +35,7 @@ public struct DashboardView: View {
                         Section(header: Text(StringFactory.Dashboard.previousFund.localizableString)) {
                             ForEach(viewStore.state.previousFunds, id: \.id) { fund in
                                 DashboardRow(viewStore: viewStore, fund: fund)
-                            }
+                            }                .transition(.opacity.animation(.default))
                         }
                         .listSectionSeparator(.hidden)
                     }

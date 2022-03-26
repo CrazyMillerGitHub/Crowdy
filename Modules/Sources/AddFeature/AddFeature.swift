@@ -13,19 +13,19 @@ public struct AddState: Equatable {
 
     @BindableState var titleValue: String
     @BindableState var expirationDateValue: Double?
-    @BindableState var catogoryValue: String
+    @BindableState var categoryValue: String
     @BindableState var backgroundURL: URL?
     var alert: AlertState<AddAction>?
 
     public init(
         titleValue: String = "",
         expirationDateValue: Double? = nil,
-        catogoryValue: String = "",
+        categoryValue: String = "",
         backgroundURL: URL? = nil
     ) {
         self.titleValue = titleValue
         self.expirationDateValue = expirationDateValue
-        self.catogoryValue = catogoryValue
+        self.categoryValue = categoryValue
         self.backgroundURL = backgroundURL
     }
 
@@ -58,7 +58,7 @@ public typealias AddReducer = Reducer<AddState, AddAction, SystemEnvironment<Add
 public let addReducer = AddReducer { state, action, environment in
     switch action {
     case .publishTapped:
-        debugPrint(state.titleValue, state.expirationDateValue, state.catogoryValue)
+        debugPrint(state.titleValue, state.expirationDateValue, state.categoryValue)
         return environment
             .saveFundRequest(environment.storage(), .init())
             .receive(on: environment.mainQueue())

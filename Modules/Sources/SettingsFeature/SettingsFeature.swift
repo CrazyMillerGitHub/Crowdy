@@ -12,7 +12,7 @@ import SwiftUI
 
 public struct SettingsState: Equatable {
 
-    public var operations: [OperationModel] = []
+    public var operations: [OperationModel] = [.fixture]
     @BindableState public var spent: Price = .fixture
     public var isCardAvailable = true
     public var isOperationsAvailble = true
@@ -66,8 +66,8 @@ public let settingsReducer = Reducer<
             .catchToEffect()
             .map(SettingsAction.didLoadUser)
     case .didLoadUser(let response):
-        state.isCardAvailable = false
-        state.isOperationsAvailble = false
+        state.isCardAvailable = environment.featureAvailability().isCardAvailable
+        state.isOperationsAvailble = environment.featureAvailability().isOperationsAvailble
         state.isLoading = false
         guard case let .success(model) = response else {
             return Effect(value: .didLoadUserFailed)
