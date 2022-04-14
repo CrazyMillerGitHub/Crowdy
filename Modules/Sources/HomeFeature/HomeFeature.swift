@@ -12,12 +12,12 @@ import SwiftUI
 
 public struct HomeEnvironment {
 
-    var loadFundsRequest: (JSONDecoder) -> Effect<[Fund], APIError>
-    var updateFavoriteFundRequest: (JSONDecoder, JSONEncoder, URL, EditFavoruriteRequest) -> Effect<Fund, APIError>
+    var loadFundsRequest: (JSONDecoder) -> Effect<[FundDTO], APIError>
+    var updateFavoriteFundRequest: (JSONDecoder, JSONEncoder, URL, EditFavoruriteRequest) -> Effect<FundDTO, APIError>
 
     public init(
-        loadFundsRequest: @escaping (JSONDecoder) -> Effect<[Fund], APIError>,
-        updateFavoriteFundRequest: @escaping (JSONDecoder, JSONEncoder, URL, EditFavoruriteRequest) -> Effect<Fund, APIError>
+        loadFundsRequest: @escaping (JSONDecoder) -> Effect<[FundDTO], APIError>,
+        updateFavoriteFundRequest: @escaping (JSONDecoder, JSONEncoder, URL, EditFavoruriteRequest) -> Effect<FundDTO, APIError>
     ) {
         self.loadFundsRequest = loadFundsRequest
         self.updateFavoriteFundRequest = updateFavoriteFundRequest
@@ -32,12 +32,12 @@ public enum HomeAction: BindableAction {
     case selectFund(UUID)
 
     // Load funds
-    case loadFunds(Result<[Fund], APIError>)
+    case loadFunds(Result<[FundDTO], APIError>)
     case loadFundsFailed
 
     // Toggle Favorite
     case toggleFavorite(UUID)
-    case toggleFavoriteLoaded(Result<Fund, APIError>)
+    case toggleFavoriteLoaded(Result<FundDTO, APIError>)
     case toggleFavoriteFailed
     case toggleFavouriteSucceed
 

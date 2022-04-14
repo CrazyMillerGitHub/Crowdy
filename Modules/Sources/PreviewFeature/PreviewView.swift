@@ -71,6 +71,7 @@ public struct PreviewView: View {
     }
 }
 
+#if DEBUG
 public struct PreviewView_Preview: PreviewProvider {
 
     public static var previews: some View {
@@ -85,3 +86,4 @@ public struct PreviewView_Preview: PreviewProvider {
         )
     }
 }
+#endif

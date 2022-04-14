@@ -15,7 +15,8 @@ public struct SystemEnvironment<Environment> {
 	public var decoder: () -> JSONDecoder
     public var encoder: () -> JSONEncoder
     public var currentUser: () -> User
-	public var storage: () -> CoreDataStorage
+	public var storage: () -> PersistenceController
+    public var paymentService: () -> PaymentServiceProtocol
     public var remoteConfig: () -> RemoteConfigProtocol
     public var featureAvailability: () -> FeatureAvailabilityProtocol
 
@@ -25,7 +26,8 @@ public struct SystemEnvironment<Environment> {
 		decoder: @escaping () -> JSONDecoder,
         encoder: @escaping () -> JSONEncoder,
         currentUser: @escaping () -> User,
-		storage: @escaping () -> CoreDataStorage,
+		storage: @escaping () -> PersistenceController,
+        paymentService: @escaping () -> PaymentServiceProtocol,
         remoteConfig: @escaping () -> RemoteConfigProtocol,
         featureAvailability: @escaping () -> FeatureAvailabilityProtocol
 	) {
@@ -35,6 +37,7 @@ public struct SystemEnvironment<Environment> {
         self.encoder = encoder
         self.currentUser = currentUser
 		self.storage = storage
+        self.paymentService = paymentService
         self.remoteConfig = remoteConfig
         self.featureAvailability = featureAvailability
 	}
@@ -71,8 +74,12 @@ public struct SystemEnvironment<Environment> {
         return User(uuid: 1)
     }
 
-	private static func storage() -> CoreDataStorage {
-        return CoreDataStorage.shared
+    private static func paymentService() -> PaymentServiceProtocol {
+        return PaymentService()
+    }
+
+	private static func storage() -> PersistenceController {
+        return PersistenceController.shared
 	}
 
 	public static func live(environment: Environment) -> Self {
@@ -83,6 +90,7 @@ public struct SystemEnvironment<Environment> {
             encoder: encoder,
             currentUser: currentUser,
             storage: storage,
+            paymentService: paymentService,
             remoteConfig: remoteConfig,
             featureAvailability: featureAvailability
         )
@@ -96,6 +104,7 @@ public struct SystemEnvironment<Environment> {
             encoder: encoder,
             currentUser: currentUser,
             storage: storage,
+            paymentService: paymentService,
             remoteConfig: remoteConfig,
             featureAvailability: featureAvailability
         )

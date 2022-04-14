@@ -13,19 +13,19 @@ public struct UserFundsRequest: Encodable {
     let userId: Int64
 }
 
-public func getUserFundsRequest(decoder: JSONDecoder, encoder: JSONEncoder, baseURL: URL, request: UserFundsRequest) -> Effect<[Fund], APIError> {
+public func getUserFundsRequest(decoder: JSONDecoder, encoder: JSONEncoder, baseURL: URL, request: UserFundsRequest) -> Effect<[FundDTO], APIError> {
     var urlRequest = URLRequest(url: baseURL)
     urlRequest.httpBody = try? encoder.encode(request)
     urlRequest.httpMethod = "POST"
     return URLSession.shared.dataTaskPublisher(for: urlRequest)
         .mapError { _ in APIError.downloadError }
         .map(\.data)
-        .decode(type: [Fund].self, decoder: decoder)
+        .decode(type: [FundDTO].self, decoder: decoder)
         .mapError { _ in APIError.decodingError }
         .eraseToEffect()
 }
 
-public func dummyGetUserFundsRequest(decoder: JSONDecoder, encoder: JSONEncoder, baseURL: URL, request: UserFundsRequest) -> Effect<[Fund], APIError> {
+public func dummyGetUserFundsRequest(decoder: JSONDecoder, encoder: JSONEncoder, baseURL: URL, request: UserFundsRequest) -> Effect<[FundDTO], APIError> {
     return Effect(value: [.fixture])
         .delay(for: 1, scheduler: DispatchQueue.main)
         .eraseToEffect()

@@ -10,6 +10,7 @@ import ComposableArchitecture
 import SwiftUI
 import SettingsFeature
 import AuthFeature
+import OnboardingFeature
 
 public struct SettingsCoordinatorView: View {
 
@@ -33,6 +34,11 @@ public struct SettingsCoordinatorView: View {
                     state: /ScreenState.authState,
                     action: ScreenAction.authAction,
                     then: AuthView.init
+                )
+                CaseLet(
+                    state: /ScreenState.onboardingState,
+                    action: ScreenAction.onboardingAction,
+                    then: OnboardingView.init
                 )
             }
         }
@@ -64,10 +70,20 @@ typealias SettingsCoordinatorReducer = Reducer<
 let settingsCoordinatorReducer: SettingsCoordinatorReducer = screenReducer
     .forEachIndexedRoute(environment: { _ in .dev(environment: .init()) })
     .withRouteReducer(
-        Reducer { state, action, environment in
+        Reducer { state, action, environment
+            in
             switch action {
             case .routeAction(_, action: .settinsgAction(.logOutButtonTapped)):
-                state.routes.presentCover(.authState(.init()))
+                state.routes.presentCover(.onboardingState(.init()), embedInNavigationView: true)
+            case .routeAction(_, action: .onboardingAction(.loginTapped)):
+                state.routes.push(.authState(.init(showLogin: true)))
+            case .routeAction(_, action: .onboardingAction(.registerTapped)):
+                state.routes.push(.authState(.init(showLogin: false)))
+            case .routeAction(_, action: .authAction(.areYouRegisteredTapped)):
+                return Effect.routeWithDelaysIfUnsupported(state.routes) {
+                    $0.goBack()
+                    $0.push(.authState(.init(showLogin: true)))
+                }
             case _:
                 break
             }

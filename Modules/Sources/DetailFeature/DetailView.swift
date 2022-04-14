@@ -22,7 +22,9 @@ public struct DetailView: View {
         WithViewStore(store) { viewStore in
             List {
                 HeaderSection(store: store)
-                ContentSection()
+                AvailabilityView(!viewStore.detail.info.isEmpty) {
+                    ContentSection(store: store)
+                }
                 Section(header: Text(StringFactory.Details.stage.localizableString)) {
                     InfoSection(detail: viewStore.binding(\.$detail))
                 }

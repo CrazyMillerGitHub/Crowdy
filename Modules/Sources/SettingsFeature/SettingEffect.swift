@@ -16,7 +16,7 @@ public func dummyLoadUserOperationsRequest(decoder: JSONDecoder, encoder: JSONEn
         .eraseToEffect()
 }
 
-public func dummyLoadUserRequest(storage: CoreDataStorage) -> Effect<User, StorageError> {
+public func dummyLoadUserRequest(storage: PersistenceController) -> Effect<User, StorageError> {
     return Effect(value: .fixture)
         .delay(for: 0.5, scheduler: DispatchQueue.main)
         .eraseToEffect()

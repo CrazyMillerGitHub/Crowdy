@@ -35,3 +35,7 @@
 "previousFund" = "Previous funds";
 "travel" = "Travel";
 "deliveringGoods" = "Delivering goods";
+"register" = "Register";
+"confirmPassword" = "Confirm password";
+"fullName" = "Full name";
+"areYouRegistered" = "Are you registered? Login";

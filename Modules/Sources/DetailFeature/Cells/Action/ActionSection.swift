@@ -27,7 +27,7 @@ struct ActionSection: View {
                     : StringFactory.Details.cancel.localizableString
                 ) {
                     viewStore.detail.isIncoming
-                    ? viewStore.send(.startTransactionOrder)
+                    ? viewStore.send(.startTransactionOrder(viewStore.uuid, viewStore.detail.title, viewStore.detail.author, viewStore.detail.fund.image))
                     : viewStore.send(.startCancellingOrder)
                 }
                 .buttonStyle(BrandButtonStyle(color: viewStore.detail.isIncoming ? .brand : .magnetta))

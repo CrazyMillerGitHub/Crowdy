@@ -15,10 +15,10 @@ import Kingfisher
 struct DashboardRow: View {
 
     private let viewStore: ViewStore<DashboardState, DashboardAction>
-    private let fund: Fund
+    private let fund: FundDTO
     @Environment(\.colorScheme) var colorScheme
 
-    init(viewStore: ViewStore<DashboardState, DashboardAction>, fund: Fund) {
+    init(viewStore: ViewStore<DashboardState, DashboardAction>, fund: FundDTO) {
         self.viewStore = viewStore
         self.fund = fund
     }

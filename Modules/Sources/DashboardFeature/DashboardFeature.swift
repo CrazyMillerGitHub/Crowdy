@@ -12,24 +12,24 @@ import ComposableArchitecture
 public struct DashboardState: Equatable {
 
     var isLoading: Bool = true
-    var activateFunds: [Fund] = [.fixture]
-    var previousFunds: [Fund] = [.fixture]
+    var activateFunds: [FundDTO] = [.fixture]
+    var previousFunds: [FundDTO] = [.fixture]
 
     public init() {}
 }
 
 public enum DashboardAction {
     case onAppear
-    case fundsLoaded(Result<[Fund], APIError>)
+    case fundsLoaded(Result<[FundDTO], APIError>)
     case fundsFailed
     case selectFund(UUID)
 }
 
 public struct DashboardEnvironment {
 
-    var getUserFundsRequest: (JSONDecoder, JSONEncoder, URL, UserFundsRequest) -> Effect<[Fund], APIError>
+    var getUserFundsRequest: (JSONDecoder, JSONEncoder, URL, UserFundsRequest) -> Effect<[FundDTO], APIError>
 
-    public init(getUserFundsRequest: @escaping (JSONDecoder, JSONEncoder, URL, UserFundsRequest) -> Effect<[Fund], APIError>) {
+    public init(getUserFundsRequest: @escaping (JSONDecoder, JSONEncoder, URL, UserFundsRequest) -> Effect<[FundDTO], APIError>) {
         self.getUserFundsRequest = getUserFundsRequest
     }
     

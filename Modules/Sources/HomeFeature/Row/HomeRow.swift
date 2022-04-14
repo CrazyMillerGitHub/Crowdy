@@ -22,9 +22,9 @@ public struct HomeRow: View {
 		static let disabledOpacity: CGFloat = 0.5
 	}
     private let store: Store<HomeState, HomeAction>
-    private let fund: Fund
+    private let fund: FundDTO
 
-    public init(store: Store<HomeState, HomeAction>, fund: Fund) {
+    public init(store: Store<HomeState, HomeAction>, fund: FundDTO) {
         self.store = store
         self.fund = fund
     }

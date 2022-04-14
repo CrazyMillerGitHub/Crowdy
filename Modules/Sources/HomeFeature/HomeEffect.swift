@@ -9,17 +9,17 @@ import Foundation
 import ComposableArchitecture
 import Core
 
-public func loadFundsRequest(decoder: JSONDecoder, baseURL: URL) -> Effect<[Fund], APIError> {
+public func loadFundsRequest(decoder: JSONDecoder, baseURL: URL) -> Effect<[FundDTO], APIError> {
     return URLSession.shared.dataTaskPublisher(for: baseURL.appendingPathComponent("get"))
 		.mapError { _ in APIError.downloadError }
 		.map { data, _ in data }
-		.decode(type: [Fund].self, decoder: decoder)
+		.decode(type: [FundDTO].self, decoder: decoder)
 		.mapError { _ in APIError.decodingError }
 		.eraseToEffect()
 }
 
-public func dummyLoadFundsRequest(decoder: JSONDecoder) -> Effect<[Fund], APIError> {
-    var fund = Fund.fixture
+public func dummyLoadFundsRequest(decoder: JSONDecoder) -> Effect<[FundDTO], APIError> {
+    var fund = FundDTO.fixture
     fund.id = .init(uuidString: "D0AD236D-0100-0000-A0BB-236D01000000")!
     return Effect(value: [fund])
         .delay(for: 1, scheduler: DispatchQueue.main)
@@ -31,14 +31,14 @@ public func updateFavoriteFundRequest(
     encoder: JSONEncoder,
     baseURL: URL,
     request: EditFavoruriteRequest
-) -> Effect<Fund, APIError> {
+) -> Effect<FundDTO, APIError> {
     var urlRequest = URLRequest(url: baseURL.appendingPathComponent("update"))
     urlRequest.httpBody = try? encoder.encode(request)
     urlRequest.httpMethod = "POST"
     return URLSession.shared.dataTaskPublisher(for: urlRequest)
         .mapError { _ in APIError.downloadError }
         .map { data, _ in data }
-        .decode(type: Fund.self, decoder: decoder)
+        .decode(type: FundDTO.self, decoder: decoder)
         .mapError { _ in APIError.decodingError }
         .eraseToEffect()
 }
@@ -48,8 +48,8 @@ public func dummyUpdateFavoriteFundRequest(
     encoder: JSONEncoder,
     baseURL: URL,
     request: EditFavoruriteRequest
-) -> Effect<Fund, APIError> {
-    var fund: Fund = .fixture
+) -> Effect<FundDTO, APIError> {
+    var fund: FundDTO = .fixture
     fund.id = request.crowdfindingId
     fund.isFavorite = request.newState
     return Effect(value: fund)

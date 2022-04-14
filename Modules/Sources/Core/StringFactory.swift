@@ -44,9 +44,13 @@ public extension StringFactory {
 
     enum AuthFeature: String {
         case login
-        case password
-        case forgotPassword
         case logIn
+        case password
+        case confirmPassword
+        case fullName
+        case areYouRegistered
+        case register
+        case forgotPassword
     }
 }
 
@@ -91,5 +95,14 @@ public extension StringFactory {
         case category
         case fundExpiration
         case without
+    }
+}
+
+// MARK: - Onboarding
+public extension StringFactory {
+
+    enum Onboarding: String {
+        case logIn
+        case register
     }
 }

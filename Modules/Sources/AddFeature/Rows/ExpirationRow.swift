@@ -11,21 +11,19 @@ import Core
 
 struct ExpirationRow: View {
 
-    @Binding var expirationDateValue: Double?
-
-    @State var expirationString: String = ""
-    @State var isSelected: Bool = false
+    @Binding var expirationDateValue: String
+    @State var isSelected: Bool = true
 
     var body: some View {
         VStack(alignment: .leading) {
-            InputField(placeholder: StringFactory.Add.fundExpiration.localizableString, binding: $expirationString) {
-                TextField("", text:  $expirationString)
+            InputField(placeholder: StringFactory.Add.fundExpiration.localizableString, binding: $expirationDateValue) {
+                ToSwiftUI {
+                    DatePickerTextField(placeholder: "", binding: $expirationDateValue, emptyTitle: StringFactory.Add.without.localizableString)
+                }
+                .disabled(isSelected)
             }
             Chips(title: StringFactory.Add.without.localizableString, binding: $isSelected)
-        }.onChange(of: isSelected, perform: { newValue in
-            expirationString = newValue ? "Без срока" : (expirationDateValue ?? 0).debugDescription
-            expirationDateValue = newValue ? nil : 12344434
-        })
+        }
         .padding([.leading, .trailing, .top])
     }
 }

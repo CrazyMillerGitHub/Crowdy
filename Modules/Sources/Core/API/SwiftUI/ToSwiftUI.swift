@@ -8,18 +8,18 @@
 import SwiftUI
 import UIKit
 
-public struct ToSwiftUI: UIViewControllerRepresentable {
+public struct ToSwiftUI: UIViewRepresentable {
 
-	public typealias UIViewControllerType = UIViewController
-	private let viewController: () -> UIViewController
+	public typealias UIViewType = UIView
+	private let viewController: () -> UIViewType
 
-	public init(_ viewController: @escaping () -> UIViewController) {
+	public init(_ viewController: @escaping () -> UIViewType) {
 		self.viewController = viewController
 	}
 
-	public func makeUIViewController(context: Context) -> UIViewController {
-		return viewController()
-	}
-	
-	public func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+    public func makeUIView(context: Context) -> UIView {
+        return viewController()
+    }
+
+    public func updateUIView(_ uiView: UIView, context: Context) {}
 }

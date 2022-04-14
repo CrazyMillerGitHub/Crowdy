@@ -11,23 +11,26 @@ import Core
 /// Стейт-машина для модуля авторизации
 public struct AuthState: Equatable {
 
-    @BindableState var passwordValue: String
-    @BindableState var loginValue: String
-    @BindableState var confirmpasswordValue: String
+    var showLogin: Bool
     @BindableState var fullNameValue: String
+    @BindableState var passwordValue: String
+    @BindableState var confirmPasswordValue: String
+    @BindableState var loginValue: String
     var isLoading: Bool
 
     public init(
+        showLogin: Bool = false,
+        fullNameValue: String = "",
         loginValue: String = "",
         passwordValue: String = "",
-        confirmpasswordValue: String = "",
-        fullNameValue: String = "",
+        confirmPasswordValue: String = "",
         isLoading: Bool = false
     ) {
-        self.loginValue = loginValue
-        self.confirmpasswordValue = confirmpasswordValue
+        self.showLogin = showLogin
         self.fullNameValue = fullNameValue
+        self.loginValue = loginValue
         self.passwordValue = passwordValue
+        self.confirmPasswordValue = confirmPasswordValue
         self.isLoading = isLoading
     }
 }
@@ -40,6 +43,8 @@ public enum AuthAction: BindableAction {
 	case logInButtonTapped
     /// Register button Tapped
     case registerButtonTapped
+    /// Login button Tapped
+    case areYouRegisteredTapped
 	/// Forgot password was tapped
 	case forgotButtonTapped
 	/// User have been authorized
@@ -110,7 +115,7 @@ public let authReducer = Reducer<
                     fullName: state.fullNameValue,
                     email: state.loginValue,
                     password: state.passwordValue,
-                    confirmPassword: state.confirmpasswordValue
+                    confirmPassword: state.confirmPasswordValue
                 )
             )
             .receive(on: environment.mainQueue())

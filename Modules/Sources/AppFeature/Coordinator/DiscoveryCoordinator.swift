@@ -13,6 +13,7 @@ import PreviewFeature
 import DetailFeature
 import AddFeature
 import AuthFeature
+import PaymentFeature
 
 public struct DiscoveryCoordinatorView: View {
 
@@ -56,6 +57,11 @@ public struct DiscoveryCoordinatorView: View {
                     state: /ScreenState.authState,
                     action: ScreenAction.authAction,
                     then: AuthView.init
+                )
+                CaseLet(
+                    state: /ScreenState.paymentState,
+                    action: ScreenAction.paymentAction,
+                    then: PaymentView.init
                 )
             }
         }
@@ -102,7 +108,9 @@ let discoveryCoordinatorReducer: DiscoveryCoordinatorReducer = screenReducer
                 state.routes.goBack()
             case .routeAction(_, action: .detailAction(.startCancellingOrder)):
                 state.routes.goBack()
-            case .routeAction(_, action: .detailAction(.startTransactionOrder)):
+            case .routeAction(_, action: .detailAction(.startTransactionOrder(let uuid, let title, let author, let image))):
+                state.routes.presentCover(.paymentState(.init(uuid: uuid, title: title, author: author, image: image)))
+            case .routeAction(_, action: .paymentAction(.cancelTapped)):
                 state.routes.goBack()
 //            case .routeAction(_, action: .homeAction(.goToAuth)):
 //                state.routes = [.root(.authState(.init()))]

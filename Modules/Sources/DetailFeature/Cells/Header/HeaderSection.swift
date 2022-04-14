@@ -35,10 +35,17 @@ struct HeaderSection: View {
                                         Text(viewStore.detail.author)
                                             .font(.headline)
                                             .foregroundColor(Color.white.opacity(0.7))
-                                        Text(viewStore.detail.title)
-                                            .foregroundColor(Color.white)
-                                            .font(.title)
-                                            .bold()
+                                        HStack {
+                                            Text(viewStore.detail.title)
+                                                .foregroundColor(Color.white)
+                                                .font(.title)
+                                                .bold()
+                                            Spacer()
+                                            Image(systemName: "heart.fill")
+                                                .foregroundColor(.white)
+                                            Image(systemName: "square.and.arrow.up")
+                                                .foregroundColor(.white)
+                                        }
                                     }
                                     Spacer()
                                 }

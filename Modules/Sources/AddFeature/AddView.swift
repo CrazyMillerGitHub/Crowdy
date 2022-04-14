@@ -33,6 +33,8 @@ public struct AddView: View {
                         .alert(self.store.scope(state: \.alert), dismiss: .alertOkTapped)
                         .padding([.leading, .trailing, .top])
                         .buttonStyle(BrandButtonStyle())
+                        .opacity(viewStore.requestIsReady ? 1 : 0.5)
+                        .animation(.easeOut, value: viewStore.state)
                     }
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {

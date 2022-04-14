@@ -41,11 +41,11 @@ public enum SettingsAction: BindableAction {
 
 public struct SettingsEnvironment {
 
-    var loadUserRequest: (CoreDataStorage) -> Effect<User, StorageError>
+    var loadUserRequest: (PersistenceController) -> Effect<User, StorageError>
     var loadOperationsRequest: (JSONDecoder, JSONEncoder, URL) -> Effect<[OperationModel], APIError>
 
     public init(
-        loadUserRequest: @escaping (CoreDataStorage) -> Effect<User, StorageError>,
+        loadUserRequest: @escaping (PersistenceController) -> Effect<User, StorageError>,
         loadOperationsRequest: @escaping (JSONDecoder, JSONEncoder, URL) -> Effect<[OperationModel], APIError>
     ) {
         self.loadUserRequest = loadUserRequest

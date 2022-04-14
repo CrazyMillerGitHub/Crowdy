@@ -28,11 +28,15 @@ public func dummyLoadDetailRequest(decoder: JSONDecoder, baseURL: URL, uuid: UUI
         fund: .fixture,
         title: "Лучший сбор в мире",
         author: "Mikhail Borisov",
-        info: "No info",
+        info: getInfo(),
         isIncoming: true,
         progress: progressModel
     )
     )
     .delay(for: 1, scheduler: DispatchQueue.main)
     .eraseToEffect()
+}
+
+private func getInfo() -> String {
+    return "**Описание задачи**"
 }

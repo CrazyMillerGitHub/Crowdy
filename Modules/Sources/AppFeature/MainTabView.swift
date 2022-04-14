@@ -44,7 +44,8 @@ public struct RootView: View {
                         Text(StringFactory.Tab.settings.localizableString)
                     }
                     .tag(MainTabCoordinatorState.Tab.settings)
-            }.accentColor(Color.brand.color)
+            }
+            .accentColor(Color.brand.color)
         }
     }
 }

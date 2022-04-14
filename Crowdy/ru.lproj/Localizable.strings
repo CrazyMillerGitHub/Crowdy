@@ -35,3 +35,7 @@
 "previousFund" = "Прошлые сборы";
 "travel" = "Путешествие";
 "deliveringGoods" = "Доставка вознагрождения";
+"register" = "Регистрация";
+"confirmPassword" = "Повторите пароль";
+"fullName" = "Полное имя";
+"areYouRegistered" = "Вы уже регистрировались? Войдите";

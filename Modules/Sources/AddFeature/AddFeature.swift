@@ -12,14 +12,14 @@ import Core
 public struct AddState: Equatable {
 
     @BindableState var titleValue: String
-    @BindableState var expirationDateValue: Double?
+    @BindableState var expirationDateValue: String
     @BindableState var categoryValue: String
     @BindableState var backgroundURL: URL?
     var alert: AlertState<AddAction>?
 
     public init(
         titleValue: String = "",
-        expirationDateValue: Double? = nil,
+        expirationDateValue: String = "",
         categoryValue: String = "",
         backgroundURL: URL? = nil
     ) {
@@ -29,8 +29,15 @@ public struct AddState: Equatable {
         self.backgroundURL = backgroundURL
     }
 
+    var requestIsReady: Bool {
+        return !titleValue.isEmpty && !categoryValue.isEmpty
+    }
+
     public static func == (lhs: AddState, rhs: AddState) -> Bool {
         return lhs.titleValue == rhs.titleValue
+        && lhs.expirationDateValue == rhs.expirationDateValue
+        && lhs.categoryValue == rhs.categoryValue
+        && lhs.alert?.id == rhs.alert?.id
     }
 }
 
@@ -40,15 +47,22 @@ public enum AddAction: BindableAction {
     case publishTapped
     case binding(BindingAction<AddState>)
     case receiveResponse(Result<FundRequestDTO, APIError>)
+    case saveFund(FundRequestDTO)
+    case receiveSaveResponse(Result<FundRequestDTO, StorageError>)
     case responseFailed
     case alertOkTapped
 }
 
 public struct AddEnvironment {
 
-    var saveFundRequest: (CoreDataStorage, FundRequestDTO) -> Effect<FundRequestDTO, APIError>
+    var createFundRequest: (JSONDecoder, FundRequestDTO) -> Effect<FundRequestDTO, APIError>
+    var saveFundRequest: (PersistenceController, FundRequestDTO) -> Effect<FundRequestDTO, StorageError>
 
-    public init(saveFundRequest: @escaping (CoreDataStorage, FundRequestDTO) -> Effect<FundRequestDTO, APIError>) {
+    public init(
+        createFundRequest: @escaping (JSONDecoder, FundRequestDTO) -> Effect<FundRequestDTO, APIError>,
+        saveFundRequest: @escaping (PersistenceController, FundRequestDTO) -> Effect<FundRequestDTO, StorageError>
+    ) {
+        self.createFundRequest = createFundRequest
         self.saveFundRequest = saveFundRequest
     }
 }
@@ -60,7 +74,7 @@ public let addReducer = AddReducer { state, action, environment in
     case .publishTapped:
         debugPrint(state.titleValue, state.expirationDateValue, state.categoryValue)
         return environment
-            .saveFundRequest(environment.storage(), .init())
+            .createFundRequest(environment.decoder(), .init())
             .receive(on: environment.mainQueue())
             .catchToEffect()
             .map(AddAction.receiveResponse)
@@ -76,7 +90,18 @@ public let addReducer = AddReducer { state, action, environment in
         guard case let .success(dto) = response else {
             return Effect(value: .responseFailed)
         }
-        debugPrint("Data successfully saved")
+        return Effect(value: .saveFund(dto))
+    case .saveFund(let dto):
+        return environment
+            .saveFundRequest(environment.storage(), dto)
+            .receive(on: environment.mainQueue())
+            .catchToEffect()
+            .map(AddAction.receiveSaveResponse)
+    case .receiveSaveResponse(let response):
+        guard case let .success(dto) = response else {
+            return Effect(value: .responseFailed)
+        }
+        return Effect(value: .cancelTapped)
     case _:
         break
     }

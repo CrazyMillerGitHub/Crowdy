@@ -27,7 +27,7 @@ extension Progress: Equatable {
 public struct FundDetail: Decodable, Equatable {
 
     let id: UUID
-    let fund: Fund
+    let fund: FundDTO
     let title: String
     var author: String
     let info: String
@@ -92,7 +92,7 @@ public enum DetailAction: BindableAction {
     case binding(BindingAction<DetailState>)
     case closeButtonTapped
     case startCancellingOrder
-    case startTransactionOrder
+    case startTransactionOrder(UUID, String, String, URL)
 }
 
 public struct DetailEnvironment {

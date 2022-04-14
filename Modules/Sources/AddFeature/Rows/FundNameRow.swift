@@ -12,10 +12,6 @@ struct FundNameRow: View {
 
     @Binding var fundNameText: String
 
-    public init(fundNameText: Binding<String>) {
-        _fundNameText = fundNameText
-    }
-
     var body: some View {
         VStack {
             InputField(placeholder: "Название сбора", binding: $fundNameText) {

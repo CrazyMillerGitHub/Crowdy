@@ -4,49 +4,69 @@ import PackageDescription
 
 let package = Package(
     name: "Modules",
-	platforms: [.iOS(.v15)],
+    platforms: [.iOS(.v15), .macOS(.v11)],
     products: [
 		.library(
 			name: "Core",
+            type: .static,
 			targets: ["Core"]),
 		.library(
 			name: "DesignSystem",
+            type: .static,
 			targets: ["DesignSystem"]),
 		.library(
 			name: "NewsFeature",
+            type: .dynamic,
 			targets: ["NewsFeature"]),
 		.library(
 			name: "ShareQrFeature",
+            type: .dynamic,
 			targets: ["ShareQrFeature"]),
 		.library(
 			name: "HomeFeature",
+            type: .dynamic,
 			targets: ["HomeFeature"]),
 		.library(
 			name: "DashboardFeature",
+            type: .dynamic,
 			targets: ["DashboardFeature"]),
 		.library(
 			name: "SettingsFeature",
+            type: .dynamic,
 			targets: ["SettingsFeature"]),
 		.library(
 			name: "AuthFeature",
+            type: .dynamic,
 			targets: ["AuthFeature"]),
+        .library(
+            name: "OnboardingFeature",
+            type: .dynamic,
+            targets: ["OnboardingFeature"]),
 		.library(
 			name: "AppFeature",
+            type: .dynamic,
 			targets: ["AppFeature"]),
 		.library(
 			name: "DeeplinkFeature",
+            type: .dynamic,
 			targets: ["DeeplinkFeature"]),
         .library(name: "PaymentFeature",
+                 type: .dynamic,
                  targets: ["PaymentFeature"]),
         .library(name: "OperationRow",
+                 type: .dynamic,
                  targets: ["OperationRow"]),
         .library(name: "DetailFeature",
+                 type: .dynamic,
                  targets: ["DetailFeature"]),
         .library(name: "CardFeature",
+                 type: .dynamic,
                  targets: ["CardFeature"]),
         .library(name: "PreviewFeature",
+                 type: .dynamic,
                  targets: ["PreviewFeature"]),
         .library(name: "AddFeature",
+                 type: .dynamic,
                  targets: ["AddFeature"])
     ],
     dependencies: [
@@ -62,7 +82,8 @@ let package = Package(
 			name: "Core",
 			dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "Kingfisher", package: "Kingfisher")
+                .product(name: "Kingfisher", package: "Kingfisher"),
+                .product(name: "Stripe", package: "stripe-ios")
 			]
 		),
 		.target(name: "DesignSystem"),
@@ -116,7 +137,9 @@ let package = Package(
 				"HomeFeature",
 				"NewsFeature",
 				"AuthFeature",
+                "OnboardingFeature",
                 "DetailFeature",
+                "PaymentFeature",
                 "PreviewFeature",
                 "AddFeature",
                 .product(name: "TCACoordinators", package: "TCACoordinators")
@@ -125,7 +148,15 @@ let package = Package(
         .target(
             name: "PaymentFeature",
             dependencies: [
-                .product(name: "Stripe", package: "stripe-ios")
+                "Core",
+                "DesignSystem"
+            ]
+        ),
+        .target(
+            name: "OnboardingFeature",
+            dependencies: [
+                "Core",
+                "DesignSystem"
             ]
         ),
         .target(

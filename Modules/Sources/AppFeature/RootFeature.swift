@@ -5,8 +5,8 @@
 //  Created by Mikhail Borisov on 07.01.2022.
 //
 
-import ComposableArchitecture
 import Core
+import ComposableArchitecture
 import HomeFeature
 import NewsFeature
 import SettingsFeature
@@ -14,6 +14,8 @@ import DashboardFeature
 import DetailFeature
 import AuthFeature
 import PreviewFeature
+import PaymentFeature
+import OnboardingFeature
 import AddFeature
 
 
@@ -33,6 +35,10 @@ public enum ScreenState: Equatable, Identifiable {
     case previewState(PreviewState)
     /// Экран добавления нового сбора
     case addState(AddState)
+    /// Состояние платежа
+    case paymentState(PaymentState)
+    /// Онбординг
+    case onboardingState(OnboardingState)
     
 
     public var id: UUID {
@@ -54,6 +60,8 @@ public enum ScreenAction {
     case detailAction(DetailAction)
     case previewAction(PreviewAction)
     case addAction(AddAction)
+    case paymentAction(PaymentAction)
+    case onboardingAction(OnboardingAction)
 }
 
 public struct ScreenEnvironment {
@@ -74,6 +82,24 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<
             )
         }
     ),
+    paymentReducer.pullback(
+        state: /ScreenState.paymentState,
+        action: /ScreenAction.paymentAction,
+        environment: { _ in
+            return .dev(
+                environment: PaymentEnvironment(
+                    createPaymentRequest: dummyCreatePaymentRequest
+                )
+            )
+        }
+    ),
+    onboardingReducer.pullback(
+        state: /ScreenState.onboardingState,
+        action: /ScreenAction.onboardingAction,
+        environment: { _ in
+            return OnboardingEnvironment()
+        }
+    ),
     previewReducer.pullback(
         state: /ScreenState.previewState,
         action: /ScreenAction.previewAction,
@@ -89,6 +115,7 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<
         environment: { _ in
             return .dev(
                 environment: AddEnvironment(
+                    createFundRequest: createFundRequest,
                     saveFundRequest: saveFundRequest
                 )
             )

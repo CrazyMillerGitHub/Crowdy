@@ -66,6 +66,7 @@ public struct SettingsView: View {
 	}
 }
 
+#if DEBUG
 struct SettingsView_Preview: PreviewProvider {
 
     static var previews: some View {
@@ -83,3 +84,4 @@ struct SettingsView_Preview: PreviewProvider {
         )
     }
 }
+#endif

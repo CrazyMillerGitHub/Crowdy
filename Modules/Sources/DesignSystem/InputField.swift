@@ -90,6 +90,7 @@ public struct InputField<Content: View>: View {
 	}
 }
 
+#if DEBUG
 struct Preview_InputField: PreviewProvider {
 
 	@State
@@ -105,3 +106,4 @@ struct Preview_InputField: PreviewProvider {
 		}
 	}
 }
+#endif

@@ -11,13 +11,13 @@ import ComposableArchitecture
 
 struct HomeRowDetail: View {
 
-    private let fund: Fund
+    private let fund: FundDTO
 
     var collectedTextValue: String {
         String(
             format: "%@ %.0f%%",
             StringFactory.HomeRow.progress.localizableString,
-            fund.amountPrecentage
+            fund.amountPrecentage * 100
         )
     }
 
@@ -34,15 +34,18 @@ struct HomeRowDetail: View {
         return formatter.string(from: .init(timeIntervalSince1970: expirationDate))
     }
 
-    init(fund: Fund) {
+    init(fund: FundDTO) {
         self.fund = fund
     }
 
     var body: some View {
-        var values = [collectedTextValue, participantsValue, expirationValue]
+        let values = [collectedTextValue, participantsValue, expirationValue]
         return HStack {
             ForEach(values, id: \.self) { value in
                 Text(value)
+                    .font(.body)
+                    .minimumScaleFactor(0.01)
+                    .lineLimit(1)
             }
         }
         .frame(height: 20)

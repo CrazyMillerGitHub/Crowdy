@@ -6,23 +6,22 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct ContentSection: View {
 
+    let store: Store<DetailState, DetailAction>
+
+    init(store: Store<DetailState, DetailAction>) {
+        self.store = store
+    }
+
     var body: some View {
-        lazy var text: String = {
-            return """
-            I want to create plane, that will be greatest in the world. It’s better than Boeing or Sukhoi.
-            Benefits:
-            * First item
-            * Second item
-            * Third item
-            * Fourth item
-            """
-        }()
-        
-        return Text(.init(text))
-            .padding(.top)
-            .listRowSeparator(.hidden)
+        WithViewStore(store) { viewStore in
+            Text(.init(viewStore.detail.info))
+                .padding(.top)
+                .listRowSeparator(.hidden)
+            
+        }
     }
 }

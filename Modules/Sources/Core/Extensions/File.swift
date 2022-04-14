@@ -31,9 +31,11 @@ struct NetworkView: View {
     }
 }
 
+#if DEBUG
 struct NetworkView_Preview: PreviewProvider {
 
     static var previews: some View {
         NetworkView()
     }
 }
+#endif

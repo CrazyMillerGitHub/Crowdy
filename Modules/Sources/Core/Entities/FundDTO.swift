@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Fund: Decodable, Equatable, Identifiable {
+public struct FundDTO: Decodable, Equatable, Identifiable {
 
     public var id: UUID
     public var isFavorite: Bool

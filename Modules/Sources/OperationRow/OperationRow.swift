@@ -39,7 +39,6 @@ public struct OperationRow: View {
 }
 
 #if DEBUG
-
 struct OperationRow_Preview: PreviewProvider {
 
     static var previews: some View {

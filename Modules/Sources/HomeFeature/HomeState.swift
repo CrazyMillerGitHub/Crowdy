@@ -10,11 +10,11 @@ import Core
 
 public struct HomeState: Equatable {
 
-    public var funds: [Fund]
+    public var funds: [FundDTO]
     var isLoading = true
     @BindableState var searchText = ""
 
-    public var searchResults: [Fund] {
+    public var searchResults: [FundDTO] {
         guard !searchText.isEmpty else {
             return funds
         }
@@ -23,12 +23,13 @@ public struct HomeState: Equatable {
         }
     }
 
-    public init(funds: [Fund]) {
+    public init(funds: [FundDTO]) {
         self.funds = funds
     }
 
     public static func ==(lhs: HomeState, rhs: HomeState) -> Bool {
         lhs.funds == rhs.funds
+        && lhs.searchText == rhs.searchText
     }
 }
 

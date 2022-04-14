@@ -17,17 +17,15 @@ struct OperationSection: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            Section {
+            Section(StringFactory.Settings.recentCrowdfundings.localizableString) {
                 ForEach(viewStore.operations, id: \.self) { model in
                     OperationRow(model: model)
                 }
                 .listRowSeparator(.hidden)
                 .transition(.opacity.animation(.default))
-            } header: {
-                Text(StringFactory.Settings.recentCrowdfundings.localizableString)
-            } footer: {}
-                .redacted(reason: viewStore.isOperationsLoading ? .placeholder : [])
-                .shimmering(active: viewStore.isOperationsLoading)
+            }
+            .redacted(reason: viewStore.isOperationsLoading ? .placeholder : [])
+            .shimmering(active: viewStore.isOperationsLoading)
         }
     }
 }
