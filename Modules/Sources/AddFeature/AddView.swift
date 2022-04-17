@@ -25,6 +25,7 @@ public struct AddView: View {
                     LazyVStack {
                         FundBackgroundRow()
                         FundNameRow(fundNameText: viewStore.binding(\.$titleValue))
+                        InfoRow(infoText: viewStore.binding(\.$infoValue))
                         ExpirationRow(expirationDateValue: viewStore.binding(\.$expirationDateValue))
                         CategoryRow(categoryValue: viewStore.binding(\.$categoryValue))
                         Button(StringFactory.Add.publish.localizableString) {

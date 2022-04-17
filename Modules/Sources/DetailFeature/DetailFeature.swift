@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import UIKit
 import Core
 
 public struct Progress: Decodable {
@@ -88,6 +89,7 @@ public enum DetailAction: BindableAction {
     case onAppear
     case onDataLoaded(Result<FundDetail, APIError>)
     case onActionTapped
+    case shareTapped(URL)
     case previewTapped(URL)
     case binding(BindingAction<DetailState>)
     case closeButtonTapped
@@ -127,6 +129,11 @@ SystemEnvironment<DetailEnvironment>
         state.detail = detail
         state.previews = [URL(string: "https://i.insider.com/622796bbdcce010019a73b34?width=1136&format=jpeg")!]
         state.isLoading = false
+        return .none
+    case .shareTapped:
+//        guard let urlShare = URL(string: "https://developer.apple.com/xcode/swiftui/") else { return .none }
+//        let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
+//        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
         return .none
     case _:
         return .none

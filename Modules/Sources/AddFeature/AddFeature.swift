@@ -14,6 +14,7 @@ public struct AddState: Equatable {
     @BindableState var titleValue: String
     @BindableState var expirationDateValue: String
     @BindableState var categoryValue: String
+    @BindableState var infoValue: String
     @BindableState var backgroundURL: URL?
     var alert: AlertState<AddAction>?
 
@@ -21,12 +22,14 @@ public struct AddState: Equatable {
         titleValue: String = "",
         expirationDateValue: String = "",
         categoryValue: String = "",
+        infoValue: String = "",
         backgroundURL: URL? = nil
     ) {
         self.titleValue = titleValue
         self.expirationDateValue = expirationDateValue
         self.categoryValue = categoryValue
         self.backgroundURL = backgroundURL
+        self.infoValue = infoValue
     }
 
     var requestIsReady: Bool {

@@ -10,7 +10,7 @@ import Core
 import DesignSystem
 import ComposableArchitecture
 
-/// Экран "Что ноовго"
+/// Экран "Что нового"
 struct NewsView: View {
 
 	private let store: Store<NewsState, NewsAction>

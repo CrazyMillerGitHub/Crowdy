@@ -67,7 +67,10 @@ let package = Package(
                  targets: ["PreviewFeature"]),
         .library(name: "AddFeature",
                  type: .dynamic,
-                 targets: ["AddFeature"])
+                 targets: ["AddFeature"]),
+        .library(name: "ForgetFeature",
+                 type: .dynamic,
+                 targets: ["ForgetFeature"])
     ],
     dependencies: [
 		.package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.32.0"),
@@ -123,6 +126,13 @@ let package = Package(
 				"Core"
 			]
 		),
+        .target(
+            name: "ForgetFeature",
+            dependencies: [
+                "DesignSystem",
+                "Core"
+            ]
+        ),
 		.target(
 			name: "SettingsFeature",
 			dependencies: [
@@ -142,6 +152,8 @@ let package = Package(
                 "PaymentFeature",
                 "PreviewFeature",
                 "AddFeature",
+                "ForgetFeature",
+                "ShareQrFeature",
                 .product(name: "TCACoordinators", package: "TCACoordinators")
 			]
 		),

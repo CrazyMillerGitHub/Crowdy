@@ -20,6 +20,7 @@ public enum Color: CaseIterable {
     case darkContent
     case lightContent
     case accept
+    case inputField
 
 	public var uiColor: UIColor {
 		.init(red: rgbPalette.red, green: rgbPalette.green, blue: rgbPalette.blue, alpha: rgbPalette.alpha)
@@ -47,6 +48,8 @@ public enum Color: CaseIterable {
             return (red: 18/256, green: 18/256, blue: 18/256, alpha: 1.0)
         case .lightContent:
             return (red: 135.0/255.0, green: 136.0/255.0, blue: 136.0/255.0, alpha: 1.0)
+        case .inputField:
+            return (red: 238.0/255.0, green: 239.0/255.0, blue: 244.0/255.0, alpha: 1.0)
 		}
 	}
 }

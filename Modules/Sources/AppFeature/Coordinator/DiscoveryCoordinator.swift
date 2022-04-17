@@ -14,6 +14,7 @@ import DetailFeature
 import AddFeature
 import AuthFeature
 import PaymentFeature
+import ShareQrFeature
 
 public struct DiscoveryCoordinatorView: View {
 
@@ -62,6 +63,11 @@ public struct DiscoveryCoordinatorView: View {
                     state: /ScreenState.paymentState,
                     action: ScreenAction.paymentAction,
                     then: PaymentView.init
+                )
+                CaseLet(
+                    state: /ScreenState.shareState,
+                    action: ScreenAction.shareAction,
+                    then: ShareView.init
                 )
             }
         }
@@ -112,6 +118,8 @@ let discoveryCoordinatorReducer: DiscoveryCoordinatorReducer = screenReducer
                 state.routes.presentCover(.paymentState(.init(uuid: uuid, title: title, author: author, image: image)))
             case .routeAction(_, action: .paymentAction(.cancelTapped)):
                 state.routes.goBack()
+            case .routeAction(_, action: .detailAction(.shareTapped(let url))):
+                state.routes.presentSheet(.shareState(.init(url: url)))
 //            case .routeAction(_, action: .homeAction(.goToAuth)):
 //                state.routes = [.root(.authState(.init()))]
 //            case .routeAction(_, action: .addAction(.receiveResponse(_))):

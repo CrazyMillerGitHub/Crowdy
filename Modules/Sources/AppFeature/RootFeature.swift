@@ -17,6 +17,8 @@ import PreviewFeature
 import PaymentFeature
 import OnboardingFeature
 import AddFeature
+import ForgetFeature
+import ShareQrFeature
 
 
 public enum ScreenState: Equatable, Identifiable {
@@ -39,6 +41,8 @@ public enum ScreenState: Equatable, Identifiable {
     case paymentState(PaymentState)
     /// Онбординг
     case onboardingState(OnboardingState)
+    case forgetState(ForgetState)
+    case shareState(ShareState)
     
 
     public var id: UUID {
@@ -62,6 +66,8 @@ public enum ScreenAction {
     case addAction(AddAction)
     case paymentAction(PaymentAction)
     case onboardingAction(OnboardingAction)
+    case forgetAction(ForgetAction)
+    case shareAction(ShareAction)
 }
 
 public struct ScreenEnvironment {
@@ -127,6 +133,24 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<
         environment: { _ in
             return .dev(
                 environment: DetailEnvironment(loadDetailRequest: dummyLoadDetailRequest)
+            )
+        }
+    ),
+    forgetReducer.pullback(
+        state: /ScreenState.forgetState,
+        action: /ScreenAction.forgetAction,
+        environment: { _ in
+            return .dev(
+                environment: ForgetEnvironment()
+            )
+        }
+    ),
+    shareReducer.pullback(
+        state: /ScreenState.shareState,
+        action: /ScreenAction.shareAction,
+        environment: { _ in
+            return .dev(
+                environment: ShareEnvironment()
             )
         }
     ),

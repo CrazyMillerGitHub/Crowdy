@@ -11,6 +11,7 @@ import SwiftUI
 import SettingsFeature
 import AuthFeature
 import OnboardingFeature
+import ForgetFeature
 
 public struct SettingsCoordinatorView: View {
 
@@ -39,6 +40,11 @@ public struct SettingsCoordinatorView: View {
                     state: /ScreenState.onboardingState,
                     action: ScreenAction.onboardingAction,
                     then: OnboardingView.init
+                )
+                CaseLet(
+                    state: /ScreenState.forgetState,
+                    action: ScreenAction.forgetAction,
+                    then: ForgetView.init
                 )
             }
         }
@@ -84,6 +90,8 @@ let settingsCoordinatorReducer: SettingsCoordinatorReducer = screenReducer
                     $0.goBack()
                     $0.push(.authState(.init(showLogin: true)))
                 }
+            case .routeAction(_, action: .authAction(.forgotButtonTapped)):
+                state.routes.push(.forgetState(.init()))
             case _:
                 break
             }

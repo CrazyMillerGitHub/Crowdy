@@ -30,7 +30,7 @@ struct PaymentButton: View {
             .frame(minWidth: 100, maxWidth: 400)
             .frame(height: height)
             .frame(maxWidth: .infinity)
-            .accessibility(label: Text("Buy with Apple Pay"))
+            .accessibility(label: Text("Donate with Apple Pay"))
     }
 }
 
@@ -73,7 +73,7 @@ extension PaymentButton {
     
     class Coordinator: NSObject {
         var action: () -> Void
-        var button = PKPaymentButton(paymentButtonType: .buy, paymentButtonStyle: .automatic)
+        var button = PKPaymentButton(paymentButtonType: .donate, paymentButtonStyle: .automatic)
         
         init(action: @escaping () -> Void) {
             self.action = action

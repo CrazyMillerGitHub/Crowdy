@@ -18,6 +18,8 @@ public struct AuthState: Equatable {
     @BindableState var loginValue: String
     var isLoading: Bool
 
+    public static var initialState: Self = .init()
+
     public init(
         showLogin: Bool = false,
         fullNameValue: String = "",

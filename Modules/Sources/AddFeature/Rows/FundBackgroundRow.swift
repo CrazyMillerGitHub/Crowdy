@@ -19,7 +19,7 @@ struct FundBackgroundRow: View {
             .overlay(
                 image
                     .resizable()
-                    .scaleEffect()
+                    .aspectRatio(contentMode: .fill)
                     .overlay(content: {
                         VStack(alignment: .center) {
                             Spacer()

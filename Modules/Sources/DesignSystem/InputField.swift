@@ -10,7 +10,6 @@ import SwiftUI
 private enum Constants {
 
     static let highlighted: Double = 6
-    static let height: Double = 54
     static let lineWidth: Double = 1
     static let cornerRadius: Double = 10
     static let animationDuration: Double = 0.2
@@ -28,6 +27,7 @@ public struct InputField<Content: View>: View {
 
 	// MARK: - Properties
     private let content: Content
+    private var height: Double
     private let placeholder: String
 
     @Environment(\.colorScheme) var colorScheme
@@ -37,10 +37,12 @@ public struct InputField<Content: View>: View {
 
     public init(
         placeholder: String = "",
+        height: CGFloat = 54,
         binding: Binding<String>,
         @ViewBuilder content: () -> Content
     ) {
         self.placeholder = placeholder
+        self.height = height
         self.content = content()
         self._binding = binding
     }
@@ -74,7 +76,7 @@ public struct InputField<Content: View>: View {
 		}
 		.offset(x: .zero, y: inputFieldHighlighted ? Constants.highlighted : .zero)
 		.padding(.leading)
-		.frame(height: Constants.height)
+		.frame(height: height)
 		.overlay(
 			RoundedRectangle(cornerRadius: Constants.cornerRadius)
 				.stroke(
@@ -85,7 +87,7 @@ public struct InputField<Content: View>: View {
 				)
         ).background(
             RoundedRectangle(cornerRadius: Constants.cornerRadius)
-                .fill(colorScheme == .dark ? Color.darkContent.color : .black.opacity(0.1))
+                .fill(colorScheme == .dark ? Color.darkContent.color : Color.inputField.color)
         )
 	}
 }

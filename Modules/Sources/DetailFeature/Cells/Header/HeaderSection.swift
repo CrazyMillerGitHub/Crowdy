@@ -45,6 +45,9 @@ struct HeaderSection: View {
                                                 .foregroundColor(.white)
                                             Image(systemName: "square.and.arrow.up")
                                                 .foregroundColor(.white)
+                                                .onTapGesture {
+                                                    viewStore.send(.shareTapped(URL(string: "apple.com")!))
+                                                }
                                         }
                                     }
                                     Spacer()

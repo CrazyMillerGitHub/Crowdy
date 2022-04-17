@@ -12,55 +12,77 @@ import Kingfisher
 import ComposableArchitecture
 import DesignSystem
 
+struct PaymentTypeView: View {
+    
+    var body: some View {
+        Color.white
+            .cornerRadius(10)
+            .frame(height: 54)
+            .overlay {
+                ZStack {
+                    HStack {
+                        Image("applePay", bundle: .main)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 40, alignment: .center)
+                        Text("Apple Pay")
+                            .foregroundColor(Color.black)
+                            .font(.body)
+                        Spacer()
+                    }
+                }
+                .padding()
+            }
+    }
+}
+
 public struct PaymentView: View {
-    
+
     let store: Store<PaymentState, PaymentAction>
-    
+
+    private let currencyFormatter: NumberFormatter = {
+        let formmatter = NumberFormatter()
+        formmatter.numberStyle = .currency
+        formmatter.locale = .current
+        formmatter.currencyCode = "rub"
+        formmatter.maximumFractionDigits = 2
+        return formmatter
+    }()
+
     public init(store: Store<PaymentState, PaymentAction>) {
         self.store = store
     }
-    
+
     public var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
-                VStack(spacing: 20) {
-                        HStack {
-                            KFImage(viewStore.image)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 90, height: 90)
-                                .cornerRadius(10)
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text(viewStore.title)
-                                    .bold()
-                                Text("Создатель: " + viewStore.author)
-                                    .foregroundColor(Color.black.opacity(0.7))
-                            }
-                            
-                            Spacer()
-                        }
+                VStack(spacing: 30) {
                     InputField(placeholder: "Введите сумму", binding: viewStore.binding(\.$amount)) {
-                        TextField("", text: viewStore.binding(\.$amount))
-                            .keyboardType(.decimalPad)
+                        CurrencyTextField(
+                            numberFormatter: currencyFormatter,
+                            value: viewStore.binding(\.$amount)
+                        )
                     }
+                    PaymentTypeView()
                     Spacer()
                     PaymentButton() {
                         viewStore.send(.startPayment)
                     }
+                    .cornerRadius(10)
                 }
-            .navigationTitle("Оформление")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Закрыть") {
-                        viewStore.send(.cancelTapped)
-                    }.foregroundColor(Color.brand.color)
+                .navigationTitle("Оформление")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Закрыть") {
+                            viewStore.send(.cancelTapped)
+                        }.foregroundColor(Color.brand.color)
+                    }
                 }
-            }
-            .padding()
-            .onAppear {
-                viewStore.send(.onAppear)
+                .padding()
+                .onAppear {
+                    viewStore.send(.onAppear)
+                }
             }
         }
     }
-}
 }
