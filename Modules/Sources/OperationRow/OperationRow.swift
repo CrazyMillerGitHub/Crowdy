@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 09.03.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import Kingfisher
 import DesignSystem
@@ -37,6 +39,8 @@ public struct OperationRow: View {
         .padding([.top, .bottom])
     }
 }
+
+#endif
 
 #if DEBUG
 struct OperationRow_Preview: PreviewProvider {

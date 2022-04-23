@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 09.01.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import UIKit
 
@@ -23,3 +25,5 @@ public struct ToSwiftUI: UIViewRepresentable {
 
     public func updateUIView(_ uiView: UIView, context: Context) {}
 }
+
+#endif

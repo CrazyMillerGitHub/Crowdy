@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 20.03.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import ComposableArchitecture
 import Core
@@ -110,3 +112,5 @@ public let addReducer = AddReducer { state, action, environment in
     }
     return .none
 }.binding()
+
+#endif

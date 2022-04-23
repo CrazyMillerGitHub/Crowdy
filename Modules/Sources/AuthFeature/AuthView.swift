@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 06.03.2022.
 //
 
+#if !APPCLIP
+
 import DesignSystem
 import SwiftUI
 import Core
@@ -33,6 +35,8 @@ public struct AuthView: View {
     }
 }
 
+#endif
+
 #if DEBUG
 struct Preview_AuthView: PreviewProvider {
 
@@ -40,7 +44,7 @@ struct Preview_AuthView: PreviewProvider {
 		Circle()
 		AuthView(
 			store: .init(
-				initialState: AuthState(),
+                initialState: .initialState,
 				reducer: authReducer,
 				environment: .dev(
 					environment: AuthEnvironment(

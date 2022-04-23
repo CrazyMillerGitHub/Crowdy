@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 26.03.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import Core
 
@@ -25,3 +27,5 @@ struct SpendingSection: View {
         }
     }
 }
+
+#endif

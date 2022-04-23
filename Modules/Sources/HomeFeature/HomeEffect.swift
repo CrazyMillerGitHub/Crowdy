@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 10.01.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import ComposableArchitecture
 import Core
@@ -60,3 +62,5 @@ public struct EditFavoruriteRequest: Encodable {
     let crowdfindingId: UUID
     let newState: Bool
 }
+
+#endif

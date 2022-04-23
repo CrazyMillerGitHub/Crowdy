@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 08.03.2022.
 //
 
+#if !APPCLIP
+
 import Core
 import OperationRow
 import ComposableArchitecture
@@ -21,3 +23,5 @@ public func dummyLoadUserRequest(storage: PersistenceController) -> Effect<User,
         .delay(for: 0.5, scheduler: DispatchQueue.main)
         .eraseToEffect()
 }
+
+#endif

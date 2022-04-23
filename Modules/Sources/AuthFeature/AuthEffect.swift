@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 07.03.2022.
 //
 
+#if !APPCLIP
+
 import ComposableArchitecture
 import Core
 
@@ -61,3 +63,5 @@ public func dummyRegisterRequest(
 ) -> Effect<AuthModel, APIError> {
     return Effect(value: AuthModel(login: "1234", passwordHash: UUID().description, user: .fixture))
 }
+
+#endif

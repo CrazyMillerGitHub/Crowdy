@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 05.01.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import Core
 import ComposableArchitecture
@@ -51,7 +53,9 @@ public let newsReducer = Reducer<
 			state.news = news
 		}
 		return .none
-	case .continueButtonTapped:
-		return .none
+    default:
+        return .none
 	}
 }
+
+#endif

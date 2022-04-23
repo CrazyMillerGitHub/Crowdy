@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 13.03.2022.
 //
 
+#if !APPCLIP
+
 import ComposableArchitecture
 import Core
 
@@ -30,3 +32,5 @@ public func dummyGetUserFundsRequest(decoder: JSONDecoder, encoder: JSONEncoder,
         .delay(for: 1, scheduler: DispatchQueue.main)
         .eraseToEffect()
 }
+
+#endif

@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 07.01.2022.
 //
 
+#if !APPCLIP
+
 import Parsing
 import Foundation
 
@@ -26,3 +28,5 @@ extension DeepLinkRequest {
 		)
 	}
 }
+
+#endif

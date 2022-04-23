@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 26.03.2022.
 //
 
+#if !APPCLIP
+
 import ComposableArchitecture
 import Core
 
@@ -65,3 +67,5 @@ public var paymentReducer = PaymentReducer { state, action, environment in
         return .none
     }
 }.binding()
+
+#endif

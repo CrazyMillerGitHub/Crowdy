@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 07.03.2022.
 //
 
+#if !APPCLIP
+
 import Core
 import ComposableArchitecture
 
@@ -30,3 +32,5 @@ public struct RegisterRequest: Encodable {
     let password: String
     let confirmPassword: String
 }
+
+#endif

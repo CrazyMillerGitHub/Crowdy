@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 18.03.2022.
 //
 
+#if !APPCLIP
+
 import TCACoordinators
 import ComposableArchitecture
 import SwiftUI
@@ -15,6 +17,7 @@ import AddFeature
 import AuthFeature
 import PaymentFeature
 import ShareQrFeature
+import NewsFeature
 
 public struct DiscoveryCoordinatorView: View {
 
@@ -69,6 +72,16 @@ public struct DiscoveryCoordinatorView: View {
                     action: ScreenAction.shareAction,
                     then: ShareView.init
                 )
+                CaseLet(
+                    state: /ScreenState.cancelFundState,
+                    action: ScreenAction.cancelFundAction,
+                    then: CancelFundView.init
+                )
+//                CaseLet(
+//                    state: /ScreenState.newsState,
+//                    action: ScreenAction.newsAction,
+//                    then: NewsView.init
+//                )
             }
         }
     }
@@ -102,6 +115,8 @@ let discoveryCoordinatorReducer: DiscoveryCoordinatorReducer = screenReducer
             switch action {
             case .routeAction(_, action: .homeAction(.selectFund(let id))):
                 state.routes.presentCover(.homeDetailState(.init(uuid: id)))
+            case .routeAction(_, action: .homeAction(.showNews)):
+                state.routes.presentCover(.newsState(.init()))
             case .routeAction(_, action: .detailAction(.closeButtonTapped)):
                 state.routes.goBack()
             case .routeAction(_, action: .detailAction(.previewTapped(let url))):
@@ -113,20 +128,25 @@ let discoveryCoordinatorReducer: DiscoveryCoordinatorReducer = screenReducer
             case .routeAction(_, action: .addAction(.cancelTapped)):
                 state.routes.goBack()
             case .routeAction(_, action: .detailAction(.startCancellingOrder)):
-                state.routes.goBack()
+                state.routes.presentSheet(.cancelFundState(.init()))
             case .routeAction(_, action: .detailAction(.startTransactionOrder(let uuid, let title, let author, let image))):
                 state.routes.presentCover(.paymentState(.init(uuid: uuid, title: title, author: author, image: image)))
             case .routeAction(_, action: .paymentAction(.cancelTapped)):
                 state.routes.goBack()
             case .routeAction(_, action: .detailAction(.shareTapped(let url))):
                 state.routes.presentSheet(.shareState(.init(url: url)))
-//            case .routeAction(_, action: .homeAction(.goToAuth)):
-//                state.routes = [.root(.authState(.init()))]
-//            case .routeAction(_, action: .addAction(.receiveResponse(_))):
-//                state.routes.goBackToRoot()
+            case .routeAction(_, action: .newsAction(.continueButtonTapped)):
+                state.routes.goBack()
+            case .routeAction(_, action: .cancelFundAction(.confirmCancellingOrder)):
+                return Effect.routeWithDelaysIfUnsupported(state.routes) {
+                    $0.goBack()
+                    $0.goBack()
+                }
             case _:
                 break
             }
             return .none
         }
     )
+
+#endif

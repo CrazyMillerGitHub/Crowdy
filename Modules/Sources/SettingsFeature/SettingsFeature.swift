@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 08.03.2022.
 //
 
+#if !APPCLIP
+
 import Core
 import OperationRow
 import ComposableArchitecture
@@ -97,3 +99,5 @@ public let settingsReducer = Reducer<
         return .none
     }
 }.binding()
+
+#endif

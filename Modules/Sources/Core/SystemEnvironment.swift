@@ -62,7 +62,7 @@ public struct SystemEnvironment<Environment> {
     }
 
     private static func featureAvailability() -> FeatureAvailabilityProtocol {
-        return FeatureAvailability()
+        return FeatureAvailability.shared
     }
 
     private static func remoteConfig() -> RemoteConfigProtocol {

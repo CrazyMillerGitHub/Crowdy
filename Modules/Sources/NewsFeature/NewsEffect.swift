@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 05.01.2022.
 //
 
+#if !APPCLIP
+
 import Core
 import Combine
 import ComposableArchitecture
@@ -32,3 +34,5 @@ public func dummyNewsEffect(decoder: JSONDecoder) -> Effect<[NewsModel], APIErro
 	]
 	return Effect(value: response)
 }
+
+#endif

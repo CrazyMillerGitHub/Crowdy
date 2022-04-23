@@ -39,3 +39,6 @@
 "confirmPassword" = "Повторите пароль";
 "fullName" = "Полное имя";
 "areYouRegistered" = "Вы уже регистрировались? Войдите";
+"saveChanges" = "Сохранить изменения";
+"passwordReset" = "Сброс пароля";
+"sendRequest" = "Отправить запрос";

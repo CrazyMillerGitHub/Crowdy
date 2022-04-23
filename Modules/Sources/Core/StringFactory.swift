@@ -106,3 +106,20 @@ public extension StringFactory {
         case register
     }
 }
+
+// MARK: - EditProfile
+public extension StringFactory {
+
+    enum EditProfile: String {
+        case saveChanges
+    }
+}
+
+public extension StringFactory {
+
+    enum Forget: String {
+        case passwordReset
+        case sendRequest
+        case login
+    }
+}

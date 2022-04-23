@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 13.03.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import Core
 import ComposableArchitecture
@@ -22,7 +24,7 @@ struct HomeRowDetail: View {
     }
 
     var participantsValue: String {
-        "\(StringFactory.HomeRow.participants.localizableString) \(fund.participants)"
+        "\(StringFactory.HomeRow.participants.localizableString) \(fund.participants.formatNumber())"
     }
 
     var expirationValue: String {
@@ -67,3 +69,5 @@ private struct HomeDetailInfo<Content: View>: View {
             .lineLimit(1)
     }
 }
+
+#endif

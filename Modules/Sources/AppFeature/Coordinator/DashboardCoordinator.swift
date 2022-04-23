@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 18.03.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import TCACoordinators
 import ComposableArchitecture
@@ -87,3 +89,5 @@ let dashboardCoordinatorReducer: DashboardCoordinatorReducer = screenReducer
             return .none
         }
     )
+
+#endif

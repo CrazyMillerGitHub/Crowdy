@@ -26,7 +26,7 @@ public struct Price: Decodable {
     }
 
     public static var fixture = Self(
-        amount: 0,
+        amount: 1435,
         currency: "RU_ru"
     )
 }

@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 09.01.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import ComposableArchitecture
 import Core
@@ -29,6 +31,7 @@ public enum HomeAction: BindableAction {
     case onAppear
     case addTapped
     case goToAuth
+    case showNews
     case selectFund(UUID)
 
     // Load funds
@@ -52,6 +55,9 @@ public let homeReducer = Reducer<
 > { state, action, environment in
     switch action {
     case .onAppear:
+        guard environment.remoteConfig().appVersion >= Bundle.main.appVersionLong else {
+            return Effect(value: .showNews)
+        }
         guard state.isLoading else { return .none }
         state = .fixture
         let remoteConfig = environment.remoteConfig()
@@ -97,3 +103,5 @@ public let homeReducer = Reducer<
     }
 }
 .binding()
+
+#endif

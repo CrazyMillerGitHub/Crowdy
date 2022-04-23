@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 13.03.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import DesignSystem
 import Kingfisher
@@ -34,7 +36,11 @@ struct PreviewSection: View {
                             .scaledToFill()
                             .frame(width: Constants.height, height: Constants.height)
                             .cornerRadius(10)
-                            .foregroundColor(colorScheme == .dark ? Color.darkContent.color : Color.lightContent.color)
+                            .foregroundColor(
+                                colorScheme == .dark
+                                ? Color.darkContent.color
+                                : Color.lightContent.color
+                            )
                             .onTapGesture {
                                 viewStore.send(.previewTapped(preview))
                             }.padding(.vertical)
@@ -46,3 +52,5 @@ struct PreviewSection: View {
         .listRowSeparator(.hidden)
     }
 }
+
+#endif

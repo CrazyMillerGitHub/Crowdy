@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 13.03.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import ComposableArchitecture
 import Core
@@ -29,7 +31,7 @@ public func dummyLoadDetailRequest(decoder: JSONDecoder, baseURL: URL, uuid: UUI
         title: "Лучший сбор в мире",
         author: "Mikhail Borisov",
         info: getInfo(),
-        isIncoming: true,
+        isIncoming: false,
         progress: progressModel
     )
     )
@@ -40,3 +42,5 @@ public func dummyLoadDetailRequest(decoder: JSONDecoder, baseURL: URL, uuid: UUI
 private func getInfo() -> String {
     return "**Описание задачи**"
 }
+
+#endif

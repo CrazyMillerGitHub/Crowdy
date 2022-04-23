@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 22.03.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import ComposableArchitecture
 import Core
@@ -19,3 +21,5 @@ public func saveFundRequest(storage: PersistenceController, request: FundRequest
     storage.saveFund(dto: .fixture)
     return Effect(value: request)
 }
+
+#endif

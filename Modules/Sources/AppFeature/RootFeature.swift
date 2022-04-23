@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 07.01.2022.
 //
 
+#if !APPCLIP
+
 import Core
 import ComposableArchitecture
 import HomeFeature
@@ -19,6 +21,7 @@ import OnboardingFeature
 import AddFeature
 import ForgetFeature
 import ShareQrFeature
+import EditProfileFeature
 
 
 public enum ScreenState: Equatable, Identifiable {
@@ -43,6 +46,8 @@ public enum ScreenState: Equatable, Identifiable {
     case onboardingState(OnboardingState)
     case forgetState(ForgetState)
     case shareState(ShareState)
+    case editProfileState(EditProfileState)
+    case cancelFundState(CancelFundState)
     
 
     public var id: UUID {
@@ -68,6 +73,8 @@ public enum ScreenAction {
     case onboardingAction(OnboardingAction)
     case forgetAction(ForgetAction)
     case shareAction(ShareAction)
+    case editProfileAction(EditProfileAction)
+    case cancelFundAction(CancelFundAction)
 }
 
 public struct ScreenEnvironment {
@@ -103,7 +110,27 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<
         state: /ScreenState.onboardingState,
         action: /ScreenAction.onboardingAction,
         environment: { _ in
-            return OnboardingEnvironment()
+            return .dev(
+                environment: OnboardingEnvironment()
+            )
+        }
+    ),
+    editProfileReducer.pullback(
+        state: /ScreenState.editProfileState,
+        action: /ScreenAction.editProfileAction,
+        environment: { _ in
+            return .dev(
+                environment: EditProfileEnvironment()
+            )
+        }
+    ),
+    cancelFundReducer.pullback(
+        state: /ScreenState.cancelFundState,
+        action: /ScreenAction.cancelFundAction,
+        environment: { _ in
+            return .dev(
+                environment: CancelFundEnvironment()
+            )
         }
     ),
     previewReducer.pullback(
@@ -201,3 +228,5 @@ public let screenReducer = Reducer<ScreenState, ScreenAction, SystemEnvironment<
         }
     )
 )
+
+#endif

@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 14.03.2022.
 //
 
+#if !APPCLIP
+
 import ComposableArchitecture
 import Core
 
@@ -45,3 +47,5 @@ extension HomeState {
 //        return self.init(homeRowStates: initalArr)
     }
 }
+
+#endif

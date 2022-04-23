@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 06.01.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import HomeFeature
 import Core
@@ -82,6 +84,8 @@ extension RootView {
         )
     }
 }
+
+#endif
 
 #if DEBUG
 struct RootView_Preview: PreviewProvider {

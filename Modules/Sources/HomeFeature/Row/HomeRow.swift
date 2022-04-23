@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 06.01.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import Core
 import Combine
@@ -67,3 +69,5 @@ public struct HomeRow: View {
         }
 	}
 }
+
+#endif

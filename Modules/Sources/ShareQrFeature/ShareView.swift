@@ -10,6 +10,8 @@ import Core
 import ComposableArchitecture
 import DesignSystem
 
+#if !APPCLIP
+
 public struct ShareState: Equatable {
 
     let url: URL
@@ -63,3 +65,5 @@ struct ActivityView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
+
+#endif

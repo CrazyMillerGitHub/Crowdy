@@ -39,3 +39,6 @@
 "confirmPassword" = "Confirm password";
 "fullName" = "Full name";
 "areYouRegistered" = "Are you registered? Login";
+"saveChanges" = "Save changes";
+"passwordReset" = "Password reset";
+"sendRequest" = "Send request";

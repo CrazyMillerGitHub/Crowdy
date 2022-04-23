@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 06.01.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import DesignSystem
 import Core
@@ -13,6 +15,8 @@ import ComposableArchitecture
 
 /// Экран настроек
 public struct SettingsView: View {
+
+    @Environment(\.colorScheme) var colorScheme
 
     private let store: Store<SettingsState, SettingsAction>
 
@@ -50,10 +54,19 @@ public struct SettingsView: View {
                         .font(.body)
                         .foregroundColor(Color(.systemGray)),
                     trailing:
-                       Image("chill")
-                        .resizable()
+                        Circle()
+                        .fill(
+                            colorScheme == .light
+                            ? .black
+                            : .white
+                        )
                         .frame(width: 40, height: 40)
-                        .clipShape(Circle())
+                        .overlay(
+                            ZStack {
+                                Image("chill")
+                                .resizable()
+                            }
+                        )
                         .onTapGesture {
                             viewStore.send(.editButtonTapped)
                         }
@@ -65,6 +78,8 @@ public struct SettingsView: View {
         }
 	}
 }
+
+#endif
 
 #if DEBUG
 struct SettingsView_Preview: PreviewProvider {

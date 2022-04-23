@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 18.03.2022.
 //
 
+#if !APPCLIP
+
 import TCACoordinators
 import ComposableArchitecture
 import SwiftUI
@@ -12,6 +14,7 @@ import SettingsFeature
 import AuthFeature
 import OnboardingFeature
 import ForgetFeature
+import EditProfileFeature
 
 public struct SettingsCoordinatorView: View {
 
@@ -45,6 +48,11 @@ public struct SettingsCoordinatorView: View {
                     state: /ScreenState.forgetState,
                     action: ScreenAction.forgetAction,
                     then: ForgetView.init
+                )
+                CaseLet(
+                    state: /ScreenState.editProfileState,
+                    action: ScreenAction.editProfileAction,
+                    then: EditProfileView.init
                 )
             }
         }
@@ -80,21 +88,25 @@ let settingsCoordinatorReducer: SettingsCoordinatorReducer = screenReducer
             in
             switch action {
             case .routeAction(_, action: .settinsgAction(.logOutButtonTapped)):
-                state.routes.presentCover(.onboardingState(.init()), embedInNavigationView: true)
+                state.routes.presentCover(.onboardingState(.initialState), embedInNavigationView: true)
             case .routeAction(_, action: .onboardingAction(.loginTapped)):
-                state.routes.push(.authState(.init(showLogin: true)))
+                state.routes.push(.authState(.initialState))
             case .routeAction(_, action: .onboardingAction(.registerTapped)):
-                state.routes.push(.authState(.init(showLogin: false)))
+                state.routes.push(.authState(.initialState))
             case .routeAction(_, action: .authAction(.areYouRegisteredTapped)):
                 return Effect.routeWithDelaysIfUnsupported(state.routes) {
                     $0.goBack()
-                    $0.push(.authState(.init(showLogin: true)))
+                    $0.push(.authState(.initialState))
                 }
             case .routeAction(_, action: .authAction(.forgotButtonTapped)):
-                state.routes.push(.forgetState(.init()))
+                state.routes.push(.forgetState(.initialState))
+            case .routeAction(_, action: .settinsgAction(.editButtonTapped)):
+                state.routes.presentSheet(.editProfileState(.initialState))
             case _:
                 break
             }
             return .none
         }
     )
+
+#endif

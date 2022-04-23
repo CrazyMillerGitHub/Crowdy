@@ -31,3 +31,58 @@ extension UIViewController {
 		#endif
 	}
 }
+
+public extension Double {
+
+    func reduceScale(to places: Int) -> Double {
+        let multiplier = pow(10, Double(places))
+        let newDecimal = multiplier * self
+        let truncated = Double(Int(newDecimal))
+        let originalDecimal = truncated / multiplier
+        return originalDecimal
+    }
+}
+
+public extension Int {
+
+    func formatNumber() -> String {
+        let num = abs(Double(self))
+        let sign = (self < 0) ? "-" : ""
+
+        switch num {
+        case 1_000_000_000...:
+            var formatted = num / 1_000_000_000
+            formatted = formatted.reduceScale(to: 1)
+            return "\(sign)\(formatted)B"
+        case 1_000_000...:
+            var formatted = num / 1_000_000
+            formatted = formatted.reduceScale(to: 1)
+            return "\(sign)\(formatted)M"
+
+        case 1_000...:
+            var formatted = num / 1_000
+            formatted = formatted.reduceScale(to: 1)
+            return "\(sign)\(formatted)K"
+
+        case 0...:
+            return "\(self)"
+
+        default:
+            return "\(sign)\(self)"
+        }
+    }
+}
+
+extension Bundle {
+
+    public var appName: String { getInfo("CFBundleName")  }
+    public var displayName: String {getInfo("CFBundleDisplayName")}
+    public var language: String {getInfo("CFBundleDevelopmentRegion")}
+    public var identifier: String {getInfo("CFBundleIdentifier")}
+    public var copyright: String {getInfo("NSHumanReadableCopyright").replacingOccurrences(of: "\\\\n", with: "\n") }
+
+    public var appBuild: String { getInfo("CFBundleVersion") }
+    public var appVersionLong: String { getInfo("CFBundleShortVersionString") }
+
+    private func getInfo(_ str: String) -> String { infoDictionary?[str] as? String ?? "⚠️" }
+}

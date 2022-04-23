@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 19.03.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import SwiftUI
 import DesignSystem
@@ -52,3 +54,5 @@ struct DashboardRow: View {
             }
     }
 }
+
+#endif

@@ -5,13 +5,15 @@
 //  Created by Mikhail Borisov on 05.01.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import Core
 import DesignSystem
 import ComposableArchitecture
 
 /// Экран "Что нового"
-struct NewsView: View {
+public struct NewsView: View {
 
 	private let store: Store<NewsState, NewsAction>
 
@@ -46,7 +48,7 @@ struct NewsView: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		WithViewStore(store) { viewStore in
 			VStack {
 				Text(StringFactory.News.whatsNew.localizableString)
@@ -64,9 +66,12 @@ struct NewsView: View {
 				}
 				.buttonStyle(BrandButtonStyle())
 			}
+            .padding()
 		}
 	}
 }
+
+#endif
 
 #if DEBUG
 struct NewsView_Preview: PreviewProvider {

@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 22.03.2022.
 //
 
+#if !APPCLIP
+
 import ComposableArchitecture
 import TCACoordinators
 //
@@ -37,3 +39,5 @@ import TCACoordinators
 //            return .none
 //        }
 //    )
+
+#endif

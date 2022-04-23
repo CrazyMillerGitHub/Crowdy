@@ -6,30 +6,30 @@
 //
 
 import SwiftUI
-import AppFeature
 
 struct ContentView: View {
     var body: some View {
-        RootView(
-            store: .init(
-                initialState: .initialState,
-                reducer: mainTabCoordinatorReducer,
-                environment: .init()
-            )
-        )
+//        RootView(
+//            store: .init(
+//                initialState: .initialState,
+//                reducer: mainTabCoordinatorReducer,
+//                environment: .init()
+//            )
+//        )
+        Circle()
     }
 }
-
-#if DEBUG
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        RootView(
-            store: .init(
-                initialState: .initialState,
-                reducer: mainTabCoordinatorReducer,
-                environment: .init()
-            )
-        )
-    }
-}
-#endif
+//
+//#if DEBUG
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RootView(
+//            store: .init(
+//                initialState: .initialState,
+//                reducer: mainTabCoordinatorReducer,
+//                environment: .init()
+//            )
+//        )
+//    }
+//}
+//#endif

@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 13.03.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import Core
 import ComposableArchitecture
@@ -42,3 +44,5 @@ struct ActionSection: View {
         }
     }
 }
+
+#endif

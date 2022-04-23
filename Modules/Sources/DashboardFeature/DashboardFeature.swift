@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 13.03.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import Core
 import ComposableArchitecture
@@ -64,3 +66,5 @@ public let dashboardReducer = Reducer<
         return .none
     }
 }
+
+#endif

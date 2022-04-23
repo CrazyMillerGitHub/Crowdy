@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 10.03.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import Core
 import ComposableArchitecture
@@ -62,6 +64,8 @@ public struct DetailView: View {
         }
     }
 }
+
+#endif
 
 #if DEBUG
 struct DetailView_Preview: PreviewProvider {

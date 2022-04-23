@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 21.03.2022.
 //
 
+#if !APPCLIP
+
 import CoreData
 
 public struct PersistenceController {
@@ -65,3 +67,5 @@ extension PersistenceController {
         return try container.viewContext.fetch(request)
     }
 }
+
+#endif

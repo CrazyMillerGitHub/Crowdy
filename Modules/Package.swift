@@ -16,31 +16,31 @@ let package = Package(
 			targets: ["DesignSystem"]),
 		.library(
 			name: "NewsFeature",
-            type: .dynamic,
+            type: .static,
 			targets: ["NewsFeature"]),
 		.library(
 			name: "ShareQrFeature",
-            type: .dynamic,
+            type: .static,
 			targets: ["ShareQrFeature"]),
 		.library(
 			name: "HomeFeature",
-            type: .dynamic,
+            type: .static,
 			targets: ["HomeFeature"]),
 		.library(
 			name: "DashboardFeature",
-            type: .dynamic,
+            type: .static,
 			targets: ["DashboardFeature"]),
 		.library(
 			name: "SettingsFeature",
-            type: .dynamic,
+            type: .static,
 			targets: ["SettingsFeature"]),
 		.library(
 			name: "AuthFeature",
-            type: .dynamic,
+            type: .static,
 			targets: ["AuthFeature"]),
         .library(
             name: "OnboardingFeature",
-            type: .dynamic,
+            type: .static,
             targets: ["OnboardingFeature"]),
 		.library(
 			name: "AppFeature",
@@ -48,29 +48,32 @@ let package = Package(
 			targets: ["AppFeature"]),
 		.library(
 			name: "DeeplinkFeature",
-            type: .dynamic,
+            type: .static,
 			targets: ["DeeplinkFeature"]),
         .library(name: "PaymentFeature",
-                 type: .dynamic,
+                 type: .static,
                  targets: ["PaymentFeature"]),
         .library(name: "OperationRow",
-                 type: .dynamic,
+                 type: .static,
                  targets: ["OperationRow"]),
         .library(name: "DetailFeature",
-                 type: .dynamic,
+                 type: .static,
                  targets: ["DetailFeature"]),
         .library(name: "CardFeature",
-                 type: .dynamic,
+                 type: .static,
                  targets: ["CardFeature"]),
         .library(name: "PreviewFeature",
-                 type: .dynamic,
+                 type: .static,
                  targets: ["PreviewFeature"]),
         .library(name: "AddFeature",
-                 type: .dynamic,
+                 type: .static,
                  targets: ["AddFeature"]),
         .library(name: "ForgetFeature",
-                 type: .dynamic,
-                 targets: ["ForgetFeature"])
+                 type: .static,
+                 targets: ["ForgetFeature"]),
+        .library(name: "EditProfileFeature",
+                 type: .static,
+                 targets: ["EditProfileFeature"])
     ],
     dependencies: [
 		.package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.32.0"),
@@ -78,7 +81,8 @@ let package = Package(
 		.package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.3.1"),
 		.package(url: "https://github.com/stripe/stripe-ios", from: "21.0.0"),
         .package(url: "https://github.com/johnpatrickmorgan/TCACoordinators", .branch("main")),
-        .package(url: "https://github.com/onevcat/Kingfisher",  from: "7.2.0")
+        .package(url: "https://github.com/onevcat/Kingfisher",  from: "7.2.0"),
+        .package(url: "https://github.com/airbnb/lottie-ios.git", from: "3.2.1")
     ],
 	targets: [
 		.target(
@@ -133,6 +137,13 @@ let package = Package(
                 "Core"
             ]
         ),
+        .target(
+            name: "EditProfileFeature",
+            dependencies: [
+                "DesignSystem",
+                "Core"
+            ]
+        ),
 		.target(
 			name: "SettingsFeature",
 			dependencies: [
@@ -154,6 +165,7 @@ let package = Package(
                 "AddFeature",
                 "ForgetFeature",
                 "ShareQrFeature",
+                "EditProfileFeature",
                 .product(name: "TCACoordinators", package: "TCACoordinators")
 			]
 		),
@@ -168,7 +180,8 @@ let package = Package(
             name: "OnboardingFeature",
             dependencies: [
                 "Core",
-                "DesignSystem"
+                "DesignSystem",
+                .product(name: "Lottie", package: "lottie-ios")
             ]
         ),
         .target(

@@ -7,8 +7,12 @@
 
 import Foundation
 
+#if !APPCLIP
+
 enum CoreDataStorageError: Error {
     case readError(Error)
     case saveError(Error)
     case deleteError(Error)
 }
+
+#endif

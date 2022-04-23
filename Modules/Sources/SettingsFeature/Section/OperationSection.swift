@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 25.03.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import Core
 import DesignSystem
@@ -29,3 +31,5 @@ struct OperationSection: View {
         }
     }
 }
+
+#endif

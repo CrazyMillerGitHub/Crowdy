@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 05.01.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 
 public struct NewsModel: Decodable, Equatable {
@@ -22,3 +24,5 @@ public struct NewsModel: Decodable, Equatable {
 extension NewsModel: Identifiable {
 	public var id: UUID { identifier }
 }
+
+#endif

@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 08.03.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import Stripe
 import Core
@@ -44,7 +46,7 @@ public struct PaymentView: View {
         let formmatter = NumberFormatter()
         formmatter.numberStyle = .currency
         formmatter.locale = .current
-        formmatter.currencyCode = "rub"
+        formmatter.currencyCode = Locale.current.currencyCode
         formmatter.maximumFractionDigits = 2
         return formmatter
     }()
@@ -86,3 +88,5 @@ public struct PaymentView: View {
         }
     }
 }
+
+#endif

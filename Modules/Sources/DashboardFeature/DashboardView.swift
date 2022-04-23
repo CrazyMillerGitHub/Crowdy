@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 06.01.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import Core
 import DesignSystem
@@ -51,3 +53,5 @@ public struct DashboardView: View {
         }
 	}
 }
+
+#endif

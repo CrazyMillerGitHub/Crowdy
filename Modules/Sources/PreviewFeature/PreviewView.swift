@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 19.03.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import SwiftUI
 import ComposableArchitecture
@@ -70,6 +72,8 @@ public struct PreviewView: View {
         }
     }
 }
+
+#endif
 
 #if DEBUG
 public struct PreviewView_Preview: PreviewProvider {

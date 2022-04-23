@@ -11,6 +11,8 @@ public protocol RemoteConfigProtocol {
 
     var isUserAuthentificated: Bool { get }
 
+    var appVersion: String { get }
+
     var baseURL: URL { get }
 }
 
@@ -26,6 +28,10 @@ public final class RemoteConfig: RemoteConfigProtocol {
     public var isUserAuthentificated: Bool {
         true
 //        storage.loadValue(for: #function) ?? false
+    }
+
+    public var appVersion: String {
+        Bundle.main.appVersionLong
     }
 
     public var baseURL: URL {

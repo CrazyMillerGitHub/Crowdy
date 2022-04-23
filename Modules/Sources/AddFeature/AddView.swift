@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 20.03.2022.
 //
 
+#if !APPCLIP
+
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
@@ -25,12 +27,15 @@ public struct AddView: View {
                     LazyVStack {
                         FundBackgroundRow()
                         FundNameRow(fundNameText: viewStore.binding(\.$titleValue))
-                        InfoRow(infoText: viewStore.binding(\.$infoValue))
+                        AvailabilityView(false) {
+                            InfoRow(infoText: viewStore.binding(\.$infoValue))
+                        }
                         ExpirationRow(expirationDateValue: viewStore.binding(\.$expirationDateValue))
                         CategoryRow(categoryValue: viewStore.binding(\.$categoryValue))
                         Button(StringFactory.Add.publish.localizableString) {
                             viewStore.send(.publishTapped)
                         }
+                        .disabled(!viewStore.requestIsReady)
                         .alert(self.store.scope(state: \.alert), dismiss: .alertOkTapped)
                         .padding([.leading, .trailing, .top])
                         .buttonStyle(BrandButtonStyle())
@@ -41,7 +46,8 @@ public struct AddView: View {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button(StringFactory.Add.cancel.localizableString) {
                                 viewStore.send(.cancelTapped)
-                            }.foregroundColor(Color.brand.color)
+                            }
+                            .foregroundColor(Color.brand.color)
                         }
                     }
                 }
@@ -51,3 +57,5 @@ public struct AddView: View {
         }
     }
 }
+
+#endif

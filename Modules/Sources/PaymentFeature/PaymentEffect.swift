@@ -5,6 +5,9 @@
 //  Created by Mikhail Borisov on 26.03.2022.
 //
 
+#if !APPCLIP
+
+
 import Foundation
 import ComposableArchitecture
 import Core
@@ -17,3 +20,6 @@ public func dummyCreatePaymentRequest(paymentService: PaymentServiceProtocol, or
     paymentService.createPayment(with: order)
     return Effect(value: .init())
 }
+
+
+#endif

@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 03.04.2022.
 //
 
+#if !APPCLIP
+
 import DesignSystem
 import SwiftUI
 import Core
@@ -78,3 +80,5 @@ public struct LoginView: View {
         }
     }
 }
+
+#endif

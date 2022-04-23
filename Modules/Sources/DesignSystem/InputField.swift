@@ -50,9 +50,9 @@ public struct InputField<Content: View>: View {
 	// MARK: - UI
 
 	public var body: some View {
-		return ZStack(alignment: .leading) {
-			Text(placeholder)
-				.foregroundColor(
+        return ZStack(alignment: .leading) {
+            Text(placeholder)
+                .foregroundColor(
                     Color.lightContent.color
 				)
 				.scaleEffect(
@@ -66,13 +66,9 @@ public struct InputField<Content: View>: View {
 					? Constants.Placeholder.verticalOffset
 					: Constants.Placeholder.normal
 				)
-				.animation(
-                    .easeOut(duration: Constants.animationDuration),
-                    value: inputFieldHighlighted
-                )
             content
                 .focused($isFocused)
-            .foregroundColor(colorScheme == .dark ? .white : .black)
+                .foregroundColor(colorScheme == .dark ? .white : .black)
 		}
 		.offset(x: .zero, y: inputFieldHighlighted ? Constants.highlighted : .zero)
 		.padding(.leading)
@@ -85,7 +81,8 @@ public struct InputField<Content: View>: View {
                     : .clear,
 					lineWidth: Constants.lineWidth
 				)
-        ).background(
+        )
+        .background(
             RoundedRectangle(cornerRadius: Constants.cornerRadius)
                 .fill(colorScheme == .dark ? Color.darkContent.color : Color.inputField.color)
         )

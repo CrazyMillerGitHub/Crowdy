@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 05.01.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 
 public enum APIError: Error {
@@ -12,3 +14,5 @@ public enum APIError: Error {
 	case decodingError
 	case urlError
 }
+
+#endif

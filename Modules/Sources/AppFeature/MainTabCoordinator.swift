@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 18.03.2022.
 //
 
+#if !APPCLIP
+
 import Foundation
 import ComposableArchitecture
 
@@ -67,3 +69,5 @@ public let mainTabCoordinatorReducer: MainTabCoordinatorReducer = .combine(
             environment: { _ in .init() }
         )
 )
+
+#endif

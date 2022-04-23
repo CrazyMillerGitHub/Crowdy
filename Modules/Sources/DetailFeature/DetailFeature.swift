@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 13.03.2022.
 //
 
+#if !APPCLIP
+
 import ComposableArchitecture
 import UIKit
 import Core
@@ -130,12 +132,9 @@ SystemEnvironment<DetailEnvironment>
         state.previews = [URL(string: "https://i.insider.com/622796bbdcce010019a73b34?width=1136&format=jpeg")!]
         state.isLoading = false
         return .none
-    case .shareTapped:
-//        guard let urlShare = URL(string: "https://developer.apple.com/xcode/swiftui/") else { return .none }
-//        let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
-//        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
-        return .none
     case _:
         return .none
     }
 }.binding()
+
+#endif

@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 13.03.2022.
 //
 
+#if !APPCLIP
+
 import DesignSystem
 import SwiftUI
 
@@ -37,3 +39,5 @@ struct InfoSection: View {
         .listRowSeparator(.hidden)
     }
 }
+
+#endif

@@ -5,6 +5,8 @@
 //  Created by Mikhail Borisov on 07.03.2022.
 //
 
+#if !APPCLIP
+
 import ComposableArchitecture
 import Core
 
@@ -18,15 +20,22 @@ public struct AuthState: Equatable {
     @BindableState var loginValue: String
     var isLoading: Bool
 
-    public static var initialState: Self = .init()
+    public static var initialState = Self(
+        showLogin: true,
+        fullNameValue: "",
+        loginValue: "",
+        passwordValue: "",
+        confirmPasswordValue: "",
+        isLoading: false
+    )
 
     public init(
-        showLogin: Bool = false,
-        fullNameValue: String = "",
-        loginValue: String = "",
-        passwordValue: String = "",
-        confirmPasswordValue: String = "",
-        isLoading: Bool = false
+        showLogin: Bool,
+        fullNameValue: String,
+        loginValue: String,
+        passwordValue: String,
+        confirmPasswordValue: String,
+        isLoading: Bool
     ) {
         self.showLogin = showLogin
         self.fullNameValue = fullNameValue
@@ -51,6 +60,8 @@ public enum AuthAction: BindableAction {
 	case forgotButtonTapped
 	/// User have been authorized
 	case didAuthUser(Result<AuthModel, APIError>)
+    /// Show alert that something went wrong
+    case showAlert
 	/// Authorization completed
 	case authCompleted
 	/// Authorization Failed
@@ -141,3 +152,5 @@ public let authReducer = Reducer<
 	}
 }
 .binding()
+
+#endif
