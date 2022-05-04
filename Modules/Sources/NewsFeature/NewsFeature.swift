@@ -13,14 +13,19 @@ import ComposableArchitecture
 
 public struct NewsState: Equatable {
 
+    public let id = UUID()
+
 	public init() {}
 
 	var news: [NewsModel] = []
 }
 
 public enum NewsAction {
+    /// When view appeared
 	case onAppear
+    /// When data loaded
     case dataLoaded(Result<[NewsModel], APIError>)
+    /// When user tapped
 	case continueButtonTapped
 }
 

@@ -46,7 +46,7 @@ public final class CurrencyUITextField: UITextField {
     private func editingChanged() {
         text = currency(from: decimal)
         resetSelection()
-        value = Int(doubleValue * 100).description
+        value = doubleValue.description
     }
 
     @objc

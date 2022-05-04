@@ -17,7 +17,7 @@ import DesignSystem
 struct PaymentTypeView: View {
     
     var body: some View {
-        Color.white
+        TokenName.background1.color
             .cornerRadius(10)
             .frame(height: 54)
             .overlay {
@@ -28,7 +28,7 @@ struct PaymentTypeView: View {
                             .scaledToFit()
                             .frame(width: 50, height: 40, alignment: .center)
                         Text("Apple Pay")
-                            .foregroundColor(Color.black)
+                            .foregroundColor(TokenName.systemInverse.color)
                             .font(.body)
                         Spacer()
                     }
@@ -46,7 +46,7 @@ public struct PaymentView: View {
         let formmatter = NumberFormatter()
         formmatter.numberStyle = .currency
         formmatter.locale = .current
-        formmatter.currencyCode = Locale.current.currencyCode
+        formmatter.currencyCode = "RUB"
         formmatter.maximumFractionDigits = 2
         return formmatter
     }()
@@ -77,7 +77,7 @@ public struct PaymentView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button("Закрыть") {
                             viewStore.send(.cancelTapped)
-                        }.foregroundColor(Color.brand.color)
+                        }.foregroundColor(TokenName.brand.color)
                     }
                 }
                 .padding()

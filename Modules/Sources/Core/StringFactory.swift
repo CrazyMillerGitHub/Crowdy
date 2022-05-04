@@ -115,11 +115,36 @@ public extension StringFactory {
     }
 }
 
+// MARK: - Forget
 public extension StringFactory {
 
     enum Forget: String {
         case passwordReset
         case sendRequest
         case login
+    }
+}
+
+// MARK: - FundSelection
+public extension StringFactory {
+
+    enum FundSelection: String {
+        case createFund
+        case internalFund
+        case internalDescription
+        case externalFund
+        case externalDescription
+    }
+}
+
+// MARK: - Alert
+public extension StringFactory {
+
+    enum Alert: String {
+        case error
+        case somethingWentWrong
+        case done
+        case dataSuccessfullyUpdated
+        case ok
     }
 }

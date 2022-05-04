@@ -32,9 +32,9 @@ struct ActionSection: View {
                     ? viewStore.send(.startTransactionOrder(viewStore.uuid, viewStore.detail.title, viewStore.detail.author, viewStore.detail.fund.image))
                     : viewStore.send(.startCancellingOrder)
                 }
-                .buttonStyle(BrandButtonStyle(color: viewStore.detail.isIncoming ? .brand : .magnetta))
+                .buttonStyle(BrandButtonStyle(color: viewStore.detail.isIncoming ? .brand : .critical))
                 HStack(alignment: .center) {
-                    Text("Совершая перевод, вы соглашаетесь \nс [пользовательским соглашением](https://apple.com)")
+                    Text("Совершая перевод, вы соглашаетесь \nс [пользовательским соглашением](https://mirror-atlasaurus-8f4.notion.site/Crowdy-3247efb360424569b26877decab13f90)")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                 }

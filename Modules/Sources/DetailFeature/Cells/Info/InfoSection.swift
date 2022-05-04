@@ -23,9 +23,9 @@ struct InfoSection: View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 10)
                 .frame(height: 30)
-                .foregroundColor(Color.magnetta.color)
+                .foregroundColor(TokenName.critical.color)
             RoundedRectangle(cornerRadius: 10)
-                .foregroundColor(Color.brand.color)
+                .foregroundColor(TokenName.brand.color)
                 .frame(width: 100, height: 30)
             HStack(alignment: .center) {
                 Spacer()

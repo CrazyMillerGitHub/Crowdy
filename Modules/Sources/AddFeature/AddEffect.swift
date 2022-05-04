@@ -11,15 +11,31 @@ import Foundation
 import ComposableArchitecture
 import Core
 
-public struct FundRequestDTO: Codable {}
+public struct FundRequestDTO: Codable {
+
+    var id: UUID
+
+    var title: String
+
+    var info: String?
+
+    var expirationDate: Double
+
+    var creatorId: Int
+
+    var category: Int
+}
 
 public func createFundRequest(decoder: JSONDecoder, request: FundRequestDTO) -> Effect<FundRequestDTO, APIError> {
     return Effect(value: request)
 }
 
 public func saveFundRequest(storage: PersistenceController, request: FundRequestDTO) -> Effect<FundRequestDTO, StorageError> {
-    storage.saveFund(dto: .fixture)
-    return Effect(value: request)
+//    let userFund = UserFund(context: storage.container.viewContext)
+//    userFund.id = request.id
+//    userFund.title = request.title
+//    storage.save()
+    return Effect(error: .unknown)
 }
 
 #endif

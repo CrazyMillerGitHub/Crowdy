@@ -6,4 +6,6 @@
 //
 
 public enum StorageError: Error {
+
+    case unknown
 }

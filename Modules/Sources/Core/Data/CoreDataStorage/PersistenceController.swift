@@ -15,7 +15,7 @@ public struct PersistenceController {
     static let shared = PersistenceController()
 
     // Storage for Core Data
-    let container: NSPersistentContainer
+    public let container: NSPersistentContainer
 
     // A test configuration for SwiftUI previews
     static public var preview: PersistenceController = {
@@ -41,7 +41,7 @@ public struct PersistenceController {
         }
     }
 
-    func save() {
+    public func save() {
         let context = container.viewContext
 
         if context.hasChanges {
@@ -56,16 +56,6 @@ public struct PersistenceController {
 
 extension PersistenceController {
 
-    public func saveFund(dto: FundDTO) {
-        let fund = Fund(context: container.viewContext)
-        fund.id = dto.id
-        save()
-    }
-
-    public func fetchFunds() throws -> [Any] {
-        let request: NSFetchRequest<Fund> = Fund.fetchRequest()
-        return try container.viewContext.fetch(request)
-    }
 }
 
 #endif

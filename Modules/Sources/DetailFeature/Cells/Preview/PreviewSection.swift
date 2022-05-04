@@ -15,7 +15,6 @@ import ComposableArchitecture
 struct PreviewSection: View {
 
     private let store: Store<DetailState, DetailAction>
-    @Environment(\.colorScheme) var colorScheme
 
     private enum Constants {
         static let height: CGFloat = 64.0
@@ -37,9 +36,7 @@ struct PreviewSection: View {
                             .frame(width: Constants.height, height: Constants.height)
                             .cornerRadius(10)
                             .foregroundColor(
-                                colorScheme == .dark
-                                ? Color.darkContent.color
-                                : Color.lightContent.color
+                                TokenName.background2.color
                             )
                             .onTapGesture {
                                 viewStore.send(.previewTapped(preview))

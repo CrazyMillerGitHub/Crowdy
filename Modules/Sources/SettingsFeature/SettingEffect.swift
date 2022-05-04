@@ -13,12 +13,12 @@ import ComposableArchitecture
 import Foundation
 
 public func dummyLoadUserOperationsRequest(decoder: JSONDecoder, encoder: JSONEncoder, baseURL: URL) -> Effect<[OperationModel], APIError> {
-    return Effect(value: [.fixture])
+    return Effect(value: [.fixture, .fixture, .fixture])
         .delay(for: 0.5, scheduler: DispatchQueue.main)
         .eraseToEffect()
 }
 
-public func dummyLoadUserRequest(storage: PersistenceController) -> Effect<User, StorageError> {
+public func dummyLoadUserRequest(storage: PersistenceController) -> Effect<UserDTO, StorageError> {
     return Effect(value: .fixture)
         .delay(for: 0.5, scheduler: DispatchQueue.main)
         .eraseToEffect()

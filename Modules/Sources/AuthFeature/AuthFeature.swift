@@ -9,6 +9,7 @@
 
 import ComposableArchitecture
 import Core
+import SwiftUI
 
 /// Стейт-машина для модуля авторизации
 public struct AuthState: Equatable {
@@ -18,7 +19,18 @@ public struct AuthState: Equatable {
     @BindableState var passwordValue: String
     @BindableState var confirmPasswordValue: String
     @BindableState var loginValue: String
+    var alert: AlertState<AuthAction>?
     var isLoading: Bool
+
+    public let id = UUID()
+
+    var loginIsReady: Bool {
+        !loginValue.isEmpty
+        && !passwordValue.isEmpty
+        && Predicate.email.evaluate(loginValue)
+        && Predicate.password.evaluate(passwordValue)
+        && (showLogin || confirmPasswordValue == passwordValue)
+    }
 
     public static var initialState = Self(
         showLogin: true,
@@ -44,6 +56,16 @@ public struct AuthState: Equatable {
         self.confirmPasswordValue = confirmPasswordValue
         self.isLoading = isLoading
     }
+
+    public static func == (lhs: AuthState, rhs: AuthState) -> Bool {
+        return lhs.isLoading == rhs.isLoading
+        && lhs.alert?.id == rhs.alert?.id
+        && lhs.fullNameValue == rhs.fullNameValue
+        && lhs.isLoading == rhs.isLoading
+        && lhs.loginValue == rhs.loginValue
+        && lhs.confirmPasswordValue == rhs.confirmPasswordValue
+        && lhs.passwordValue == rhs.passwordValue
+    }
 }
 
 /// Actions that may happend on authorization screen
@@ -66,6 +88,7 @@ public enum AuthAction: BindableAction {
 	case authCompleted
 	/// Authorization Failed
 	case authFailed
+    case alertOkTapped
     /// Binding
     case binding(BindingAction<AuthState>)
 }
@@ -106,7 +129,6 @@ public let authReducer = Reducer<
 	case .onAppear:
 		return .none
 	case .logInButtonTapped:
-        debugPrint("login: \(state.loginValue), password: \(state.passwordValue)")
         state.isLoading = true
 		return environment
             .loginUserRequest(
@@ -136,17 +158,20 @@ public let authReducer = Reducer<
             .map(AuthAction.didAuthUser)
 	case .didAuthUser(let result):
         state.isLoading = false
-		switch result {
-		case .success(let model):
-//			environment
-//				.saveModelRequest(environment.storage(), model)
-			return .none
-		case .failure(let err):
-            return Effect(value: .authFailed)
-		}
+        guard case .failure(_) = result else {
+            return Effect(value: .authCompleted)
+        }
+        return Effect(value: .authFailed)
     case .authFailed:
-        debugPrint("auth failed")
-        fallthrough
+        state.alert = AlertState(
+            title: .init(StringFactory.Alert.error.localizableString),
+            message: .init(StringFactory.Alert.somethingWentWrong.localizableString),
+            dismissButton: .default(.init(StringFactory.Alert.ok.localizableString))
+        )
+        return .none
+    case .alertOkTapped:
+        state.alert = nil
+        return .none
 	case _:
 		return .none
 	}

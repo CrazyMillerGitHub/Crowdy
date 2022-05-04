@@ -8,7 +8,7 @@
 import Core
 import UIKit
 
-public enum Category: String {
+public enum Category: String, CaseIterable {
     case travel
     case electronic
     case charity
@@ -22,11 +22,16 @@ public struct OperationModel {
     let image: URL
 
     public static var fixture: Self {
+        let title = [
+            "Круизный лайнер из мусора",
+            "Фонд помощи беженцам донбасса",
+            "Подшибник для поезда"
+        ]
         return .init(
-            title: "Круизный лайнер из мусора",
-            category: .travel,
-            price: .init(amount: 12, currency: "ru_RU"),
-            image: URL(string: "apple.com")!
+            title: title.randomElement() ?? "",
+            category: Category.allCases.randomElement() ?? .charity,
+            price: .init(amount: Decimal(Int.random(in: 0..<1000)), currency: "ru_RU"),
+            image: URL(string: "https://bsmp-bel.ru/images/help.jpg")!
         )
     }
 }

@@ -13,6 +13,7 @@ import Core
 public struct HomeState: Equatable {
 
     public var funds: [FundDTO]
+    public let id = UUID()
     var isLoading = true
     @BindableState var searchText = ""
 

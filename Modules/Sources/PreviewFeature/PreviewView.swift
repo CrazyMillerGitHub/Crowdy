@@ -17,6 +17,8 @@ public struct PreviewState: Equatable {
 
     let url: URL
 
+    public let id = UUID()
+
     public init(url: URL) {
         self.url = url
     }

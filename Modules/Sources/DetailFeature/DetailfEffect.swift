@@ -31,7 +31,7 @@ public func dummyLoadDetailRequest(decoder: JSONDecoder, baseURL: URL, uuid: UUI
         title: "Лучший сбор в мире",
         author: "Mikhail Borisov",
         info: getInfo(),
-        isIncoming: false,
+        isIncoming: uuid == UUID(uuidString: "D0AD236D-0100-0000-A0BB-236D01000000")! ? false : true,
         progress: progressModel
     )
     )

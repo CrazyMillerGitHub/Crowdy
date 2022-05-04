@@ -32,6 +32,14 @@ public struct AddView: View {
                         }
                         ExpirationRow(expirationDateValue: viewStore.binding(\.$expirationDateValue))
                         CategoryRow(categoryValue: viewStore.binding(\.$categoryValue))
+                        AvailabilityView(viewStore.isHiddenFund) {
+                            Banner(
+                                title: "Сбор является закрытым",
+                                subtitle: "Данный сбор нельзя будет найти в общеим поиске сборов",
+                                image: "exclamationmark.triangle"
+                            )
+                            .padding([.leading, .trailing, .top])
+                        }
                         Button(StringFactory.Add.publish.localizableString) {
                             viewStore.send(.publishTapped)
                         }
@@ -47,7 +55,7 @@ public struct AddView: View {
                             Button(StringFactory.Add.cancel.localizableString) {
                                 viewStore.send(.cancelTapped)
                             }
-                            .foregroundColor(Color.brand.color)
+                            .foregroundColor(TokenName.brand.color)
                         }
                     }
                 }

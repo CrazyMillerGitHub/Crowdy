@@ -9,20 +9,31 @@
 
 import Foundation
 import Core
+import CoreData
 import ComposableArchitecture
+import SwiftUI
 
 public struct DashboardState: Equatable {
 
+    var activateFunds: [UserFund] = []
+
+    var previousFunds: [UserFund] = []
+
     var isLoading: Bool = true
-    var activateFunds: [FundDTO] = [.fixture]
-    var previousFunds: [FundDTO] = [.fixture]
+    
+    public let id = UUID()
 
     public init() {}
+
+    public static func == (lhs: DashboardState, rhs: DashboardState) -> Bool {
+        lhs.activateFunds.count == rhs.activateFunds.count
+    }
 }
 
 public enum DashboardAction {
     case onAppear
     case fundsLoaded(Result<[FundDTO], APIError>)
+    case fundsSaved(Result<[UserFund], StorageError>)
     case fundsFailed
     case selectFund(UUID)
 }
@@ -30,9 +41,14 @@ public enum DashboardAction {
 public struct DashboardEnvironment {
 
     var getUserFundsRequest: (JSONDecoder, JSONEncoder, URL, UserFundsRequest) -> Effect<[FundDTO], APIError>
+    var saveUserFundsRequest: (PersistenceController, [FundDTO]) -> Effect<[UserFund], StorageError>
 
-    public init(getUserFundsRequest: @escaping (JSONDecoder, JSONEncoder, URL, UserFundsRequest) -> Effect<[FundDTO], APIError>) {
+    public init(
+        getUserFundsRequest: @escaping (JSONDecoder, JSONEncoder, URL, UserFundsRequest) -> Effect<[FundDTO], APIError>,
+        saveUserFundsRequest: @escaping (PersistenceController, [FundDTO]) -> Effect<[UserFund], StorageError>
+    ) {
         self.getUserFundsRequest = getUserFundsRequest
+        self.saveUserFundsRequest = saveUserFundsRequest
     }
     
 }
@@ -58,9 +74,16 @@ public let dashboardReducer = Reducer<
         guard case .success(let funds) = response else {
             return Effect(value: .fundsFailed)
         }
+        return environment
+            .saveUserFundsRequest(environment.storage(), funds)
+            .receive(on: environment.mainQueue())
+            .catchToEffect()
+            .map(DashboardAction.fundsSaved)
+    case .fundsSaved(let response):
+        guard case .success(let funds) = response else {
+            return Effect(value: .fundsFailed)
+        }
         state.isLoading = false
-        state.activateFunds = funds
-        state.previousFunds = []
         fallthrough
     case _:
         return .none

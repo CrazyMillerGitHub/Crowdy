@@ -12,20 +12,6 @@ import ComposableArchitecture
 import Core
 import DesignSystem
 
-public enum CancelFundAction {
-    case confirmCancellingOrder
-}
-
-public struct CancelFundState: Equatable {
-
-    public init() {}
-}
-
-public struct CancelFundEnvironment {
-
-    public init() {}
-}
-
 public struct CancelFundView: View {
 
     private let store: Store<CancelFundState, CancelFundAction>
@@ -38,13 +24,7 @@ public struct CancelFundView: View {
         WithViewStore(store) { viewStore in
             BottomSheet {
                 VStack(alignment: .leading, spacing: 20) {
-                    HStack() {
-                        Spacer()
-                        RoundedRectangle(cornerRadius: 2)
-                            .fill(.gray.opacity(0.7))
-                            .frame(width: 35, height: 4)
-                        Spacer()
-                    }
+                    Slider()
                     Text("Внимание")
                         .font(.title2)
                         .bold()
@@ -55,7 +35,7 @@ public struct CancelFundView: View {
                         viewStore.send(.confirmCancellingOrder)
                     }
                     .padding(.vertical)
-                    .buttonStyle(BrandButtonStyle(color: .magnetta))
+                    .buttonStyle(BrandButtonStyle(color: .critical))
                 }
             }
         }

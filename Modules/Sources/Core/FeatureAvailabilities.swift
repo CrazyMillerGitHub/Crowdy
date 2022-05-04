@@ -5,11 +5,22 @@
 //  Created by Mikhail Borisov on 08.03.2022.
 //
 
+/// Протокол, описывающий доступность функциональности
 public protocol FeatureAvailabilityProtocol {
+
+    /// Доступность добавления карт
     var isCardAvailable: Bool { get }
+
+    /// Доступность списка операций
     var isOperationsAvailble: Bool { get }
+
+    /// Доступность "забыл пароль"
     var isForgetPasswordAvailable: Bool { get }
+
+    /// Доступность регистрации пользователей
     var isRegistrationAvailable: Bool { get }
+
+    /// Доступность превью
     var isPreviewAvailable: Bool { get }
 }
 
@@ -31,7 +42,7 @@ final public class FeatureAvailability: FeatureAvailabilityProtocol {
     }
 
     public var isRegistrationAvailable: Bool {
-        return true
+        return false
     }
 
     public var isPreviewAvailable: Bool {

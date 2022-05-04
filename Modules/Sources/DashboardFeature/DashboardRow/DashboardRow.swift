@@ -17,20 +17,20 @@ import Kingfisher
 struct DashboardRow: View {
 
     private let viewStore: ViewStore<DashboardState, DashboardAction>
-    private let fund: FundDTO
+    private let fund: Fund
     @Environment(\.colorScheme) var colorScheme
 
-    init(viewStore: ViewStore<DashboardState, DashboardAction>, fund: FundDTO) {
+    init(viewStore: ViewStore<DashboardState, DashboardAction>, fund: Fund) {
         self.viewStore = viewStore
         self.fund = fund
     }
     
     var body: some View {
         RoundedRectangle(cornerRadius: 10)
-            .fill(colorScheme == .dark ? Color.darkContent.color : Color.white)
+            .fill(TokenName.background2.color)
             .overlay {
                 HStack(spacing: 10) {
-                    KFImage(fund.image)
+                    KFImage(URL(string: "apple.com")!)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 90, height: 90)
@@ -39,8 +39,8 @@ struct DashboardRow: View {
                         Text(fund.title)
                             .font(.footnote)
                             .bold()
-                        Text(fund.status.localizableString)
-                            .foregroundColor(Color.accept.color)
+                        Text(style(for: fund.status))
+                            .foregroundColor(TokenName.accept.color)
                             .font(.caption)
                     }
                     Spacer()
@@ -52,6 +52,10 @@ struct DashboardRow: View {
             .onTapGesture {
                 viewStore.send(.selectFund(.init()))
             }
+    }
+
+    func style(for number: Int16) -> String {
+        return "В обработке"
     }
 }
 

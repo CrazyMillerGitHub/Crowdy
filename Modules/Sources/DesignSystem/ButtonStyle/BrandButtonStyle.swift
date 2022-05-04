@@ -13,9 +13,13 @@ public struct BrandButtonStyle: ButtonStyle {
 		static let cornerRadius: CGFloat = 10
 	}
 
-	private let color: Color
+	private let color: TokenName
 
-	public init(color: Color = Color.brand) {
+    private var isInverseToken: Bool {
+        return [.systemInverse, .background1Inverse].contains(color)
+    }
+
+    public init(color: TokenName = .brand) {
 		self.color = color
 	}
 
@@ -25,8 +29,8 @@ public struct BrandButtonStyle: ButtonStyle {
 			.font(Font.button.font)
 			.frame(minWidth: .zero, maxWidth: .infinity)
 			.frame(height: 60)
-			.foregroundColor(.white)
 			.background(color.color)
+            .foregroundColor(isInverseToken ? TokenName.background1.color : .white)
 			.cornerRadius(Constants.cornerRadius)
 			.scaleEffect(configuration.isPressed ? 0.9 : 1.0)
 			.animation(Animation.easeOut, value: configuration.isPressed)

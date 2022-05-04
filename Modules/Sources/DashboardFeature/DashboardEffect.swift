@@ -12,7 +12,7 @@ import Core
 
 public struct UserFundsRequest: Encodable {
 
-    let userId: Int64
+    let userId: Int
 }
 
 public func getUserFundsRequest(decoder: JSONDecoder, encoder: JSONEncoder, baseURL: URL, request: UserFundsRequest) -> Effect<[FundDTO], APIError> {
@@ -31,6 +31,18 @@ public func dummyGetUserFundsRequest(decoder: JSONDecoder, encoder: JSONEncoder,
     return Effect(value: [.fixture])
         .delay(for: 1, scheduler: DispatchQueue.main)
         .eraseToEffect()
+}
+
+public func saveUserFundsRequest(storage: PersistenceController, dtos: [FundDTO]) -> Effect<[UserFund], StorageError> {
+    var results: [UserFund] = []
+//    dtos.forEach { dto in
+//        let fund = UserFund(context: storage.container.viewContext)
+//        fund.id = dto.id
+//        fund.title = dto.title
+//        results.append(fund)
+//    }
+//    storage.save()
+    return Effect(value: results)
 }
 
 #endif

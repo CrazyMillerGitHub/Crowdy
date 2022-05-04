@@ -28,6 +28,8 @@ public struct OnboardingState: Equatable {
     @BindableState
     public var isLoading: Bool
 
+    public let id = UUID()
+
     public static var initialState = Self(showRegister: true, isLoading: true)
 
     public init(showRegister: Bool, isLoading: Bool) {
@@ -81,7 +83,7 @@ public struct OnboardingView: View {
                     Button(StringFactory.Onboarding.logIn.localizableString) {
                         viewStore.send(.loginTapped)
                     }
-                    .buttonStyle(BrandButtonStyle(color: .darkContent))
+                    .buttonStyle(BrandButtonStyle(color: .background1Inverse))
                     AvailabilityView(viewStore.showRegister) {
                         Button(StringFactory.Onboarding.register.localizableString) {
                             viewStore.send(.registerTapped)

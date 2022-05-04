@@ -8,11 +8,11 @@ let package = Package(
     products: [
 		.library(
 			name: "Core",
-            type: .static,
+            type: .dynamic,
 			targets: ["Core"]),
 		.library(
 			name: "DesignSystem",
-            type: .static,
+            type: .dynamic,
 			targets: ["DesignSystem"]),
 		.library(
 			name: "NewsFeature",
@@ -20,7 +20,7 @@ let package = Package(
 			targets: ["NewsFeature"]),
 		.library(
 			name: "ShareQrFeature",
-            type: .static,
+            type: .dynamic,
 			targets: ["ShareQrFeature"]),
 		.library(
 			name: "HomeFeature",
@@ -77,12 +77,12 @@ let package = Package(
     ],
     dependencies: [
 		.package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.32.0"),
-		.package(url: "https://github.com/CrazyMillerGitHub/QrCodeManager", .branch("main")),
 		.package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.3.1"),
 		.package(url: "https://github.com/stripe/stripe-ios", from: "21.0.0"),
         .package(url: "https://github.com/johnpatrickmorgan/TCACoordinators", .branch("main")),
         .package(url: "https://github.com/onevcat/Kingfisher",  from: "7.2.0"),
-        .package(url: "https://github.com/airbnb/lottie-ios.git", from: "3.2.1")
+        .package(url: "https://github.com/airbnb/lottie-ios.git", from: "3.2.1"),
+        .package(url: "https://github.com/dagronf/QRCode", .branch("main"))
     ],
 	targets: [
 		.target(
@@ -93,7 +93,12 @@ let package = Package(
                 .product(name: "Stripe", package: "stripe-ios")
 			]
 		),
-		.target(name: "DesignSystem"),
+		.target(
+            name: "DesignSystem",
+            dependencies: [
+                .product(name: "Lottie", package: "lottie-ios")
+            ]
+        ),
 		.target(
 			name: "NewsFeature",
 			dependencies: [
@@ -113,7 +118,7 @@ let package = Package(
 			dependencies: [
 				"DesignSystem",
 				"Core",
-				.product(name: "QrCodeManager", package: "QrCodeManager")
+				.product(name: "QRCode", package: "QRCode")
 			]
 		),
 		.target(
@@ -180,8 +185,7 @@ let package = Package(
             name: "OnboardingFeature",
             dependencies: [
                 "Core",
-                "DesignSystem",
-                .product(name: "Lottie", package: "lottie-ios")
+                "DesignSystem"
             ]
         ),
         .target(

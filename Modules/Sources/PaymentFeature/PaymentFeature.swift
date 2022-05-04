@@ -17,6 +17,7 @@ public struct PaymentState: Equatable {
     let author: String
     let image: URL
     @BindableState var amount: String = ""
+    public let id = UUID()
 
     public init(
         uuid: UUID,

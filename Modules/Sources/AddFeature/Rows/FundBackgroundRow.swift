@@ -15,7 +15,7 @@ struct FundBackgroundRow: View {
     @State private var image: Image = .init(uiImage: .init())
 
     var body: some View {
-        Color.brand.color
+        TokenName.brand.color
             .overlay(
                 image
                     .resizable()

@@ -34,6 +34,9 @@
 "activeFund" = "Active funds";
 "previousFund" = "Previous funds";
 "travel" = "Travel";
+"electronic" = "Electronic";
+"private" = "Private";
+"charity" = "Charity";
 "deliveringGoods" = "Delivering goods";
 "register" = "Register";
 "confirmPassword" = "Confirm password";
@@ -42,3 +45,12 @@
 "saveChanges" = "Save changes";
 "passwordReset" = "Password reset";
 "sendRequest" = "Send request";
+"externalFund" = "External fund";
+"internalFund" = "Internal fund";
+"internalDescription" = "Perfect for birthday party gatherings";
+"externalDescription" = "Such funds appear in collections for all users";
+"error" = "Error";
+"somethingWentWrong" = "Something went wrong";
+"ok" = "Okay";
+"done" = "Done";
+"dataSuccessfullyUpdated" = "Your data successfully updated";

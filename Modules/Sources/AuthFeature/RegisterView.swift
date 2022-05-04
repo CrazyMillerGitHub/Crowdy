@@ -66,7 +66,7 @@ public struct RegisterView: View {
                 Text(StringFactory.AuthFeature.areYouRegistered.localizableString)
                     .font(.footnote)
                     .bold()
-                    .foregroundColor(Color.brand.color)
+                    .foregroundColor(TokenName.brand.color)
                     .onTapGesture {
                         viewStore.send(.areYouRegisteredTapped)
                     }

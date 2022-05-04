@@ -23,7 +23,7 @@ struct CardSection: View {
         WithViewStore(store) { viewStore in
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(Color.brand.color)
+                    .foregroundColor(TokenName.brand.color)
                     .frame(height: 164)
                 VStack {
                     Spacer()

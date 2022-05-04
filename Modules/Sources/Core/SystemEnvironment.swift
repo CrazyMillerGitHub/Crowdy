@@ -14,7 +14,7 @@ public struct SystemEnvironment<Environment> {
 	public var mainQueue: () -> AnySchedulerOf<DispatchQueue>
 	public var decoder: () -> JSONDecoder
     public var encoder: () -> JSONEncoder
-    public var currentUser: () -> User
+    public var currentUser: () -> UserDTO
 	public var storage: () -> PersistenceController
     public var paymentService: () -> PaymentServiceProtocol
     public var remoteConfig: () -> RemoteConfigProtocol
@@ -25,7 +25,7 @@ public struct SystemEnvironment<Environment> {
 		mainQueue: @autoclosure @escaping () -> AnySchedulerOf<DispatchQueue>,
 		decoder: @escaping () -> JSONDecoder,
         encoder: @escaping () -> JSONEncoder,
-        currentUser: @escaping () -> User,
+        currentUser: @escaping () -> UserDTO,
 		storage: @escaping () -> PersistenceController,
         paymentService: @escaping () -> PaymentServiceProtocol,
         remoteConfig: @escaping () -> RemoteConfigProtocol,
@@ -69,9 +69,9 @@ public struct SystemEnvironment<Environment> {
         return RemoteConfig(storage: Storage())
     }
 
-    private static func currentUser() -> User {
+    private static func currentUser() -> UserDTO {
         // TODO: Добавить загрузку откуда-то значения
-        return User(uuid: 1)
+        return UserDTO(uuid: 1)
     }
 
     private static func paymentService() -> PaymentServiceProtocol {

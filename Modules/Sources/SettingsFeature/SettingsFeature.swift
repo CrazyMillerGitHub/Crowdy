@@ -20,6 +20,7 @@ public struct SettingsState: Equatable {
     public var isOperationsAvailble = true
     public var isLoading: Bool = true
     public var isOperationsLoading: Bool = true
+    public let id = UUID()
 
     public init() {}
 }
@@ -28,7 +29,7 @@ public enum SettingsAction: BindableAction {
     case onAppear
 
     // Requests
-    case didLoadUser(Result<User, StorageError>)
+    case didLoadUser(Result<UserDTO, StorageError>)
     case didLoadUserFailed
     case didLoadOpeartions(Result<[OperationModel], APIError>)
     case didLoadOperationsFailed
@@ -43,11 +44,11 @@ public enum SettingsAction: BindableAction {
 
 public struct SettingsEnvironment {
 
-    var loadUserRequest: (PersistenceController) -> Effect<User, StorageError>
+    var loadUserRequest: (PersistenceController) -> Effect<UserDTO, StorageError>
     var loadOperationsRequest: (JSONDecoder, JSONEncoder, URL) -> Effect<[OperationModel], APIError>
 
     public init(
-        loadUserRequest: @escaping (PersistenceController) -> Effect<User, StorageError>,
+        loadUserRequest: @escaping (PersistenceController) -> Effect<UserDTO, StorageError>,
         loadOperationsRequest: @escaping (JSONDecoder, JSONEncoder, URL) -> Effect<[OperationModel], APIError>
     ) {
         self.loadUserRequest = loadUserRequest

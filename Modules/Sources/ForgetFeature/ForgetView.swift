@@ -11,28 +11,6 @@ import ComposableArchitecture
 import Core
 import DesignSystem
 
-public struct ForgetState: Equatable {
-
-    @BindableState
-    public var email: String
-
-    public static var initialState = Self(email: "")
-
-    public init(email: String) {
-        self.email = email
-    }
-}
-
-public enum ForgetAction: BindableAction {
-    case sendRequestTapped
-    case binding(BindingAction<ForgetState>)
-}
-
-public struct ForgetEnvironment {
-
-    public init() {}
-}
-
 public struct ForgetView: View {
 
     public typealias ForgetStore = Store<ForgetState, ForgetAction>
@@ -56,16 +34,30 @@ public struct ForgetView: View {
                 Button(StringFactory.Forget.sendRequest.localizableString) {
                     viewStore.send(.sendRequestTapped)
                 }
-                .buttonStyle(BrandButtonStyle())
+                .buttonStyle(BrandButtonStyle(color: .brand))
+                .disabled(!viewStore.requestIsReady)
+                .opacity(viewStore.requestIsReady ? 1 : 0.5)
+                .animation(.easeOut, value: viewStore.state)
             }
             .padding()
+            .alert(store.scope(state: \.alert), dismiss: .alertOkTapped)
             .navigationTitle(StringFactory.Forget.passwordReset.localizableString)
             .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
 
-public let forgetReducer = Reducer<ForgetState, ForgetAction, SystemEnvironment<ForgetEnvironment>> { _, _, _ in
+public typealias ForgetReducer = Reducer<ForgetState, ForgetAction, SystemEnvironment<ForgetEnvironment>>
+
+public let forgetReducer = ForgetReducer { state, action, environment in
+    switch action {
+    case .sendRequestTapped:
+        state.alert = .init(title: .init("Запрос успешно отправлен"), buttons: [])
+    case .alertOkTapped:
+        state.alert = nil
+    case _:
+        break
+    }
     return .none
 }.binding()
 

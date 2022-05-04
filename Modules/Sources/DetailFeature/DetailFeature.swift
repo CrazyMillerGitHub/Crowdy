@@ -72,6 +72,8 @@ public struct DetailState: Equatable {
         && lhs.detail == rhs.detail
     }
 
+    public let id = UUID()
+
     /// ID сбора
     let uuid: UUID
     /// Загружен ли сбор

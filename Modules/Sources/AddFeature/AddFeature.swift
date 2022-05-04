@@ -18,19 +18,23 @@ public struct AddState: Equatable {
     @BindableState var categoryValue: String
     @BindableState var infoValue: String
     @BindableState var backgroundURL: URL?
+    @BindableState var isHiddenFund: Bool
     var alert: AlertState<AddAction>?
+    public let id = UUID()
 
     public init(
         titleValue: String = "",
         expirationDateValue: String = "",
         categoryValue: String = "",
         infoValue: String = "",
+        isHiddenFund: Bool = false,
         backgroundURL: URL? = nil
     ) {
         self.titleValue = titleValue
         self.expirationDateValue = expirationDateValue
         self.categoryValue = categoryValue
         self.backgroundURL = backgroundURL
+        self.isHiddenFund = isHiddenFund
         self.infoValue = infoValue
     }
 
@@ -56,6 +60,7 @@ public enum AddAction: BindableAction {
     case receiveSaveResponse(Result<FundRequestDTO, StorageError>)
     case responseFailed
     case alertOkTapped
+    case saveSuccess(UUID)
 }
 
 public struct AddEnvironment {
@@ -77,17 +82,24 @@ public typealias AddReducer = Reducer<AddState, AddAction, SystemEnvironment<Add
 public let addReducer = AddReducer { state, action, environment in
     switch action {
     case .publishTapped:
-        debugPrint(state.titleValue, state.expirationDateValue, state.categoryValue)
         return environment
-            .createFundRequest(environment.decoder(), .init())
+            .createFundRequest(
+                environment.decoder(),
+                .init(id: .init(),
+                      title: state.titleValue,
+                      expirationDate: -1,
+                      creatorId: environment.currentUser().uuid,
+                      category: 0
+                     )
+            )
             .receive(on: environment.mainQueue())
             .catchToEffect()
             .map(AddAction.receiveResponse)
     case .responseFailed:
         state.alert = AlertState(
-            title: .init("Ошибка"),
-            message: .init("Что-то пошло не так"),
-            dismissButton: .default(.init("Хорошо"))
+            title: .init(StringFactory.Alert.error.localizableString),
+            message: .init(StringFactory.Alert.somethingWentWrong.localizableString),
+            dismissButton: .default(.init(StringFactory.Alert.ok.localizableString))
         )
     case .alertOkTapped:
         state.alert = nil
@@ -106,11 +118,12 @@ public let addReducer = AddReducer { state, action, environment in
         guard case let .success(dto) = response else {
             return Effect(value: .responseFailed)
         }
-        return Effect(value: .cancelTapped)
+        return Effect(value: .saveSuccess(.init()))
     case _:
         break
     }
     return .none
-}.binding()
+}
+    .binding()
 
 #endif

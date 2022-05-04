@@ -51,7 +51,7 @@ public struct LoginView: View {
                 Text(StringFactory.AuthFeature.forgotPassword.localizableString)
                     .font(.footnote)
                     .bold()
-                    .foregroundColor(Color.brand.color)
+                    .foregroundColor(TokenName.brand.color)
                     .onTapGesture {
                         viewStore.send(.forgotButtonTapped)
                     }
@@ -60,6 +60,9 @@ public struct LoginView: View {
                     viewStore.send(.logInButtonTapped)
                 }
                 .buttonStyle(BrandButtonStyle())
+                .disabled(!viewStore.loginIsReady)
+                .opacity(viewStore.loginIsReady ? 1 : 0.5)
+                .animation(.easeOut, value: viewStore.state)
             }
             .overlay(content: {
                 ProgressView()

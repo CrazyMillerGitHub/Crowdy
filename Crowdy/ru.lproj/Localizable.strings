@@ -21,7 +21,7 @@
 "dashboard" = "Статистика";
 "discovery" = "Исследование";
 "spent" = "Потрачено";
-"recentCrowdfundings" = "Последнии сборы";
+"recentCrowdfundings" = "Последние операции";
 "cancel" = "Отменить";
 "donate" = "Пожертвовать";
 "stage" = "Прогресс";
@@ -34,6 +34,9 @@
 "activeFund" = "Активные сборы";
 "previousFund" = "Прошлые сборы";
 "travel" = "Путешествие";
+"electronic" = "Электроника";
+"private" = "Приватный сбор";
+"charity" = "Благотворительность";
 "deliveringGoods" = "Доставка вознагрождения";
 "register" = "Регистрация";
 "confirmPassword" = "Повторите пароль";
@@ -42,3 +45,12 @@
 "saveChanges" = "Сохранить изменения";
 "passwordReset" = "Сброс пароля";
 "sendRequest" = "Отправить запрос";
+"externalFund" = "Открытый сбор";
+"internalFund" = "Закрытый сбор";
+"internalDescription" = "Идеально подходит для сборов на день рождения";
+"externalDescription" = "Такие сборы появляются в подборках для всех пользователей";
+"error" = "Ошибка";
+"somethingWentWrong" = "Что-то пошло не так";
+"ok" = "Хорошо";
+"done" = "Готово";
+"dataSuccessfullyUpdated" = "Ваши данные были успешно обновлены";

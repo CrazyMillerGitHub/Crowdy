@@ -31,6 +31,7 @@ public struct AuthView: View {
                     RegisterView(store: store)
                 }
             }
+            .alert(store.scope(state: \.alert), dismiss: .alertOkTapped)
         }
     }
 }

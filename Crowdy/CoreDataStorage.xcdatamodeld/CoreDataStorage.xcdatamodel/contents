@@ -1,15 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E230" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Fund" representedClassName="Fund" syncable="YES">
-        <attribute name="amountPrecentage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="expirationDate" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+    <entity name="Currency" representedClassName="Currency" syncable="YES">
+        <attribute name="code" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="participants" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="funds" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Fund" inverseName="currency" inverseEntity="Fund"/>
+        <relationship name="operations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Operation" inverseName="currency" inverseEntity="Operation"/>
+    </entity>
+    <entity name="Detail" representedClassName="Detail" parentEntity="Fund" syncable="YES">
+        <attribute name="info" optional="YES" attributeType="String"/>
+        <attribute name="previewImageId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="previews" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Media" inverseName="detail" inverseEntity="Media"/>
+    </entity>
+    <entity name="Fund" representedClassName="Fund" syncable="YES">
+        <attribute name="expirationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="originalAmount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="remainAmount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ownedFunds" inverseEntity="User"/>
+        <relationship name="currency" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Currency" inverseName="funds" inverseEntity="Currency"/>
+        <relationship name="operations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Operation" inverseName="fund" inverseEntity="Operation"/>
+        <relationship name="placeholderMedia" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Media" inverseName="fund" inverseEntity="Media"/>
+    </entity>
+    <entity name="Media" representedClassName="Media" syncable="YES">
+        <attribute name="background" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="data" optional="YES" attributeType="Binary"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="detail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Detail" inverseName="previews" inverseEntity="Detail"/>
+        <relationship name="fund" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Fund" inverseName="placeholderMedia" inverseEntity="Fund"/>
+    </entity>
+    <entity name="Operation" representedClassName="Operation" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="currencyId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="fundId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="userId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="currency" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Currency" inverseName="operations" inverseEntity="Currency"/>
+        <relationship name="fund" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Fund" inverseName="operations" inverseEntity="Fund"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="operations" inverseEntity="User"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="fullName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="operations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Operation" inverseName="user" inverseEntity="Operation"/>
+        <relationship name="ownedFunds" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Fund" inverseName="creator" inverseEntity="Fund"/>
     </entity>
     <elements>
-        <element name="Fund" positionX="-63" positionY="-18" width="128" height="134"/>
+        <element name="Currency" positionX="-24855.03515625" positionY="-762.43359375" width="128" height="89"/>
+        <element name="Detail" positionX="-25441.3203125" positionY="-559.6484375" width="128" height="74"/>
+        <element name="Fund" positionX="-25437.8359375" positionY="-916.28125" width="128" height="194"/>
+        <element name="Media" positionX="-25174.0546875" positionY="-543.21484375" width="128" height="104"/>
+        <element name="Operation" positionX="-24723.0078125" positionY="-579.37890625" width="128" height="149"/>
+        <element name="User" positionX="-25073.9375" positionY="-913.88671875" width="128" height="104"/>
     </elements>
 </model>

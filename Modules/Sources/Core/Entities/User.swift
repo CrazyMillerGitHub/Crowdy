@@ -6,11 +6,11 @@
 //
 
 /// Модель пользователя
-public struct User: Decodable {
+public struct UserDTO: Decodable {
 
-    public let uuid: Int64
+    public let uuid: Int
 
-    public init(uuid: Int64) {
+    public init(uuid: Int) {
         self.uuid = uuid
     }
 

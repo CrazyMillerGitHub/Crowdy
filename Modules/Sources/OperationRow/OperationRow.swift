@@ -27,14 +27,15 @@ public struct OperationRow: View {
                 .padding(.trailing)
             VStack(alignment: .leading, spacing: 4) {
                 Text(model.title)
-                    .fontWeight(.semibold)
+                    .font(.body)
                 Text(model.category.localizableString)
-                    .opacity(0.8)
+                    .font(.footnote)
+                    .opacity(0.55)
             }
             Spacer()
             Text(model.price.value)
                 .bold()
-                .foregroundColor(Color.accept.color)
+                .foregroundColor(TokenName.accept.color)
         }
         .padding([.top, .bottom])
     }

@@ -39,10 +39,10 @@ public struct AlertView: View {
 				.aspectRatio(contentMode: .fit)
 				.frame(width: 128, height: 128)
 			Text(title)
-				.foregroundColor(Color.darkSpace.color)
+                .foregroundColor(TokenName.background2.color)
 				.font(.system(size: 17, weight: .semibold))
 			Text(subtitle)
-				.foregroundColor(Color.darkSpace.color.opacity(0.5))
+                .foregroundColor(TokenName.background2.color)
 				.font(.system(size: 15, weight: .regular))
 		}
 	}

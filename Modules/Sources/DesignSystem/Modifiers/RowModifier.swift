@@ -9,7 +9,6 @@ import SwiftUI
 
 public struct RowModifier: ViewModifier {
 
-    @Environment(\.colorScheme) var colorScheme
 	private let cornerRadius: CGFloat
 
 	public init(cornerRadius: CGFloat = 15) {
@@ -21,7 +20,7 @@ public struct RowModifier: ViewModifier {
 			.cornerRadius(cornerRadius)
 			.listRowBackground(SwiftUI.Color.clear)
 			.listRowInsets(.init(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
-            .background(colorScheme == .dark ? Color.darkContent.color : .white)
+            .background(TokenName.background1.color)
             .cornerRadius(10)
             .shadow(color: .black.opacity(0.10), radius: 5, x: 0, y: 0)
 	}

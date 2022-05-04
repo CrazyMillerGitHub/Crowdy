@@ -30,7 +30,6 @@ public struct InputField<Content: View>: View {
     private var height: Double
     private let placeholder: String
 
-    @Environment(\.colorScheme) var colorScheme
 	@Binding private var binding: String
     private var inputFieldHighlighted: Bool { !binding.isEmpty || isFocused }
     @FocusState private var isFocused: Bool
@@ -53,7 +52,7 @@ public struct InputField<Content: View>: View {
         return ZStack(alignment: .leading) {
             Text(placeholder)
                 .foregroundColor(
-                    Color.lightContent.color
+                    TokenName.background2Constant.color
 				)
 				.scaleEffect(
 					inputFieldHighlighted
@@ -68,7 +67,7 @@ public struct InputField<Content: View>: View {
 				)
             content
                 .focused($isFocused)
-                .foregroundColor(colorScheme == .dark ? .white : .black)
+                .foregroundColor(TokenName.systemInverse.color)
 		}
 		.offset(x: .zero, y: inputFieldHighlighted ? Constants.highlighted : .zero)
 		.padding(.leading)
@@ -77,14 +76,14 @@ public struct InputField<Content: View>: View {
 			RoundedRectangle(cornerRadius: Constants.cornerRadius)
 				.stroke(
 					inputFieldHighlighted
-					? Color.brand.color
+					? TokenName.brand.color
                     : .clear,
 					lineWidth: Constants.lineWidth
 				)
         )
         .background(
             RoundedRectangle(cornerRadius: Constants.cornerRadius)
-                .fill(colorScheme == .dark ? Color.darkContent.color : Color.inputField.color)
+                .fill(TokenName.background1.color)
         )
 	}
 }

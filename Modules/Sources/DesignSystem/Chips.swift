@@ -34,15 +34,15 @@ public struct Chips: View {
 
     func backgrounColor(isSelected: Bool) -> SwiftUI.Color {
         guard colorScheme == .dark else {
-            return isSelected ? Color.brand.color : .black.opacity(0.05)
+            return isSelected ? TokenName.brand.color : .black.opacity(0.05)
         }
-        return isSelected ? Color.brand.color : Color.darkContent.color
+        return isSelected ? TokenName.brand.color : TokenName.background2.color
     }
 
     func titleColor(isSelected: Bool) -> SwiftUI.Color {
         guard colorScheme == .dark else {
-            return isSelected ? Color.white.color : Color.darkSpace.color
+            return isSelected ? TokenName.background2.color : TokenName.background2.color
         }
-        return Color.white.color
+        return TokenName.background2.color
     }
 }

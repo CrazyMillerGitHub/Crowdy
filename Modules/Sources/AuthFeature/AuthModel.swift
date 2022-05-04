@@ -17,7 +17,7 @@ public struct AuthModel: Decodable {
 	/// Пароль
 	var passwordHash: String
 	/// ифнормация о пользователе
-	var user: User
+	var user: UserDTO
     @BindableState var shouldRegister = false
 }
 
