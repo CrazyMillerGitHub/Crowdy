@@ -63,6 +63,9 @@ public let settingsReducer = Reducer<
 > { state, action, environment in
     switch action {
     case .onAppear:
+        guard state.isLoading else {
+            return .none
+        }
         return environment
             .loadUserRequest(environment.storage())
             .receive(on: environment.mainQueue())

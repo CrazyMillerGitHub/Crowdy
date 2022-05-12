@@ -17,7 +17,7 @@ public struct ShareFundState: Equatable, Identifiable {
     var alert: AlertState<ShareFundAction>?
     let fundId: UUID
     var isLoading = true
-    var url: String = ""
+    var url: URL = URL(string: "apple.com")!
     @BindableState
     var showShareSheet = false
 
@@ -64,7 +64,7 @@ public let shareFundReducer = ShareFundReducer { state, action, environment in
             .catchToEffect()
             .map(ShareFundAction.urlLoaded)
     case .urlLoaded(let result):
-        guard case .success(let url) = result else {
+        guard case .success(let value) = result, let url = URL(string: value) else {
             return Effect(value: .urlLoadFailed)
         }
         state.isLoading = false

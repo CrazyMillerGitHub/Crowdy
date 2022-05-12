@@ -5,8 +5,6 @@
 //  Created by Mikhail Borisov on 08.03.2022.
 //
 
-#if !APPCLIP
-
 import SwiftUI
 import Stripe
 import Core
@@ -88,5 +86,3 @@ public struct PaymentView: View {
         }
     }
 }
-
-#endif

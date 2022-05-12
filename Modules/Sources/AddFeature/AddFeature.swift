@@ -119,6 +119,8 @@ public let addReducer = AddReducer { state, action, environment in
             return Effect(value: .responseFailed)
         }
         return Effect(value: .saveSuccess(.init()))
+            .delay(for: 0.5, scheduler: environment.mainQueue())
+            .eraseToEffect()
     case _:
         break
     }

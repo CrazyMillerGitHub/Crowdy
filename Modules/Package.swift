@@ -51,7 +51,7 @@ let package = Package(
             type: .static,
 			targets: ["DeeplinkFeature"]),
         .library(name: "PaymentFeature",
-                 type: .static,
+                 type: .dynamic,
                  targets: ["PaymentFeature"]),
         .library(name: "OperationRow",
                  type: .static,

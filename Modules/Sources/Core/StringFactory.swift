@@ -36,6 +36,7 @@ public extension StringFactory {
         case expireOn
         case progress
         case without
+        case until
     }
 }
 
@@ -73,6 +74,7 @@ public extension StringFactory {
         case cancel
         case previewImages
         case stage
+        case withoutRestrictions
     }
 }
 

@@ -21,9 +21,7 @@ public func loadFundsRequest(decoder: JSONDecoder, baseURL: URL) -> Effect<[Fund
 }
 
 public func dummyLoadFundsRequest(decoder: JSONDecoder) -> Effect<[FundDTO], APIError> {
-    var funds = [FundDTO.fixture, FundDTO.fixture]
-    funds[0].id = .init(uuidString: "D0AD236D-0100-0000-A0BB-236D01000000")!
-    return Effect(value: funds)
+    return Effect(value: [.fake1, .fake2, .fake3])
         .delay(for: 1, scheduler: DispatchQueue.main)
         .eraseToEffect()
 }
@@ -51,15 +49,17 @@ public func dummyUpdateFavoriteFundRequest(
     baseURL: URL,
     request: EditFavoruriteRequest
 ) -> Effect<FundDTO, APIError> {
-    var fund: FundDTO = .fixture
-    fund.id = request.crowdfindingId
-    fund.isFavorite = request.newState
-    return Effect(value: fund)
+    let fakeArr: [FundDTO] = [.fake3, .fake2, .fake1]
+    guard var fake = fakeArr.first(where: { $0.id == request.crowdfundingId }) else {
+        return Effect(error: .decodingError)
+    }
+    fake.isFavorite = request.newState
+    return Effect(value: fake)
 }
 
 public struct EditFavoruriteRequest: Encodable {
     let userId: Int
-    let crowdfindingId: UUID
+    let crowdfundingId: UUID
     let newState: Bool
 }
 

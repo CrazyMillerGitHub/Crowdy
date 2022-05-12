@@ -69,9 +69,6 @@ public struct LoginView: View {
                     .opacity(viewStore.isLoading ? 1 : 0)
             })
             .padding([.leading, .trailing])
-            .onAppear(perform: {
-                viewStore.send(.onAppear)
-            })
             .onSubmit {
                 switch focusedField {
                 case .login:

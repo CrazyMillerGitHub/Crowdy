@@ -85,7 +85,7 @@ public let homeReducer = Reducer<
                 environment.decoder(),
                 environment.encoder(),
                 environment.remoteConfig().baseURL.appendingPathComponent("funds"),
-                .init(userId: environment.currentUser().uuid, crowdfindingId: uuid, newState: !selectedFund.isFavorite)
+                .init(userId: environment.currentUser().uuid, crowdfundingId: uuid, newState: !selectedFund.isFavorite)
             )
             .receive(on: environment.mainQueue())
             .catchToEffect()

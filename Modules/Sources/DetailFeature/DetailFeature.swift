@@ -35,7 +35,7 @@ public struct FundDetail: Decodable, Equatable {
     var author: String
     let info: String
     let isIncoming: Bool
-    let progress: Progress
+    let progress: Progress?
 
     static var fixture: Self {
         .init(
@@ -46,23 +46,9 @@ public struct FundDetail: Decodable, Equatable {
             info: "",
             isIncoming: true,
             progress: .fixture
-    //        previews: []
         )
     }
 }
-
-//extension FundDetail: Equatable {
-//
-//    public static func == (lhs: Self, rhs: Self) -> Bool {
-//        return lhs.id == rhs.id
-//        && lhs.fund == rhs.fund
-//        && lhs.title == rhs.title
-//        && lhs.author == rhs.author
-//        && lhs.info == rhs.info
-//        && lhs.isIncoming == rhs.isIncoming
-//        && lhs.progress == rhs.progress
-//    }
-//}
 
 public struct DetailState: Equatable {
 

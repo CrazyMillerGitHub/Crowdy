@@ -42,13 +42,13 @@ public enum OnboardingCoordinator {
             Reducer<CoordinatorState, CoordinatorAction, Environment> { state, action, environment in
                 switch action {
                 case .routeAction(_, action: .onboarding(.loginTapped)):
-                    state.routes.push(.auth(.initialState))
+                    state.routes.push(.auth(.init(showLogin: true)))
                 case .routeAction(_, action: .onboarding(.registerTapped)):
-                    state.routes.push(.auth(.initialState))
+                    state.routes.push(.auth(.init(showLogin: false)))
                 case .routeAction(_, action: .auth(.areYouRegisteredTapped)):
                     return Effect.routeWithDelaysIfUnsupported(state.routes) {
                         $0.goBack()
-                        $0.push(.auth(.initialState))
+                        $0.push(.auth(.init(showLogin: true)))
                     }
                 case .routeAction(_, action: .auth(.forgotButtonTapped)):
                     state.routes.push(.forget(.initialState))

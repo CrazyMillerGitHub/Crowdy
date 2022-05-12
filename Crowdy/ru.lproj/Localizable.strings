@@ -54,3 +54,5 @@
 "ok" = "Хорошо";
 "done" = "Готово";
 "dataSuccessfullyUpdated" = "Ваши данные были успешно обновлены";
+"until" = "До";
+"withoutRestrictions" = "Без ограничения";

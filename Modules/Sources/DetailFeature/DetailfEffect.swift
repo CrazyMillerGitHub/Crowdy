@@ -21,21 +21,12 @@ func loadDetailRequest(decoder: JSONDecoder, baseURL: URL, uuid: UUID) -> Effect
 }
 
 public func dummyLoadDetailRequest(decoder: JSONDecoder, baseURL: URL, uuid: UUID) -> Effect<FundDetail, APIError> {
-    let progressModel = Progress(
-        remainAmount: .init(amount: 1000, currency: "ru_RU"),
-        originalAmount: .init(amount: 2000, currency: "ru_RU")
-    )
-    return Effect(value: .init(
-        id: .init(),
-        fund: .fixture,
-        title: "Лучший сбор в мире",
-        author: "Mikhail Borisov",
-        info: getInfo(),
-        isIncoming: uuid == UUID(uuidString: "D0AD236D-0100-0000-A0BB-236D01000000")! ? false : true,
-        progress: progressModel
-    )
-    )
-    .delay(for: 1, scheduler: DispatchQueue.main)
+    let fakeArr: [FundDetail] = [.fake1, .fake2, .fake3]
+    guard let fake = fakeArr.first(where: {$0.id == uuid }) else {
+        return Effect(error: .decodingError)
+            .eraseToEffect()
+    }
+    return Effect(value: fake)
     .eraseToEffect()
 }
 

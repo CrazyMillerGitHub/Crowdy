@@ -55,6 +55,8 @@ public struct HomeRow: View {
                         .font(.headline)
                         .foregroundColor(SwiftUI.Color.white)
                         .padding(Constants.padding)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(.ultraThinMaterial)
                 }
                 .frame(height: Constants.previewHeight)
                 ProgressView(value: fund.amountPrecentage)

@@ -9,6 +9,7 @@
 
 import DesignSystem
 import SwiftUI
+import Core
 
 struct InfoSection: View {
 
@@ -20,23 +21,46 @@ struct InfoSection: View {
     }
 
     var body: some View {
-        ZStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 10)
-                .frame(height: 30)
-                .foregroundColor(TokenName.critical.color)
-            RoundedRectangle(cornerRadius: 10)
-                .foregroundColor(TokenName.brand.color)
-                .frame(width: 100, height: 30)
-            HStack(alignment: .center) {
-                Spacer()
-                Text("\(detail.progress.remainAmount.value) / \(detail.progress.originalAmount.value)")
-                    .font(.caption2)
-                    .bold()
-                    .foregroundColor(.white)
-                Spacer()
+        GeometryReader { proxy in
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(height: 30)
+                    .foregroundColor(TokenName.critical.color)
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(TokenName.brand.color)
+                    .frame(width: completedWidth(detail.progress, proxy: proxy), height: 30)
+                HStack(alignment: .center) {
+                    Spacer()
+                    Text(formattedString(detail.progress))
+                        .font(.caption2)
+                        .bold()
+                        .foregroundColor(.white)
+                    Spacer()
+                }
             }
         }
         .listRowSeparator(.hidden)
+    }
+
+    private func completedWidth(_ progress: Progress?, proxy: GeometryProxy) -> CGFloat {
+        guard let progress = progress else {
+            return proxy.size.width
+        }
+        let ratio = (progress.originalAmount.amount - progress.remainAmount.amount) / progress.originalAmount.amount
+        return proxy.size.width * ratio.doubleValue
+    }
+
+    private func formattedString(_ progress: Progress?) -> String {
+        guard let progress = progress else {
+            return StringFactory.Details.withoutRestrictions.localizableString
+        }
+        return "\(progress.remainAmount.value) / \(progress.originalAmount.value)"
+    }
+}
+
+extension Decimal {
+    var doubleValue:Double {
+        return NSDecimalNumber(decimal:self).doubleValue
     }
 }
 

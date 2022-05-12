@@ -24,6 +24,7 @@ public struct ForgetView: View {
     public var body: some View {
         WithViewStore(store) { viewStore in
             VStack {
+                Spacer()
                 InputField(
                     placeholder: StringFactory.Forget.login.localizableString,
                     binding: viewStore.binding(\.$email)
@@ -59,6 +60,6 @@ public let forgetReducer = ForgetReducer { state, action, environment in
         break
     }
     return .none
-}.binding()
+}
 
 #endif

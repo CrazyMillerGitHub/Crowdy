@@ -50,7 +50,7 @@ extension AddCoordinator {
                 case .routeAction(_, action: .add(.saveSuccess(let fundId))):
                     return Effect.routeWithDelaysIfUnsupported(state.routes) {
                         $0.goBack()
-                        $0.presentCover(.share(.init(fundId: fundId)))
+                        $0.presentSheet(.share(.init(fundId: fundId)))
                     }
                 case _:
                     break

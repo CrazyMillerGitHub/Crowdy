@@ -31,11 +31,7 @@ public func createFundRequest(decoder: JSONDecoder, request: FundRequestDTO) -> 
 }
 
 public func saveFundRequest(storage: PersistenceController, request: FundRequestDTO) -> Effect<FundRequestDTO, StorageError> {
-//    let userFund = UserFund(context: storage.container.viewContext)
-//    userFund.id = request.id
-//    userFund.title = request.title
-//    storage.save()
-    return Effect(error: .unknown)
+    return Effect(value: request)
 }
 
 #endif

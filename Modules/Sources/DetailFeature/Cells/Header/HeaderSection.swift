@@ -43,12 +43,16 @@ struct HeaderSection: View {
                                                 .font(.title)
                                                 .bold()
                                             Spacer()
-                                            Image(systemName: "heart.fill")
-                                                .foregroundColor(.white)
                                             Image(systemName: "square.and.arrow.up")
                                                 .foregroundColor(.white)
                                                 .onTapGesture {
-                                                    viewStore.send(.shareTapped(URL(string: "apple.com")!))
+                                                    viewStore.send(
+                                                        .shareTapped(
+                                                            URL(
+                                                                string: "https:crowdyapp.ru/api/fund/1231"
+                                                            )!
+                                                        )
+                                                    )
                                                 }
                                         }
                                     }

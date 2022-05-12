@@ -42,7 +42,7 @@ final public class FeatureAvailability: FeatureAvailabilityProtocol {
     }
 
     public var isRegistrationAvailable: Bool {
-        return false
+        return true
     }
 
     public var isPreviewAvailable: Bool {

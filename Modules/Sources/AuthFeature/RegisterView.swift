@@ -81,9 +81,6 @@ public struct RegisterView: View {
                     .opacity(viewStore.isLoading ? 1 : 0)
             })
             .padding([.leading, .trailing])
-            .onAppear(perform: {
-                viewStore.send(.onAppear)
-            })
             .onSubmit {
                 switch focusedField {
                 case .fullName:

@@ -74,7 +74,7 @@ public struct ShareFundView: View {
                             Slider()
                             Spacer()
                             QRCodeUI(
-                                text: viewStore.url.utf8.description,
+                                text: viewStore.url.description,
                                 errorCorrection: .medium
                             )!
                             .eyeShape(QRCode.EyeShape.RoundedRect())
@@ -101,7 +101,7 @@ public struct ShareFundView: View {
                         .alert(store.scope(state: \.alert), dismiss: .okTapped)
                         .padding([.leading, .trailing, .bottom, .top])
                         .sheet(isPresented: viewStore.binding(\.$showShareSheet)) {
-                            ShareSheet(items: ["Hello World"])
+                            ShareSheet(items: [viewStore.url])
                         }
                     }
                 }

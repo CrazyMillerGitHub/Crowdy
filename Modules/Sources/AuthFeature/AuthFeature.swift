@@ -32,22 +32,13 @@ public struct AuthState: Equatable {
         && (showLogin || confirmPasswordValue == passwordValue)
     }
 
-    public static var initialState = Self(
-        showLogin: true,
-        fullNameValue: "",
-        loginValue: "",
-        passwordValue: "",
-        confirmPasswordValue: "",
-        isLoading: false
-    )
-
     public init(
         showLogin: Bool,
-        fullNameValue: String,
-        loginValue: String,
-        passwordValue: String,
-        confirmPasswordValue: String,
-        isLoading: Bool
+        fullNameValue: String = "",
+        loginValue: String = "",
+        passwordValue: String = "",
+        confirmPasswordValue: String = "",
+        isLoading: Bool = false
     ) {
         self.showLogin = showLogin
         self.fullNameValue = fullNameValue
@@ -70,8 +61,6 @@ public struct AuthState: Equatable {
 
 /// Actions that may happend on authorization screen
 public enum AuthAction: BindableAction {
-	/// initial event
-	case onAppear
 	/// Log in button was pressed
 	case logInButtonTapped
     /// Register button Tapped
@@ -126,8 +115,6 @@ public let authReducer = Reducer<
 	SystemEnvironment<AuthEnvironment>
 > { state, action, environment in
 	switch action {
-	case .onAppear:
-		return .none
 	case .logInButtonTapped:
         state.isLoading = true
 		return environment

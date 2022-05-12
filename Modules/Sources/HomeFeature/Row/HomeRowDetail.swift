@@ -32,7 +32,7 @@ struct HomeRowDetail: View {
             return StringFactory.HomeRow.without.localizableString
         }
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM DD yyyy"
+        formatter.dateFormat = "\(StringFactory.HomeRow.until.localizableString) dd.MM.yyyy"
         return formatter.string(from: .init(timeIntervalSince1970: expirationDate))
     }
 
@@ -45,8 +45,7 @@ struct HomeRowDetail: View {
         return HStack {
             ForEach(values, id: \.self) { value in
                 Text(value)
-                    .font(.body)
-                    .minimumScaleFactor(0.01)
+                    .font(.footnote)
                     .lineLimit(1)
             }
         }

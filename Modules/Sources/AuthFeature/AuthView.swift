@@ -45,7 +45,7 @@ struct Preview_AuthView: PreviewProvider {
 		Circle()
 		AuthView(
 			store: .init(
-                initialState: .initialState,
+                initialState: .init(showLogin: true),
 				reducer: authReducer,
 				environment: .dev(
 					environment: AuthEnvironment(

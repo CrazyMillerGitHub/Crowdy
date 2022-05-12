@@ -14,7 +14,7 @@ public struct ForgetState: Equatable {
     public var email: String
 
     var requestIsReady: Bool {
-        return !email.isEmpty && Predicate.email.evaluate(email)
+        return true//!email.isEmpty && Predicate.email.evaluate(email)
     }
 
     var alert: AlertState<ForgetAction>?
