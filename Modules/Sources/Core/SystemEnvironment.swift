@@ -70,8 +70,7 @@ public struct SystemEnvironment<Environment> {
     }
 
     private static func currentUser() -> UserDTO {
-        // TODO: Добавить загрузку откуда-то значения
-        return UserDTO(uuid: 1)
+        return storage().user
     }
 
     private static func paymentService() -> PaymentServiceProtocol {

@@ -47,7 +47,7 @@ public struct SettingsView: View {
                 .shimmering(active: viewStore.isLoading)
                 .disabled(viewStore.isLoading)
                 .listStyle(.plain)
-                .navigationTitle("👋, Михаил")
+                .navigationTitle("👋, \(viewStore.firstName)")
                 .navigationBarItems(
                     leading:
                         Text(StringFactory.Settings.welcomeBack.localizableString)

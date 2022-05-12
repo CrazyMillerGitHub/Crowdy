@@ -145,10 +145,12 @@ public let authReducer = Reducer<
             .map(AuthAction.didAuthUser)
 	case .didAuthUser(let result):
         state.isLoading = false
-        guard case .failure(_) = result else {
-            return Effect(value: .authCompleted)
+        guard case .success(let response) = result else {
+            return Effect(value: .authFailed)
         }
-        return Effect(value: .authFailed)
+        var storage = environment.storage()
+        storage.update(user: response.user)
+        return Effect(value: .authCompleted)
     case .authFailed:
         state.alert = AlertState(
             title: .init(StringFactory.Alert.error.localizableString),

@@ -61,7 +61,11 @@ public func dummyRegisterRequest(
     baseURL: URL,
     request: RegisterRequest
 ) -> Effect<AuthModel, APIError> {
-    return Effect(value: AuthModel(login: "1234", passwordHash: UUID().description, user: .fixture))
+    var user: UserDTO = .fixture
+    let nameElements = request.fullName.split(separator: " ").map(String.init)
+    (user.firstName, user.lastName) = (nameElements[0], nameElements[1])
+    user.email = request.email
+    return Effect(value: AuthModel(login: "1234", passwordHash: UUID().description, user: user))
 }
 
 #endif

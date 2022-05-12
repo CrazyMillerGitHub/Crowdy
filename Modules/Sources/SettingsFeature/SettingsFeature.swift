@@ -21,6 +21,7 @@ public struct SettingsState: Equatable {
     public var isLoading: Bool = true
     public var isOperationsLoading: Bool = true
     public let id = UUID()
+    public var firstName: String = ""
 
     public init() {}
 }
@@ -63,6 +64,7 @@ public let settingsReducer = Reducer<
 > { state, action, environment in
     switch action {
     case .onAppear:
+        state.firstName = environment.currentUser().firstName
         guard state.isLoading else {
             return .none
         }

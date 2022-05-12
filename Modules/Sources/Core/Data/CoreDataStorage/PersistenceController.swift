@@ -17,11 +17,17 @@ public struct PersistenceController {
     // Storage for Core Data
     public let container: NSPersistentContainer
 
+    public var user: UserDTO = .fixture
+
     // A test configuration for SwiftUI previews
     static public var preview: PersistenceController = {
         let controller = PersistenceController(inMemory: true)
         return controller
     }()
+
+    public mutating func update(user: UserDTO) {
+        self.user = user
+    }
 
     // An initializer to load Core Data, optionally able
     // to use an in-memory store.

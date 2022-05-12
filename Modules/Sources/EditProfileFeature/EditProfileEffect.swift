@@ -10,5 +10,5 @@ import ComposableArchitecture
 import Core
 
 public func dummyEditProfileRequest(storage: PersistenceController) -> Effect<EditProfileDTO, StorageError> {
-    return Effect(value: EditProfileDTO(fullName: "Михаил Борисов", email: "dsgnmike@gmail.com"))
+    return Effect(value: EditProfileDTO(fullName: storage.user.fullName, email: storage.user.email))
 }

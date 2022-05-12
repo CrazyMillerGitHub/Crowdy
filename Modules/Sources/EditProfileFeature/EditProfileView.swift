@@ -119,10 +119,10 @@ public typealias EditProfileReducer = Reducer<EditProfileState, EditProfileActio
 public let editProfileReducer = EditProfileReducer { state, action, environment in
     switch action {
     case .onAppear:
-        state.originalEmail = "dsgnmike@gmail.com"
-        state.email = "dsgnmike@gmail.com"
-        state.fullName = "Mikhail Borisov"
-        state.originalFullName = "Mikhail Borisov"
+        state.originalEmail = environment.storage().user.email
+        state.email = environment.storage().user.email
+        state.fullName = environment.storage().user.fullName
+        state.originalFullName = environment.storage().user.fullName
     case .saveChangesTapped:
         return Effect(value: .saveFinished)
     case .saveFinished:

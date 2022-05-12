@@ -9,10 +9,11 @@
 
 import ComposableArchitecture
 import Core
+import Foundation
 
 public struct UserFundsRequest: Encodable {
 
-    let userId: Int
+    let userId: UUID
 }
 
 public func getUserFundsRequest(decoder: JSONDecoder, encoder: JSONEncoder, baseURL: URL, request: UserFundsRequest) -> Effect<[FundDTO], APIError> {

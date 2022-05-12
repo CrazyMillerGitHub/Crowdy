@@ -21,7 +21,7 @@ public struct FundRequestDTO: Codable {
 
     var expirationDate: Double
 
-    var creatorId: Int
+    var creatorId: UUID
 
     var category: Int
 }

@@ -60,7 +60,7 @@ extension OnboardingCoordinator {
                     environment:
                         AuthEnvironment(
                             loginUserRequest: dummyLoginRequest,
-                            registerUserRequest: registerEffect,
+                            registerUserRequest: dummyRegisterRequest,
                             saveModelRequest: dummySaveModelRequest
                         )
                 )

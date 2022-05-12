@@ -45,6 +45,7 @@ public struct RegisterView: View {
                     binding: viewStore.binding(\.$loginValue)
                 ) {
                     TextField("", text: viewStore.binding(\.$loginValue))
+                        .keyboardType(.emailAddress)
                         .focused($focusedField, equals: .login)
                 }
                 InputField(

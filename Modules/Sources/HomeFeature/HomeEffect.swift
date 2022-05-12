@@ -58,7 +58,7 @@ public func dummyUpdateFavoriteFundRequest(
 }
 
 public struct EditFavoruriteRequest: Encodable {
-    let userId: Int
+    let userId: UUID
     let crowdfundingId: UUID
     let newState: Bool
 }
